@@ -1,7 +1,7 @@
 import React from 'react';
 import Hero from '@/components/Hero';
 import MenuPackageCard from '@/components/MenuPackageCard';
-import { Button } from '@/components/ui/button';
+import { InfoCard } from '@/components/InfoCard';
 
 const PackagesPage = () => {
   const handleWhatsAppClick = () => {
@@ -20,11 +20,38 @@ const PackagesPage = () => {
       {/* Package Categories */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-8">
             <h2 className="section-heading mx-auto">Menu Packages</h2>
             <p className="text-gray-600 text-lg mt-4">
               Experience the finest Kerala cuisine with our specially curated menu packages
             </p>
+          </div>
+
+          {/* Pricing Information */}
+          <div className="max-w-3xl mx-auto mb-16 text-center">
+            <div className="bg-lotus-navy/5 rounded-lg p-6">
+              <h3 className="text-xl font-medium text-lotus-navy mb-4">Pricing Information</h3>
+              <p className="text-gray-600 mb-2">• Prices shown are per head based on 1000 guests</p>
+              <p className="text-gray-600 mb-2">• Per head price decreases as guest count increases</p>
+              <p className="text-gray-600">• All menus are completely customizable to your preferences</p>
+            </div>
+          </div>
+
+          {/* Standard Package Inclusions */}
+          <div className="max-w-3xl mx-auto mb-16">
+            <InfoCard 
+              title="Standard Package Inclusions"
+              items={[
+                "Venue & Facilities",
+                "Essential amenities",
+                "Basic décor package",
+                "Professional catering services",
+                "Beverages",
+                "Security",
+                "Welcome Board",
+                "Marriage Certificate Processing"
+              ]}
+            />
           </div>
 
           {/* Traditional Sadhya Package - Featured Row */}
@@ -52,13 +79,15 @@ const PackagesPage = () => {
                     items: ["Parippu Pradhaman", "Palada Pradhaman"]
                   },
                   {
-                    category: "Complimentary",
+                    category: "Special Complimentary Services",
                     items: [
-                      "Puja, Pujari, Nadaswaram, Thallam",
-                      "Security & Marriage Certificate Processing"
+                      "Religious Rituals (Puja, Pujari)",
+                      "Nadaswaram",
+                      "Thallam"
                     ]
                   }
                 ]}
+                specialNote="Includes all standard package inclusions plus special religious ceremony services"
               />
             </div>
           </div>
@@ -189,7 +218,7 @@ const PackagesPage = () => {
       </section>
 
       {/* Notes Section */}
-      <section className="py-16 bg-lotus-navy text-white">
+      <section className="py-16 bg-lotus-navy text-white mt-16 rounded-lg">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h3 className="text-3xl font-playfair font-medium text-center mb-10">
@@ -201,7 +230,7 @@ const PackagesPage = () => {
                 <ul className="space-y-3">
                   <li className="flex items-start">
                     <span className="text-lotus-gold mr-2">•</span>
-                    <span>Venue rental with complete setup</span>
+                    <span>Venue & facilities with complete setup</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-lotus-gold mr-2">•</span>
@@ -213,7 +242,7 @@ const PackagesPage = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-lotus-gold mr-2">•</span>
-                    <span>Essential amenities and facilities</span>
+                    <span>Beverages and security services</span>
                   </li>
                 </ul>
               </div>
@@ -230,11 +259,11 @@ const PackagesPage = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-lotus-gold mr-2">•</span>
-                    <span>AC hall with modern amenities included</span>
+                    <span>Complimentary Welcome Board & Certificate Processing</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-lotus-gold mr-2">•</span>
-                    <span>Photo booth and live kitchen facilities</span>
+                    <span>Special inclusions for Sadhya packages</span>
                   </li>
                 </ul>
               </div>
