@@ -6,9 +6,14 @@ import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { motion } from 'framer-motion';
 
+interface MenuSubSection {
+  heading: string;
+  items: string[];
+}
+
 interface MenuItem {
   category: string;
-  items: string[];
+  items: (string | MenuSubSection)[];
 }
 
 interface MenuPackageProps {
@@ -22,6 +27,31 @@ interface MenuPackageProps {
 const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageProps) => {
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/919207102999', '_blank');
+  };
+
+  const renderMenuItem = (item: string | MenuSubSection) => {
+    if (typeof item === 'string') {
+      return (
+        <li className="text-gray-600 flex items-start">
+          <span className="text-lotus-gold mr-2">•</span>
+          {item}
+        </li>
+      );
+    }
+
+    return (
+      <div className="space-y-2">
+        <h4 className="text-lotus-navy font-medium">{item.heading}</h4>
+        <ul className="space-y-1.5 pl-4">
+          {item.items.map((subItem, subIndex) => (
+            <li key={subIndex} className="text-gray-600 flex items-start">
+              <span className="text-lotus-gold mr-2">•</span>
+              {subItem}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   };
 
   return (
@@ -48,15 +78,12 @@ const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageP
                   <span className="text-lotus-navy font-medium">{section.category}</span>
                   <ChevronDown className="h-4 w-4 text-lotus-navy transition-transform duration-200 ease-out" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="pt-2">
-                  <ul className="space-y-1.5 pl-4">
-                    {section.items.map((item, itemIndex) => (
-                      <li key={itemIndex} className="text-gray-600 flex items-start">
-                        <span className="text-lotus-gold mr-2">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                <CollapsibleContent className="pt-2 space-y-3">
+                  {section.items.map((item, itemIndex) => (
+                    <div key={itemIndex}>
+                      {renderMenuItem(item)}
+                    </div>
+                  ))}
                 </CollapsibleContent>
               </Collapsible>
             ))}

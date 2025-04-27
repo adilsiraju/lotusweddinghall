@@ -48,30 +48,43 @@ const PackagesPage = () => {
                 {
                   category: "Main Course",
                   items: [
-                    "Rice",
-                    "Curries",
-                    "• Sambar",
-                    "• Aviyal",
-                    "• Kootu Curry",
-                    "• Thoran",
-                    "• Olan",
-                    "• Pachadi",
-                    "• Kalan",
-                    "• Kichadi",
-                    "• Puli Inji",
-                    "• Parippu Pradhaman",
-                    "• Palada Pradhaman",
-                    "Accompaniments",
-                    "• Pickle",
-                    "• Salt",
-                    "• Papadam",
-                    "• Neyy (Ghee)",
-                    "• Rasam",
-                    "• Moru",
-                    "Snacks",
-                    "• Nendra Chips",
-                    "• Sharkara Upperi (Jaggery Banana Chips)",
-                    "• Banana"
+                    {
+                      heading: "Rice",
+                      items: ["Rice"]
+                    },
+                    {
+                      heading: "Curries",
+                      items: [
+                        "Sambar",
+                        "Aviyal",
+                        "Kootu Curry",
+                        "Thoran",
+                        "Olan",
+                        "Pachadi",
+                        "Kalan",
+                        "Kichadi",
+                        "Puli Inji"
+                      ]
+                    },
+                    {
+                      heading: "Accompaniments",
+                      items: [
+                        "Pickle",
+                        "Salt",
+                        "Papadam",
+                        "Neyy (Ghee)",
+                        "Rasam",
+                        "Moru"
+                      ]
+                    },
+                    {
+                      heading: "Snacks",
+                      items: [
+                        "Nendra Chips",
+                        "Sharkara Upperi (Jaggery Banana Chips)",
+                        "Banana"
+                      ]
+                    }
                   ]
                 },
                 {
@@ -111,25 +124,35 @@ const PackagesPage = () => {
                   ]
                 },
                 {
-                  category: "Starters",
-                  items: ["Alsa (served at dining)"]
-                },
-                {
                   category: "Main Course",
                   items: [
-                    "Rice & Biryani",
-                    "• Beef Biryani",
-                    "• Chicken Mandi",
-                    "Main Dishes",
-                    "• Chicken Fry",
-                    "Accompaniments",
-                    "• Salad",
-                    "• Curd Salad",
-                    "• Pickle",
-                    "• Coconut Chutney",
-                    "Breads & Curries",
-                    "• 2 Breads",
-                    "• 2 Curries (Veg & Non-Veg)"
+                    {
+                      heading: "Rice & Biryani",
+                      items: [
+                        "Beef Biryani",
+                        "Chicken Mandi"
+                      ]
+                    },
+                    {
+                      heading: "Main Dishes",
+                      items: ["Chicken Fry"]
+                    },
+                    {
+                      heading: "Accompaniments",
+                      items: [
+                        "Salad",
+                        "Curd Salad",
+                        "Pickle",
+                        "Coconut Chutney"
+                      ]
+                    },
+                    {
+                      heading: "Breads & Curries",
+                      items: [
+                        "2 Breads",
+                        "2 Curries (Veg & Non-Veg)"
+                      ]
+                    }
                   ]
                 },
                 {
@@ -167,26 +190,38 @@ const PackagesPage = () => {
                   ]
                 },
                 {
-                  category: "Starters",
-                  items: ["Alsa (served at dining)"]
-                },
-                {
                   category: "Main Course",
                   items: [
-                    "Rice & Biryani",
-                    "• Mutton Biryani",
-                    "• Chicken Mandi",
-                    "Main Dishes",
-                    "• Chicken Fry (Lunch)",
-                    "• Chicken Tikka (Dinner)",
-                    "Accompaniments",
-                    "• Salad",
-                    "• Curd Salad",
-                    "• Pickle",
-                    "• Coconut Chutney",
-                    "Breads & Curries",
-                    "• 2 Breads",
-                    "• 2 Curries (Veg & Non-Veg)"
+                    {
+                      heading: "Rice & Biryani",
+                      items: [
+                        "Mutton Biryani",
+                        "Chicken Mandi"
+                      ]
+                    },
+                    {
+                      heading: "Main Dishes",
+                      items: [
+                        "Chicken Fry (Lunch)",
+                        "Chicken Tikka (Dinner)"
+                      ]
+                    },
+                    {
+                      heading: "Accompaniments",
+                      items: [
+                        "Salad",
+                        "Curd Salad",
+                        "Pickle",
+                        "Coconut Chutney"
+                      ]
+                    },
+                    {
+                      heading: "Breads & Curries",
+                      items: [
+                        "2 Breads",
+                        "2 Curries (Veg & Non-Veg)"
+                      ]
+                    }
                   ]
                 },
                 {
