@@ -18,6 +18,10 @@ const Hero = ({
   showBookButton = false,
   className
 }: HeroProps) => {
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/919207102999', '_blank');
+  };
+  
   return (
     <div 
       className={cn(
@@ -41,6 +45,7 @@ const Hero = ({
         {showBookButton && (
           <Button 
             size="lg" 
+            onClick={handleWhatsAppClick}
             className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg animate-fade-in"
             style={{ animationDelay: '0.4s' }}
           >

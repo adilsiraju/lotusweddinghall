@@ -21,13 +21,17 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/919207102999', '_blank');
+  };
+
   return (
     <header 
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled 
           ? 'bg-white shadow-md py-2' 
-          : 'bg-transparent py-4'
+          : 'bg-black/30 backdrop-blur-sm py-4'
       )}
     >
       <div className="container mx-auto flex justify-between items-center">
@@ -52,29 +56,33 @@ const Navigation = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center">
           <Link to="/" className={cn(
-            'nav-link',
-            isScrolled ? 'text-lotus-navy' : 'text-white'
+            'nav-link mx-3 py-2 relative',
+            isScrolled ? 'text-lotus-navy' : 'text-white font-medium'
           )}>Home</Link>
           <Link to="/gallery" className={cn(
-            'nav-link',
-            isScrolled ? 'text-lotus-navy' : 'text-white'
+            'nav-link mx-3 py-2 relative',
+            isScrolled ? 'text-lotus-navy' : 'text-white font-medium'
           )}>Gallery</Link>
           <Link to="/packages" className={cn(
-            'nav-link',
-            isScrolled ? 'text-lotus-navy' : 'text-white'
+            'nav-link mx-3 py-2 relative',
+            isScrolled ? 'text-lotus-navy' : 'text-white font-medium'
           )}>Packages</Link>
           <Link to="/about" className={cn(
-            'nav-link',
-            isScrolled ? 'text-lotus-navy' : 'text-white'
+            'nav-link mx-3 py-2 relative',
+            isScrolled ? 'text-lotus-navy' : 'text-white font-medium'
           )}>About Us</Link>
           <Link to="/contact" className={cn(
-            'nav-link',
-            isScrolled ? 'text-lotus-navy' : 'text-white'
+            'nav-link mx-3 py-2 relative',
+            isScrolled ? 'text-lotus-navy' : 'text-white font-medium'
           )}>Contact</Link>
-          <Button size="sm" className={cn(
-            'ml-6 bg-lotus-gold hover:bg-lotus-gold/90 text-white',
-            'transition-all duration-300 font-medium px-5 py-2'
-          )}>
+          <Button 
+            size="sm" 
+            onClick={handleWhatsAppClick}
+            className={cn(
+              'ml-6 bg-lotus-gold hover:bg-lotus-gold/90 text-white',
+              'transition-all duration-300 font-medium px-5 py-2'
+            )}
+          >
             Book Now
           </Button>
         </nav>
@@ -115,7 +123,7 @@ const Navigation = () => {
           <Link to="/about" className="py-3 px-4 hover:bg-gray-100" onClick={() => setIsMobileMenuOpen(false)}>About Us</Link>
           <Link to="/contact" className="py-3 px-4 hover:bg-gray-100" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>
           <div className="px-4 py-3">
-            <Button className="w-full bg-lotus-gold hover:bg-lotus-gold/90 text-white">Book Now</Button>
+            <Button onClick={handleWhatsAppClick} className="w-full bg-lotus-gold hover:bg-lotus-gold/90 text-white">Book Now</Button>
           </div>
         </nav>
       </div>

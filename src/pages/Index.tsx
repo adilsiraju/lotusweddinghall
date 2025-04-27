@@ -7,12 +7,16 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const IndexPage = () => {
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/919207102999', '_blank');
+  };
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
       <Hero 
         title="Elegant Celebrations & Cherished Memories"
-        subtitle="Kerala's premier wedding and event venue with traditional cuisine"
+        subtitle="Thalassery's premier wedding and event venue with traditional cuisine"
         backgroundImage="/hero-wedding.jpg"
         showBookButton={true}
       />
@@ -24,16 +28,16 @@ const IndexPage = () => {
             <div className="order-2 md:order-1 animate-fade-in">
               <h2 className="section-heading">Welcome to Lotus Wedding & Banquet Hall</h2>
               <p className="text-gray-600 mb-6">
-                Located in the heart of Kerala, Lotus Wedding & Banquet Hall offers a perfect blend of tradition and modern elegance for your special celebrations.
+                Located in the heart of Thalassery, just 150m from the railway station, Lotus Wedding & Banquet Hall offers a perfect blend of tradition and modern elegance for your special celebrations.
               </p>
               <p className="text-gray-600 mb-6">
-                Whether you're planning a traditional wedding ceremony, an intimate reception, or a grand celebration, our venue provides the perfect backdrop for your cherished memories.
+                Since 2019, we've been helping families create cherished memories with our elegant venue, exceptional service, and authentic Kerala cuisine.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button className="btn-primary">
+                <Button className="btn-primary" onClick={() => window.location.href='/gallery'}>
                   Explore Our Venue
                 </Button>
-                <Button className="btn-secondary">
+                <Button className="btn-secondary" onClick={() => window.location.href='/contact'}>
                   Contact Us
                 </Button>
               </div>
@@ -99,7 +103,7 @@ const IndexPage = () => {
               icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.84828 8.84847C9.64245 8.05431 10.7996 7.6665 12 7.6665C13.2003 7.6665 14.3575 8.05431 15.1516 8.84847C15.9458 9.64264 16.3336 10.7998 16.3336 12.0002C16.3336 13.2005 15.9458 14.3577 15.1516 15.1518C14.3575 15.946 13.2003 16.3338 12 16.3338C10.7996 16.3338 9.64245 15.946 8.84828 15.1518C8.05412 14.3577 7.66631 13.2005 7.66631 12.0002C7.66631 10.7998 8.05412 9.64264 8.84828 8.84847ZM9.39848 14.6016C10.0343 15.2374 10.8995 15.5893 11.7998 15.5893C12.7001 15.5893 13.5654 15.2374 14.2012 14.6016C14.837 13.9658 15.1889 13.1005 15.1889 12.2002C15.1889 11.2999 14.837 10.4346 14.2012 9.79878C13.5654 9.16296 12.7001 8.81104 11.7998 8.81104C10.8995 8.81104 10.0343 9.16296 9.39848 9.79878C8.76266 10.4346 8.41074 11.2999 8.41074 12.2002C8.41074 13.1005 8.76266 13.9658 9.39848 14.6016Z" fill="#D4AF37"/>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM3.06667 12C3.06667 7.05446 7.05446 3.06667 12 3.06667C16.9455 3.06667 20.9333 7.05446 20.9333 12C20.9333 16.9455 16.9455 20.9333 12 20.9333C7.05446 20.9333 3.06667 16.9455 3.06667 12Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.4999 11.9999H22.9999M1 11.9999H3.5M11.9999 20.4999V22.9999M11.9999 1V3.5" stroke="#D4AF37" strokeLinecap="round" strokeLinejoin="round"/>
+                <path stroke="#D4AF37" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.4999 11.9999H22.9999M1 11.9999H3.5M11.9999 20.4999V22.9999M11.9999 1V3.5"></path>
               </svg>}
               title="Kerala Sadhya"
               description="Experience the authentic flavors of traditional Kerala Sadhya served on banana leaves, prepared by our expert chefs."
@@ -114,8 +118,8 @@ const IndexPage = () => {
               description="Delight your guests with the rich and aromatic flavors of authentic Malabar cuisine crafted with traditional recipes."
             />
             <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10H21M6 14H8M11 14H13M3 7.8L3 16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3L7.8 3C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8Z" stroke="#D4AF37"/>
+              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="#D4AF37">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10H21M6 14H8M11 14H13M3 7.8L3 16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3L7.8 3C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8Z" />
               </svg>}
               title="Event Planning"
               description="Our experienced team helps coordinate every detail of your event, ensuring a seamless and stress-free experience."
@@ -170,7 +174,7 @@ const IndexPage = () => {
           </div>
 
           <div className="text-center mt-10">
-            <Button className="btn-primary">
+            <Button className="btn-primary" onClick={() => window.location.href='/gallery'}>
               View Full Gallery
             </Button>
           </div>
@@ -215,10 +219,16 @@ const IndexPage = () => {
             Contact us today to schedule a venue tour or to discuss how we can make your celebration truly memorable.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg">
+            <Button 
+              onClick={handleWhatsAppClick}
+              className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg"
+            >
               Book Now
             </Button>
-            <Button className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+            <Button 
+              onClick={() => window.location.href='/contact'}
+              className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
+            >
               Contact Us
             </Button>
           </div>
