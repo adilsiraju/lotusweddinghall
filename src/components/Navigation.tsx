@@ -26,7 +26,7 @@ const Navigation = () => {
             className="h-12 brightness-100"
           />
           <span className="ml-2 font-playfair text-xl font-semibold text-white">
-            Lotus
+            Lotus Wedding & Banquet Hall
           </span>
         </Link>
 
