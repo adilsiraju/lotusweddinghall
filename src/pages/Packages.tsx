@@ -17,7 +17,6 @@ const PackagesPage = () => {
         height="min-h-[50vh] lg:min-h-[60vh]"
       />
 
-      {/* Package Categories */}
       <section className="py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-8">
@@ -27,7 +26,6 @@ const PackagesPage = () => {
             </p>
           </div>
 
-          {/* Pricing Information */}
           <div className="max-w-3xl mx-auto mb-16 text-center">
             <div className="bg-lotus-navy/5 rounded-lg p-6">
               <h3 className="text-xl font-medium text-lotus-navy mb-4">Pricing Information</h3>
@@ -37,10 +35,10 @@ const PackagesPage = () => {
             </div>
           </div>
 
-          {/* Featured Packages */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
             <MenuPackageCard
               title="Traditional Sadhya"
+              description="Traditional Kerala feast with complete religious ceremony services"
               price="430"
               menu={[
                 {
@@ -61,25 +59,27 @@ const PackagesPage = () => {
                   items: ["Parippu Pradhaman", "Palada Pradhaman"]
                 },
                 {
-                  category: "Drinks",
-                  items: ["Hot Water"]
+                  category: "Refreshments",
+                  items: ["Hot Water", "Black Tea"]
                 },
                 {
-                  category: "Complimentary Rituals",
+                  category: "Complimentary Services",
                   items: [
                     "Puja setup",
                     "Pujari",
                     "Nadaswaram",
                     "Thallam",
-                    "Security & Marriage Certificate Handling"
+                    "Welcome Board",
+                    "Certificate Processing"
                   ]
                 }
               ]}
-              specialNote="Traditional Kerala feast with complete religious ceremony services"
+              note="Available for Lunch"
             />
 
             <MenuPackageCard
               title="Silver Package"
+              description="Classic wedding feast with a perfect blend of traditional and modern cuisine"
               price="495"
               menu={[
                 {
@@ -87,9 +87,7 @@ const PackagesPage = () => {
                   items: [
                     "Fresh Juice (2 Seasonal Fruits)",
                     "Water Juice (1)",
-                    "Coffee",
-                    "Hot Water",
-                    "Black Tea"
+                    "Coffee"
                   ]
                 },
                 {
@@ -116,6 +114,17 @@ const PackagesPage = () => {
                 {
                   category: "Dessert",
                   items: ["Choice of: Mysore Pak / Jalebi / Halwa (Carrot, Beetroot, or Ash Gourd)"]
+                },
+                {
+                  category: "Refreshments",
+                  items: ["Hot Water", "Black Tea"]
+                },
+                {
+                  category: "Complimentary Services",
+                  items: [
+                    "Welcome Board",
+                    "Certificate Processing"
+                  ]
                 }
               ]}
               note="Available for both Lunch and Dinner"
@@ -123,6 +132,7 @@ const PackagesPage = () => {
 
             <MenuPackageCard
               title="Gold Package"
+              description="Premium dining experience with enhanced menu selections"
               price="575"
               menu={[
                 {
@@ -150,7 +160,8 @@ const PackagesPage = () => {
                   items: [
                     "Mutton Biryani",
                     "Chicken Mandi",
-                    "Chicken Fry",
+                    "Chicken Fry (Lunch)",
+                    "Chicken Tikka (Dinner)",
                     "Breads (2 varieties)",
                     "Curries (Veg & Non-Veg)"
                   ]
@@ -158,16 +169,27 @@ const PackagesPage = () => {
                 {
                   category: "Dessert",
                   items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                },
+                {
+                  category: "Refreshments",
+                  items: ["Hot Water", "Black Tea"]
+                },
+                {
+                  category: "Complimentary Services",
+                  items: [
+                    "Welcome Board",
+                    "Certificate Processing"
+                  ]
                 }
               ]}
               note="Available for both Lunch and Dinner"
             />
           </div>
 
-          {/* Additional Packages */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             <MenuPackageCard
               title="Reception Package 1"
+              description="Perfect blend of continental and Kerala cuisine for reception celebrations"
               price="510"
               menu={[
                 {
@@ -175,9 +197,7 @@ const PackagesPage = () => {
                   items: [
                     "Fresh Juice (2 Seasonal Fruits)",
                     "Water Juice (1)",
-                    "Coffee",
-                    "Hot Water",
-                    "Black Tea"
+                    "Coffee"
                   ]
                 },
                 {
@@ -204,6 +224,17 @@ const PackagesPage = () => {
                 {
                   category: "Dessert",
                   items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                },
+                {
+                  category: "Refreshments",
+                  items: ["Hot Water", "Black Tea"]
+                },
+                {
+                  category: "Complimentary Services",
+                  items: [
+                    "Welcome Board",
+                    "Certificate Processing"
+                  ]
                 }
               ]}
               note="Available for both Lunch and Dinner"
@@ -211,6 +242,7 @@ const PackagesPage = () => {
 
             <MenuPackageCard
               title="Reception Package 2"
+              description="Elegant reception feast featuring signature dishes"
               price="495"
               menu={[
                 {
@@ -245,6 +277,17 @@ const PackagesPage = () => {
                 {
                   category: "Dessert",
                   items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                },
+                {
+                  category: "Refreshments",
+                  items: ["Hot Water", "Black Tea"]
+                },
+                {
+                  category: "Complimentary Services",
+                  items: [
+                    "Welcome Board",
+                    "Certificate Processing"
+                  ]
                 }
               ]}
               note="Available for both Lunch and Dinner"
@@ -252,6 +295,7 @@ const PackagesPage = () => {
 
             <MenuPackageCard
               title="Platinum Package"
+              description="Luxury dining experience with premium selections and exclusive features"
               price="652"
               menu={[
                 {
@@ -294,15 +338,25 @@ const PackagesPage = () => {
                     "Chocolate Fountain",
                     "Cake Set"
                   ]
+                },
+                {
+                  category: "Refreshments",
+                  items: ["Hot Water", "Black Tea"]
+                },
+                {
+                  category: "Complimentary Services",
+                  items: [
+                    "Welcome Board",
+                    "Certificate Processing"
+                  ]
                 }
               ]}
-              note="Available for both Lunch and Dinner with meal-specific items"
+              note="Available for both Lunch and Dinner"
             />
           </div>
         </div>
       </section>
 
-      {/* Notes Section */}
       <section className="py-16 bg-lotus-navy text-white mt-16 rounded-lg">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
@@ -344,10 +398,6 @@ const PackagesPage = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-lotus-gold mr-2">•</span>
-                    <span>Complimentary Welcome Board & Certificate Processing</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
                     <span>Special inclusions for Sadhya packages</span>
                   </li>
                 </ul>
@@ -357,7 +407,6 @@ const PackagesPage = () => {
         </div>
       </section>
 
-      {/* Custom Package CTA */}
       <section className="py-20 bg-gradient-to-b from-lotus-navy to-lotus-navy/95 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-6">

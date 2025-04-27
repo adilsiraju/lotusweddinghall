@@ -13,13 +13,13 @@ interface MenuItem {
 
 interface MenuPackageProps {
   title: string;
+  description: string;
   price: string;
   menu: MenuItem[];
   note?: string;
-  specialNote?: string;
 }
 
-const MenuPackageCard = ({ title, price, menu, note, specialNote }: MenuPackageProps) => {
+const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageProps) => {
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/919207102999', '_blank');
   };
@@ -36,12 +36,8 @@ const MenuPackageCard = ({ title, price, menu, note, specialNote }: MenuPackageP
           <div className="space-y-2">
             <h3 className="font-playfair text-2xl font-medium">{title}</h3>
             <p className="text-3xl font-bold text-lotus-gold">₹{price} <span className="text-sm font-normal">per head*</span></p>
-            {note && <p className="text-sm text-gray-200 italic">{note}</p>}
-            {specialNote && (
-              <p className="text-sm text-lotus-gold/90 mt-2 border-t border-white/10 pt-2">
-                {specialNote}
-              </p>
-            )}
+            <p className="text-sm text-gray-200">{description}</p>
+            {note && <p className="text-sm text-gray-200 italic mt-2">{note}</p>}
           </div>
         </CardHeader>
         <CardContent className="p-6 flex flex-col justify-between flex-grow">
