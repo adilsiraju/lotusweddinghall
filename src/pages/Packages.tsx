@@ -27,38 +27,49 @@ const PackagesPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-20">
-            <MenuPackageCard
-              title="Traditional Sadhya"
-              price="430"
-              menu={[
-                {
-                  category: "Starters",
-                  items: ["Lemon Juice (Welcome Drink)"]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    "Rice", "Sambar", "Aviyal", "Kootu Curry", "Thoran", "Olan",
-                    "Pachadi", "Kalan", "Kichadi", "Puliyinji", "Pickle", "Papadam",
-                    "Neyy (Ghee)", "Rasam", "Moru", "Upperi (Banana Chips)",
-                    "Sharkara Upperi (Jaggery Chips)", "Banana"
-                  ]
-                },
-                {
-                  category: "Desserts",
-                  items: ["Parippu Pradhaman", "Palada Pradhaman"]
-                },
-                {
-                  category: "Complimentary",
-                  items: [
-                    "Puja, Pujari, Nadaswaram, Thallam",
-                    "Security & Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
+          {/* Traditional Sadhya Package - Featured Row */}
+          <div className="mb-16">
+            <div className="max-w-4xl mx-auto">
+              <MenuPackageCard
+                title="Traditional Sadhya"
+                price="430"
+                menu={[
+                  {
+                    category: "Starters",
+                    items: ["Lemon Juice (Welcome Drink)"]
+                  },
+                  {
+                    category: "Main Course",
+                    items: [
+                      "Rice", "Sambar", "Aviyal", "Kootu Curry", "Thoran", "Olan",
+                      "Pachadi", "Kalan", "Kichadi", "Puliyinji", "Pickle", "Papadam",
+                      "Neyy (Ghee)", "Rasam", "Moru", "Upperi (Banana Chips)",
+                      "Sharkara Upperi (Jaggery Chips)", "Banana"
+                    ]
+                  },
+                  {
+                    category: "Desserts",
+                    items: ["Parippu Pradhaman", "Palada Pradhaman"]
+                  },
+                  {
+                    category: "Complimentary",
+                    items: [
+                      "Puja, Pujari, Nadaswaram, Thallam",
+                      "Security & Marriage Certificate Processing"
+                    ]
+                  }
+                ]}
+              />
+            </div>
+          </div>
 
+          {/* Visual Separator */}
+          <div className="w-full max-w-4xl mx-auto mb-16">
+            <div className="h-px bg-gradient-to-r from-transparent via-lotus-navy/20 to-transparent" />
+          </div>
+
+          {/* Other Packages - Three Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <MenuPackageCard
               title="Silver Package"
               price="495"
@@ -96,7 +107,6 @@ const PackagesPage = () => {
               ]}
               note="Available for both Lunch and Dinner"
             />
-
             <MenuPackageCard
               title="Gold Package"
               price="575"
@@ -134,7 +144,6 @@ const PackagesPage = () => {
               ]}
               note="Available for both Lunch and Dinner"
             />
-
             <MenuPackageCard
               title="Platinum Package"
               price="652"
