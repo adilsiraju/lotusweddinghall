@@ -1,9 +1,8 @@
-
 import React from 'react';
 import Hero from '@/components/Hero';
-import PackageCard from '@/components/PackageCard';
 import MenuPackageCard from '@/components/MenuPackageCard';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
 const PackagesPage = () => {
   const handleWhatsAppClick = () => {
@@ -11,7 +10,7 @@ const PackagesPage = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-white to-lotus-cream/30">
       <Hero 
         title="Celebration Packages"
         subtitle="Choose from our curated collection of wedding and event packages"
@@ -20,15 +19,15 @@ const PackagesPage = () => {
 
       {/* Package Categories */}
       <section className="py-20">
-        <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto text-center mb-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="section-heading mx-auto">Menu Packages</h2>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-lg mt-4">
               Experience the finest Kerala cuisine with our specially curated menu packages
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             <MenuPackageCard
               title="Traditional Sadhya"
               price="430"
@@ -181,36 +180,66 @@ const PackagesPage = () => {
       </section>
 
       {/* Notes Section */}
-      <section className="py-12 bg-lotus-cream">
-        <div className="container mx-auto">
-          <div className="max-w-3xl mx-auto">
-            <h3 className="text-2xl font-playfair font-medium text-center mb-6">Important Notes</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start">
-                <span className="text-lotus-gold mr-2">•</span>
-                <span>All packages include: Venue, Catering, Décor, and Amenities</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-lotus-gold mr-2">•</span>
-                <span>Guest Count: The number of guests is variable — prices are calculated based on your final guest count</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-lotus-gold mr-2">•</span>
-                <span>Menu Customization: Menus are customizable; final pricing will be tailored accordingly</span>
-              </li>
-              <li className="flex items-start">
-                <span className="text-lotus-gold mr-2">•</span>
-                <span>Facilities: Luxurious air-conditioned hall, live kitchen, and photo booth included</span>
-              </li>
-            </ul>
+      <section className="py-16 bg-lotus-navy text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-3xl font-playfair font-medium text-center mb-10">
+              Important Information
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-white/5 rounded-lg p-6 backdrop-blur-sm">
+                <h4 className="text-xl font-medium text-lotus-gold mb-4">Package Inclusions</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Venue rental with complete setup</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Professional catering services</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Basic décor package</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Essential amenities and facilities</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="bg-white/5 rounded-lg p-6 backdrop-blur-sm">
+                <h4 className="text-xl font-medium text-lotus-gold mb-4">Additional Notes</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Pricing varies based on final guest count</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Menu customization available on request</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>AC hall with modern amenities included</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-lotus-gold mr-2">•</span>
+                    <span>Photo booth and live kitchen facilities</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Custom Package CTA */}
-      <section className="py-20 bg-lotus-navy text-white">
-        <div className="container mx-auto text-center">
-          <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-6">Need a Custom Package?</h2>
+      <section className="py-20 bg-gradient-to-b from-lotus-navy to-lotus-navy/95 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-6">
+            Need a Custom Package?
+          </h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
             We understand that every celebration is unique. Contact us to create a personalized package tailored to your specific requirements.
           </p>
