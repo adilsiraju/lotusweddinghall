@@ -75,6 +75,7 @@ const GalleryPage = () => {
         title="Our Gallery"
         subtitle="Moments of celebration captured in our elegant venue"
         backgroundImage="/gallery-hero.jpg"
+        height="min-h-[50vh] lg:min-h-[60vh]" // Smaller height
       />
       
       <section className="py-20">

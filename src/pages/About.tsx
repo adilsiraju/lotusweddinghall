@@ -9,6 +9,7 @@ const AboutPage = () => {
         title="About Lotus"
         subtitle="The story behind Kerala's premier wedding & banquet hall"
         backgroundImage="/about-hero.jpg"
+        height="min-h-[50vh] lg:min-h-[60vh]" // Smaller height
       />
       
       {/* Our Story */}

@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from '@/components/Hero';
 import MenuPackageCard from '@/components/MenuPackageCard';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
 
 const PackagesPage = () => {
   const handleWhatsAppClick = () => {
@@ -15,6 +14,7 @@ const PackagesPage = () => {
         title="Celebration Packages"
         subtitle="Choose from our curated collection of wedding and event packages"
         backgroundImage="/packages-hero.jpg"
+        height="min-h-[50vh] lg:min-h-[60vh]"
       />
 
       {/* Package Categories */}

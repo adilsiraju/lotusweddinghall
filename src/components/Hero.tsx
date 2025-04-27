@@ -9,6 +9,7 @@ interface HeroProps {
   backgroundImage: string;
   showBookButton?: boolean;
   className?: string;
+  height?: string; // New prop for custom height
 }
 
 const Hero = ({
@@ -16,7 +17,8 @@ const Hero = ({
   subtitle,
   backgroundImage,
   showBookButton = false,
-  className
+  className,
+  height = 'min-h-[70vh] lg:min-h-[90vh]' // Default to existing height
 }: HeroProps) => {
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/919207102999', '_blank');
@@ -25,7 +27,8 @@ const Hero = ({
   return (
     <div 
       className={cn(
-        "relative min-h-[70vh] lg:min-h-[90vh] flex items-center justify-center",
+        "relative flex items-center justify-center",
+        height, // Use the height prop
         className
       )}
       style={{

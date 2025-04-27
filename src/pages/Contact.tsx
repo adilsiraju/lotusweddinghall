@@ -15,6 +15,7 @@ const ContactPage = () => {
         title="Contact Us"
         subtitle="Get in touch to plan your perfect celebration"
         backgroundImage="/contact-hero.jpg"
+        height="min-h-[50vh] lg:min-h-[60vh]" // Smaller height
       />
       
       {/* Contact Info & Form */}
