@@ -48,10 +48,31 @@ const PackagesPage = () => {
                 {
                   category: "Main Course",
                   items: [
-                    "Rice", "Sambar", "Aviyal", "Kootu Curry", "Thoran", "Olan",
-                    "Pachadi", "Kalan", "Kichadi", "Puli Inji", "Pickle", "Salt",
-                    "Papadam", "Neyy (Ghee)", "Rasam", "Moru", "Nendra Chips",
-                    "Sharkara Upperi (Jaggery Banana Chips)", "Banana"
+                    "Rice Items:",
+                    "• Rice",
+                    "Curries:",
+                    "• Sambar",
+                    "• Aviyal",
+                    "• Kootu Curry",
+                    "• Thoran",
+                    "• Olan",
+                    "• Pachadi",
+                    "• Kalan",
+                    "• Kichadi",
+                    "• Puli Inji",
+                    "• Parippu Pradhaman",
+                    "• Palada Pradhaman",
+                    "Accompaniments:",
+                    "• Pickle",
+                    "• Salt",
+                    "• Papadam",
+                    "• Neyy (Ghee)",
+                    "• Rasam",
+                    "• Moru",
+                    "Snacks:",
+                    "• Nendra Chips",
+                    "• Sharkara Upperi (Jaggery Banana Chips)",
+                    "• Banana"
                   ]
                 },
                 {
@@ -92,23 +113,24 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Starters",
-                  items: [
-                    "Alsa (served at dining)",
-                    "Salad",
-                    "Curd Salad",
-                    "Pickle",
-                    "Coconut Chutney"
-                  ]
+                  items: ["Alsa (served at dining)"]
                 },
                 {
                   category: "Main Course",
                   items: [
-                    "Beef Biryani",
-                    "Chicken Mandi",
-                    "Chicken Fry",
-                    "Breads (2 varieties)",
-                    "Curries (Veg & Non-Veg)",
-                    "2 Breads & 2 Curries (Dinner)"
+                    "Rice & Biryani:",
+                    "• Beef Biryani",
+                    "• Chicken Mandi",
+                    "Main Dishes:",
+                    "• Chicken Fry",
+                    "Accompaniments:",
+                    "• Salad",
+                    "• Curd Salad",
+                    "• Pickle",
+                    "• Coconut Chutney",
+                    "Breads & Curries (Dinner):",
+                    "• 2 Breads",
+                    "• 2 Curries (Veg & Non-Veg)"
                   ]
                 },
                 {
@@ -147,23 +169,25 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Starters",
-                  items: [
-                    "Alsa (served at dining)",
-                    "Salad",
-                    "Curd Salad",
-                    "Pickle",
-                    "Coconut Chutney"
-                  ]
+                  items: ["Alsa (served at dining)"]
                 },
                 {
                   category: "Main Course",
                   items: [
-                    "Mutton Biryani",
-                    "Chicken Mandi",
-                    "Chicken Fry (Lunch)",
-                    "Chicken Tikka (Dinner)",
-                    "Breads (2 varieties)",
-                    "Curries (Veg & Non-Veg)"
+                    "Rice & Biryani:",
+                    "• Mutton Biryani",
+                    "• Chicken Mandi",
+                    "Main Dishes:",
+                    "• Chicken Fry (Lunch)",
+                    "• Chicken Tikka (Dinner)",
+                    "Accompaniments:",
+                    "• Salad",
+                    "• Curd Salad",
+                    "• Pickle",
+                    "• Coconut Chutney",
+                    "Breads & Curries:",
+                    "• 2 Breads",
+                    "• 2 Curries (Veg & Non-Veg)"
                   ]
                 },
                 {
@@ -202,23 +226,27 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Starters",
-                  items: [
-                    "Chicken Macaroni & Raw Mango Salad (served at dining)",
-                    "Salad",
-                    "Curd Salad",
-                    "Pickle",
-                    "Coconut Chutney"
-                  ]
+                  items: ["Chicken Macaroni & Raw Mango Salad (served at dining)"]
                 },
                 {
                   category: "Main Course",
                   items: [
-                    "Ghee Rice + Fried Rice",
-                    "2 Breads",
-                    "Chicken Curry",
-                    "Veg Curry",
-                    "Chilli Chicken",
-                    "Chicken Fry"
+                    "Rice Items:",
+                    "• Ghee Rice",
+                    "• Fried Rice",
+                    "Main Dishes:",
+                    "• Chicken Curry",
+                    "• Chilli Chicken",
+                    "• Chicken Fry",
+                    "• Gobi Manchurian",
+                    "Accompaniments:",
+                    "• Salad",
+                    "• Curd Salad",
+                    "• Pickle",
+                    "• Coconut Chutney",
+                    "Breads & Curries:",
+                    "• 2 Breads",
+                    "• Veg Curry"
                   ]
                 },
                 {
@@ -257,21 +285,22 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Starters",
-                  items: [
-                    "Alsa (served at dining)",
-                    "Salad",
-                    "Curd Salad",
-                    "Pickle",
-                    "Coconut Chutney"
-                  ]
+                  items: ["Alsa (served at dining)"]
                 },
                 {
                   category: "Main Course",
                   items: [
-                    "Mutton Biryani",
-                    "Chicken Mandi",
-                    "Chicken Fry",
-                    "Mini Sadhya with Fish Curry"
+                    "Rice & Biryani:",
+                    "• Mutton Biryani",
+                    "• Chicken Mandi",
+                    "Main Dishes:",
+                    "• Chicken Fry",
+                    "• Mini Sadhya with Fish Curry",
+                    "Accompaniments:",
+                    "• Salad",
+                    "• Curd Salad",
+                    "• Pickle",
+                    "• Coconut Chutney"
                   ]
                 },
                 {
@@ -312,24 +341,29 @@ const PackagesPage = () => {
                   category: "Starters",
                   items: [
                     "Alsa (served at dining)",
-                    "Chicken Lollipop / Fish Fingers / Cutlet",
-                    "Salad",
-                    "Curd Salad",
-                    "Pickle",
-                    "Coconut Chutney"
+                    "Chicken Lollipop / Fish Fingers / Cutlet"
                   ]
                 },
                 {
                   category: "Main Course",
                   items: [
-                    "Mutton Biryani",
-                    "Chicken Alfaham Mandi",
-                    "Chicken Fry (Lunch)",
-                    "Chicken Tikka (Dinner)",
-                    "Mini Sadhya with Fish Curry (Lunch)",
-                    "White Khubz, Hummus & Mayo (Dinner)",
-                    "Porotta & Neypathil",
-                    "Veg & Non-Veg Curries"
+                    "Rice & Biryani:",
+                    "• Mutton Biryani",
+                    "• Chicken Alfaham Mandi",
+                    "Main Dishes:",
+                    "• Chicken Fry (Lunch)",
+                    "• Chicken Tikka (Dinner)",
+                    "• Mini Sadhya with Fish Curry (Lunch)",
+                    "Accompaniments:",
+                    "• Salad",
+                    "• Curd Salad",
+                    "• Pickle",
+                    "• Coconut Chutney",
+                    "Breads & Sides:",
+                    "• White Khubz",
+                    "• Hummus & Mayo (Dinner)",
+                    "• Porotta & Neypathil",
+                    "• Veg & Non-Veg Curries"
                   ]
                 },
                 {
