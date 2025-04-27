@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '@/components/Hero';
 import MenuPackageCard from '@/components/MenuPackageCard';
 import { InfoCard } from '@/components/InfoCard';
+import { Button } from '@/components/ui/button';
 
 const PackagesPage = () => {
   const handleWhatsAppClick = () => {
@@ -37,26 +38,9 @@ const PackagesPage = () => {
             </div>
           </div>
 
-          {/* Standard Package Inclusions */}
-          <div className="max-w-3xl mx-auto mb-16">
-            <InfoCard 
-              title="Standard Package Inclusions"
-              items={[
-                "Venue & Facilities",
-                "Essential amenities",
-                "Basic décor package",
-                "Professional catering services",
-                "Beverages",
-                "Security",
-                "Welcome Board",
-                "Marriage Certificate Processing"
-              ]}
-            />
-          </div>
-
-          {/* Traditional Sadhya Package - Featured Row */}
+          {/* Featured Packages Row */}
           <div className="mb-16">
-            <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
               <MenuPackageCard
                 title="Traditional Sadhya"
                 price="430"
@@ -88,6 +72,79 @@ const PackagesPage = () => {
                   }
                 ]}
                 specialNote="Includes all standard package inclusions plus special religious ceremony services"
+              />
+              <MenuPackageCard
+                title="Reception Package 1"
+                price="510"
+                menu={[
+                  {
+                    category: "Starters",
+                    items: [
+                      "Chicken Macaroni & Raw Mango Salad (Served in Dining)",
+                      "Salad, Curd Salad, Pickle, Coconut Chutney"
+                    ]
+                  },
+                  {
+                    category: "Main Course",
+                    items: [
+                      "Ghee Rice + Fried Rice",
+                      "Breads (2 varieties)",
+                      "Chicken Curry & Veg Curry",
+                      "Chilli Chicken",
+                      "Chicken Fry"
+                    ]
+                  },
+                  {
+                    category: "Drinks",
+                    items: [
+                      "Fresh Juices (2 Seasonal Fruits)",
+                      "Water Juice (1)",
+                      "Coffee",
+                      "Hot Water",
+                      "Black Tea"
+                    ]
+                  },
+                  {
+                    category: "Dessert",
+                    items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                  }
+                ]}
+              />
+              <MenuPackageCard
+                title="Reception Package 2"
+                price="495"
+                menu={[
+                  {
+                    category: "Starters",
+                    items: [
+                      "Alsa (Served in Dining)",
+                      "Salad, Curd Salad, Pickle, Coconut Chutney"
+                    ]
+                  },
+                  {
+                    category: "Main Course",
+                    items: [
+                      "Mutton Biryani",
+                      "Chicken Mandi",
+                      "Chicken Fry",
+                      "Mini Sadhya with Fish Curry"
+                    ]
+                  },
+                  {
+                    category: "Drinks",
+                    items: [
+                      "Fresh Juices (2 Seasonal Fruits)",
+                      "Water Juice (1)",
+                      "Coffee",
+                      "Bottled Water",
+                      "Lemon Tea"
+                    ]
+                  },
+                  {
+                    category: "Dessert",
+                    items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                  }
+                ]}
               />
             </div>
           </div>
