@@ -1,7 +1,6 @@
 import React from 'react';
 import Hero from '@/components/Hero';
 import MenuPackageCard from '@/components/MenuPackageCard';
-import { InfoCard } from '@/components/InfoCard';
 import { Button } from '@/components/ui/button';
 
 const PackagesPage = () => {
@@ -38,133 +37,69 @@ const PackagesPage = () => {
             </div>
           </div>
 
-          {/* Featured Packages Row */}
-          <div className="mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              <MenuPackageCard
-                title="Traditional Sadhya"
-                price="430"
-                menu={[
-                  {
-                    category: "Starters",
-                    items: ["Lemon Juice (Welcome Drink)"]
-                  },
-                  {
-                    category: "Main Course",
-                    items: [
-                      "Rice", "Sambar", "Aviyal", "Kootu Curry", "Thoran", "Olan",
-                      "Pachadi", "Kalan", "Kichadi", "Puliyinji", "Pickle", "Papadam",
-                      "Neyy (Ghee)", "Rasam", "Moru", "Upperi (Banana Chips)",
-                      "Sharkara Upperi (Jaggery Chips)", "Banana"
-                    ]
-                  },
-                  {
-                    category: "Desserts",
-                    items: ["Parippu Pradhaman", "Palada Pradhaman"]
-                  },
-                  {
-                    category: "Special Complimentary Services",
-                    items: [
-                      "Religious Rituals (Puja, Pujari)",
-                      "Nadaswaram",
-                      "Thallam"
-                    ]
-                  }
-                ]}
-                specialNote="Includes all standard package inclusions plus special religious ceremony services"
-              />
-              <MenuPackageCard
-                title="Reception Package 1"
-                price="510"
-                menu={[
-                  {
-                    category: "Starters",
-                    items: [
-                      "Chicken Macaroni & Raw Mango Salad (Served in Dining)",
-                      "Salad, Curd Salad, Pickle, Coconut Chutney"
-                    ]
-                  },
-                  {
-                    category: "Main Course",
-                    items: [
-                      "Ghee Rice + Fried Rice",
-                      "Breads (2 varieties)",
-                      "Chicken Curry & Veg Curry",
-                      "Chilli Chicken",
-                      "Chicken Fry"
-                    ]
-                  },
-                  {
-                    category: "Drinks",
-                    items: [
-                      "Fresh Juices (2 Seasonal Fruits)",
-                      "Water Juice (1)",
-                      "Coffee",
-                      "Hot Water",
-                      "Black Tea"
-                    ]
-                  },
-                  {
-                    category: "Dessert",
-                    items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
-                  }
-                ]}
-              />
-              <MenuPackageCard
-                title="Reception Package 2"
-                price="495"
-                menu={[
-                  {
-                    category: "Starters",
-                    items: [
-                      "Alsa (Served in Dining)",
-                      "Salad, Curd Salad, Pickle, Coconut Chutney"
-                    ]
-                  },
-                  {
-                    category: "Main Course",
-                    items: [
-                      "Mutton Biryani",
-                      "Chicken Mandi",
-                      "Chicken Fry",
-                      "Mini Sadhya with Fish Curry"
-                    ]
-                  },
-                  {
-                    category: "Drinks",
-                    items: [
-                      "Fresh Juices (2 Seasonal Fruits)",
-                      "Water Juice (1)",
-                      "Coffee",
-                      "Bottled Water",
-                      "Lemon Tea"
-                    ]
-                  },
-                  {
-                    category: "Dessert",
-                    items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
-                  }
-                ]}
-              />
-            </div>
-          </div>
+          {/* Featured Packages */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+            <MenuPackageCard
+              title="Traditional Sadhya"
+              price="430"
+              menu={[
+                {
+                  category: "Welcome Drink",
+                  items: ["Lemon Juice"]
+                },
+                {
+                  category: "Main Course",
+                  items: [
+                    "Rice", "Sambar", "Aviyal", "Kootu Curry", "Thoran", "Olan",
+                    "Pachadi", "Kalan", "Kichadi", "Puli Inji", "Pickle", "Salt",
+                    "Papadam", "Neyy (Ghee)", "Rasam", "Moru", "Nendra Chips",
+                    "Sharkara Upperi (Jaggery Banana Chips)", "Banana"
+                  ]
+                },
+                {
+                  category: "Desserts",
+                  items: ["Parippu Pradhaman", "Palada Pradhaman"]
+                },
+                {
+                  category: "Drinks",
+                  items: ["Hot Water"]
+                },
+                {
+                  category: "Complimentary Rituals",
+                  items: [
+                    "Puja setup",
+                    "Pujari",
+                    "Nadaswaram",
+                    "Thallam",
+                    "Security & Marriage Certificate Handling"
+                  ]
+                }
+              ]}
+              specialNote="Traditional Kerala feast with complete religious ceremony services"
+            />
 
-          {/* Visual Separator */}
-          <div className="w-full max-w-4xl mx-auto mb-16">
-            <div className="h-px bg-gradient-to-r from-transparent via-lotus-navy/20 to-transparent" />
-          </div>
-
-          {/* Other Packages - Three Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <MenuPackageCard
               title="Silver Package"
               price="495"
               menu={[
                 {
+                  category: "Welcome Drinks",
+                  items: [
+                    "Fresh Juice (2 Seasonal Fruits)",
+                    "Water Juice (1)",
+                    "Coffee",
+                    "Hot Water",
+                    "Black Tea"
+                  ]
+                },
+                {
                   category: "Starters",
                   items: [
-                    "Alsa (Served in Dining)",
-                    "Salad, Curd Salad, Pickle, Coconut Chutney"
+                    "Alsa (served at dining)",
+                    "Salad",
+                    "Curd Salad",
+                    "Pickle",
+                    "Coconut Chutney"
                   ]
                 },
                 {
@@ -173,17 +108,9 @@ const PackagesPage = () => {
                     "Beef Biryani",
                     "Chicken Mandi",
                     "Chicken Fry",
-                    "Breads (2 varieties) & Veg/Non-Veg Curries"
-                  ]
-                },
-                {
-                  category: "Drinks",
-                  items: [
-                    "Fresh Juices (2 Seasonal Fruits)",
-                    "Water Juice",
-                    "Coffee",
-                    "Hot Water",
-                    "Black Tea"
+                    "Breads (2 varieties)",
+                    "Curries (Veg & Non-Veg)",
+                    "2 Breads & 2 Curries (Dinner)"
                   ]
                 },
                 {
@@ -193,15 +120,29 @@ const PackagesPage = () => {
               ]}
               note="Available for both Lunch and Dinner"
             />
+
             <MenuPackageCard
               title="Gold Package"
               price="575"
               menu={[
                 {
+                  category: "Welcome Drinks",
+                  items: [
+                    "Fresh Juice (2 Seasonal Fruits)",
+                    "Water Juice (1)",
+                    "Coffee",
+                    "Bottled Water",
+                    "Lemon Tea"
+                  ]
+                },
+                {
                   category: "Starters",
                   items: [
-                    "Alsa (Served in Dining)",
-                    "Salad, Curd Salad, Pickle, Coconut Chutney"
+                    "Alsa (served at dining)",
+                    "Salad",
+                    "Curd Salad",
+                    "Pickle",
+                    "Coconut Chutney"
                   ]
                 },
                 {
@@ -210,17 +151,8 @@ const PackagesPage = () => {
                     "Mutton Biryani",
                     "Chicken Mandi",
                     "Chicken Fry",
-                    "Breads (2 varieties) & Veg/Non-Veg Curries"
-                  ]
-                },
-                {
-                  category: "Drinks",
-                  items: [
-                    "Fresh Juices (2 Seasonal Fruits)",
-                    "Water Juice",
-                    "Coffee",
-                    "Bottled Water",
-                    "Lemon Tea"
+                    "Breads (2 varieties)",
+                    "Curries (Veg & Non-Veg)"
                   ]
                 },
                 {
@@ -230,16 +162,117 @@ const PackagesPage = () => {
               ]}
               note="Available for both Lunch and Dinner"
             />
+          </div>
+
+          {/* Additional Packages */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <MenuPackageCard
+              title="Reception Package 1"
+              price="510"
+              menu={[
+                {
+                  category: "Welcome Drinks",
+                  items: [
+                    "Fresh Juice (2 Seasonal Fruits)",
+                    "Water Juice (1)",
+                    "Coffee",
+                    "Hot Water",
+                    "Black Tea"
+                  ]
+                },
+                {
+                  category: "Starters",
+                  items: [
+                    "Chicken Macaroni & Raw Mango Salad (served at dining)",
+                    "Salad",
+                    "Curd Salad",
+                    "Pickle",
+                    "Coconut Chutney"
+                  ]
+                },
+                {
+                  category: "Main Course",
+                  items: [
+                    "Ghee Rice + Fried Rice",
+                    "2 Breads",
+                    "Chicken Curry",
+                    "Veg Curry",
+                    "Chilli Chicken",
+                    "Chicken Fry"
+                  ]
+                },
+                {
+                  category: "Dessert",
+                  items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                }
+              ]}
+              note="Available for both Lunch and Dinner"
+            />
+
+            <MenuPackageCard
+              title="Reception Package 2"
+              price="495"
+              menu={[
+                {
+                  category: "Welcome Drinks",
+                  items: [
+                    "Fresh Juice (2 Seasonal Fruits)",
+                    "Water Juice (1)",
+                    "Coffee",
+                    "Bottled Water",
+                    "Lemon Tea"
+                  ]
+                },
+                {
+                  category: "Starters",
+                  items: [
+                    "Alsa (served at dining)",
+                    "Salad",
+                    "Curd Salad",
+                    "Pickle",
+                    "Coconut Chutney"
+                  ]
+                },
+                {
+                  category: "Main Course",
+                  items: [
+                    "Mutton Biryani",
+                    "Chicken Mandi",
+                    "Chicken Fry",
+                    "Mini Sadhya with Fish Curry"
+                  ]
+                },
+                {
+                  category: "Dessert",
+                  items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
+                }
+              ]}
+              note="Available for both Lunch and Dinner"
+            />
+
             <MenuPackageCard
               title="Platinum Package"
               price="652"
               menu={[
                 {
+                  category: "Welcome Drinks",
+                  items: [
+                    "Fresh Juice (2 Seasonal Fruits)",
+                    "Water Juice (1)",
+                    "Coffee",
+                    "Bottled Water",
+                    "Herbal Tea Counter"
+                  ]
+                },
+                {
                   category: "Starters",
                   items: [
-                    "Alsa (Served in Dining)",
+                    "Alsa (served at dining)",
                     "Chicken Lollipop / Fish Fingers / Cutlet",
-                    "Salad, Curd Salad, Pickle, Coconut Chutney"
+                    "Salad",
+                    "Curd Salad",
+                    "Pickle",
+                    "Coconut Chutney"
                   ]
                 },
                 {
@@ -247,28 +280,23 @@ const PackagesPage = () => {
                   items: [
                     "Mutton Biryani",
                     "Chicken Alfaham Mandi",
-                    "Chicken Fry",
-                    "Mini Sadhya with Fish Curry",
-                    "Porotta & Neypathil Breads",
-                    "Veg and Non-Veg Curries"
+                    "Chicken Fry (Lunch)",
+                    "Chicken Tikka (Dinner)",
+                    "Mini Sadhya with Fish Curry (Lunch)",
+                    "White Khubz, Hummus & Mayo (Dinner)",
+                    "Porotta & Neypathil",
+                    "Veg & Non-Veg Curries"
                   ]
                 },
                 {
-                  category: "Drinks",
+                  category: "Dessert",
                   items: [
-                    "Fresh Juices (2 Seasonal Fruits)",
-                    "Water Juice",
-                    "Coffee",
-                    "Bottled Water",
-                    "Herbal Tea Counter"
+                    "Chocolate Fountain",
+                    "Cake Set"
                   ]
-                },
-                {
-                  category: "Desserts",
-                  items: ["Chocolate Fountain", "Cake Set"]
                 }
               ]}
-              note="Available for both Lunch and Dinner with slight variations"
+              note="Available for both Lunch and Dinner with meal-specific items"
             />
           </div>
         </div>
