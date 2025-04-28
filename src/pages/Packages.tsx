@@ -107,7 +107,6 @@ const PackagesPage = () => {
                   ]
                 }
               ]}
-              note="Available for Lunch"
             />
 
             <MenuPackageCard
@@ -171,7 +170,6 @@ const PackagesPage = () => {
                   ]
                 }
               ]}
-              note="Available for both Lunch and Dinner"
             />
 
             <MenuPackageCard
@@ -242,7 +240,6 @@ const PackagesPage = () => {
                   ]
                 }
               ]}
-              note="Available for both Lunch and Dinner"
             />
           </div>
 
@@ -320,7 +317,6 @@ const PackagesPage = () => {
                   ]
                 }
               ]}
-              note="Available for both Lunch and Dinner"
             />
 
             <MenuPackageCard
@@ -384,7 +380,6 @@ const PackagesPage = () => {
                   ]
                 }
               ]}
-              note="Available for both Lunch and Dinner"
             />
 
             <MenuPackageCard
@@ -467,7 +462,6 @@ const PackagesPage = () => {
                   ]
                 }
               ]}
-              note="Available for both Lunch and Dinner"
             />
           </div>
         </div>
