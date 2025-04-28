@@ -153,12 +153,12 @@ const PackagesPage = () => {
                       ]
                     },
                     {
-                      heading: "Mini Sadhya with fish curry",
-                      items: ["Traditional Kerala Sadhya Items with fish curry"]
-                    },
-                    {
                       heading: "Fry Items",
                       items: ["Chicken Fry"]
+                    },
+                    {
+                      heading: "Mini Sadhya with fish curry",
+                      items: ["Traditional Kerala Sadhya Items with fish curry"]
                     },
                     {
                       heading: "Accompaniments",
@@ -216,6 +216,10 @@ const PackagesPage = () => {
                       ]
                     },
                     {
+                      heading: "Breads",
+                      items: ["2 Breads"]
+                    },
+                    {
                       heading: "Curry Dishes",
                       items: ["2 Curries (Veg & Non-Veg)"]
                     },
@@ -224,10 +228,6 @@ const PackagesPage = () => {
                       items: [
                         "Chicken Fry",
                       ]
-                    },
-                    {
-                      heading: "Breads",
-                      items: ["2 Breads"]
                     },
                     {
                       heading: "Accompaniments",
@@ -289,6 +289,10 @@ const PackagesPage = () => {
                       ]
                     },
                     {
+                      heading: "Breads",
+                      items: ["2 Breads"]
+                    },
+                    {
                       heading: "Curry Dishes",
                       items: [
                         "2 Non Veg Curries",
@@ -302,10 +306,6 @@ const PackagesPage = () => {
                         "Chilli Chicken",
                         "Gobi Manchurian"
                       ]
-                    },
-                    {
-                      heading: "Breads",
-                      items: ["2 Breads"]
                     },
                     {
                       heading: "Accompaniments",
@@ -408,8 +408,7 @@ const PackagesPage = () => {
                   items: [
                     "Fresh Juice (2 Seasonal Fruits)",
                     "Water Juice (1)",
-                    "Coffee",
-                    
+                    "Coffee"
                   ]
                 },
                 {
@@ -430,6 +429,14 @@ const PackagesPage = () => {
                       ]
                     },
                     {
+                      heading: "Breads",
+                      items: [
+                        "White Khubz",
+                        "Porotta",
+                        "Neypathil",
+                      ]
+                    },
+                    {
                       heading: "Curry Dishes",
                       items: ["Fish Curry", "Chicken or Beef Curry", "Veg Curry"]
                     },
@@ -437,14 +444,6 @@ const PackagesPage = () => {
                       heading: "Fry Items",
                       items: [
                         "Chicken Tikka"
-                      ]
-                    },
-                    {
-                      heading: "Breads",
-                      items: [
-                        "White Khubz",
-                        "Porotta",
-                        "Neypathil",
                       ]
                     },
                     {
