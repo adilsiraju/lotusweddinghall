@@ -18,22 +18,38 @@ const PackagesPage = () => {
       />
 
       <section className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">          <div className="max-w-3xl mx-auto text-center mb-8">
             <h2 className="section-heading mx-auto">Menu Packages</h2>
             <p className="text-gray-600 text-lg mt-4">
               Experience the finest Kerala cuisine with our specially curated menu packages
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto mb-16 text-center">
-            <div className="bg-lotus-navy/5 rounded-lg p-6">
-              <h3 className="text-xl font-medium text-lotus-navy mb-4">Pricing Information</h3>
-              <p className="text-gray-600 mb-2">• Prices shown are per head based on 1000 guests</p>
-              <p className="text-gray-600 mb-2">• Per head price decreases as guest count increases</p>
-              <p className="text-gray-600">• All menus are completely customizable to your preferences</p>
+          <section className="py-16 bg-lotus-navy text-white mb-16">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
+                <h3 className="text-3xl font-playfair font-medium text-center mb-6">
+                  Pricing Information
+                </h3>
+                <div className="bg-white/5 rounded-lg p-6 backdrop-blur-sm">
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <span className="text-lotus-gold mr-2">•</span>
+                      <span>Prices shown are per head based on 1000 guests</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-lotus-gold mr-2">•</span>
+                      <span>Per head price decreases as guest count increases</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="text-lotus-gold mr-2">•</span>
+                      <span>All menus are completely customizable to your preferences</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
             <MenuPackageCard
