@@ -53,12 +53,11 @@ const PackagesPage = () => {
                       items: ["Rice"]
                     },
                     {
-                      heading: "Curries",
+                      heading: "Traditional Curries",
                       items: [
                         "Sambar",
                         "Aviyal",
                         "Kootu Curry",
-                        "Thoran",
                         "Olan",
                         "Pachadi",
                         "Kalan",
@@ -69,6 +68,7 @@ const PackagesPage = () => {
                     {
                       heading: "Accompaniments",
                       items: [
+                        "Thoran",
                         "Pickle",
                         "Salt",
                         "Papadam",
@@ -134,8 +134,16 @@ const PackagesPage = () => {
                       ]
                     },
                     {
-                      heading: "Main Dishes",
+                      heading: "Curry Dishes",
+                      items: ["2 Curries (Veg & Non-Veg)"]
+                    },
+                    {
+                      heading: "Fry Items",
                       items: ["Chicken Fry"]
+                    },
+                    {
+                      heading: "Breads",
+                      items: ["2 Breads"]
                     },
                     {
                       heading: "Accompaniments",
@@ -144,13 +152,6 @@ const PackagesPage = () => {
                         "Curd Salad",
                         "Pickle",
                         "Coconut Chutney"
-                      ]
-                    },
-                    {
-                      heading: "Breads & Curries",
-                      items: [
-                        "2 Breads",
-                        "2 Curries (Veg & Non-Veg)"
                       ]
                     }
                   ]
@@ -200,11 +201,19 @@ const PackagesPage = () => {
                       ]
                     },
                     {
-                      heading: "Main Dishes",
+                      heading: "Curry Dishes",
+                      items: ["2 Curries (Veg & Non-Veg)"]
+                    },
+                    {
+                      heading: "Fry Items",
                       items: [
                         "Chicken Fry (Lunch)",
                         "Chicken Tikka (Dinner)"
                       ]
+                    },
+                    {
+                      heading: "Breads",
+                      items: ["2 Breads"]
                     },
                     {
                       heading: "Accompaniments",
@@ -213,13 +222,6 @@ const PackagesPage = () => {
                         "Curd Salad",
                         "Pickle",
                         "Coconut Chutney"
-                      ]
-                    },
-                    {
-                      heading: "Breads & Curries",
-                      items: [
-                        "2 Breads",
-                        "2 Curries (Veg & Non-Veg)"
                       ]
                     }
                   ]
@@ -265,22 +267,41 @@ const PackagesPage = () => {
                 {
                   category: "Main Course",
                   items: [
-                    "Rice Items",
-                    "• Ghee Rice",
-                    "• Fried Rice",
-                    "Main Dishes",
-                    "• Chicken Curry",
-                    "• Chilli Chicken",
-                    "• Chicken Fry",
-                    "• Gobi Manchurian",
-                    "Accompaniments",
-                    "• Salad",
-                    "• Curd Salad",
-                    "• Pickle",
-                    "• Coconut Chutney",
-                    "Breads & Curries",
-                    "• 2 Breads",
-                    "• Veg Curry"
+                    {
+                      heading: "Rice & Biryani",
+                      items: [
+                        "Ghee Rice",
+                        "Fried Rice"
+                      ]
+                    },
+                    {
+                      heading: "Curry Dishes",
+                      items: [
+                        "Chicken Curry",
+                        "Veg Curry"
+                      ]
+                    },
+                    {
+                      heading: "Fry Items",
+                      items: [
+                        "Chicken Fry",
+                        "Chilli Chicken",
+                        "Gobi Manchurian"
+                      ]
+                    },
+                    {
+                      heading: "Breads",
+                      items: ["2 Breads"]
+                    },
+                    {
+                      heading: "Accompaniments",
+                      items: [
+                        "Salad",
+                        "Curd Salad",
+                        "Pickle",
+                        "Coconut Chutney"
+                      ]
+                    }
                   ]
                 },
                 {
@@ -324,17 +345,34 @@ const PackagesPage = () => {
                 {
                   category: "Main Course",
                   items: [
-                    "Rice & Biryani",
-                    "• Mutton Biryani",
-                    "• Chicken Mandi",
-                    "Main Dishes",
-                    "• Chicken Fry",
-                    "• Mini Sadhya with Fish Curry",
-                    "Accompaniments",
-                    "• Salad",
-                    "• Curd Salad",
-                    "• Pickle",
-                    "• Coconut Chutney"
+                    {
+                      heading: "Rice & Biryani",
+                      items: [
+                        "Mutton Biryani",
+                        "Chicken Mandi"
+                      ]
+                    },
+                    {
+                      heading: "Curry Dishes",
+                      items: ["Fish Curry"]
+                    },
+                    {
+                      category: "Fry Items",
+                      items: ["Chicken Fry"]
+                    },
+                    {
+                      heading: "Mini Sadhya",
+                      items: ["Traditional Kerala Sadhya Items"]
+                    },
+                    {
+                      heading: "Accompaniments",
+                      items: [
+                        "Salad",
+                        "Curd Salad",
+                        "Pickle",
+                        "Coconut Chutney"
+                      ]
+                    }
                   ]
                 },
                 {
@@ -381,23 +419,40 @@ const PackagesPage = () => {
                 {
                   category: "Main Course",
                   items: [
-                    "Rice & Biryani",
-                    "• Mutton Biryani",
-                    "• Chicken Alfaham Mandi",
-                    "Main Dishes",
-                    "• Chicken Fry (Lunch)",
-                    "• Chicken Tikka (Dinner)",
-                    "• Mini Sadhya with Fish Curry (Lunch)",
-                    "Accompaniments",
-                    "• Salad",
-                    "• Curd Salad",
-                    "• Pickle",
-                    "• Coconut Chutney",
-                    "Breads & Sides",
-                    "• White Khubz",
-                    "• Hummus & Mayo (Dinner)",
-                    "• Porotta & Neypathil",
-                    "• Veg & Non-Veg Curries"
+                    {
+                      heading: "Rice & Biryani",
+                      items: [
+                        "Mutton Biryani",
+                        "Chicken Alfaham Mandi"
+                      ]
+                    },
+                    {
+                      heading: "Curry Dishes",
+                      items: ["Fish Curry"]
+                    },
+                    {
+                      heading: "Fry Items",
+                      items: [
+                        "Chicken Fry (Lunch)",
+                        "Chicken Tikka (Dinner)"
+                      ]
+                    },
+                    {
+                      heading: "Mini Sadhya",
+                      items: ["Traditional Kerala Sadhya Items"]
+                    },
+                    {
+                      heading: "Breads & Accompaniments",
+                      items: [
+                        "White Khubz",
+                        "Hummus & Mayo (Dinner)",
+                        "Porotta & Neypathil",
+                        "Salad",
+                        "Curd Salad",
+                        "Pickle",
+                        "Coconut Chutney"
+                      ]
+                    }
                   ]
                 },
                 {
