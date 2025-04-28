@@ -93,7 +93,7 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Refreshments",
-                  items: ["Hot Water", "Black Tea"]
+                  items: ["Hot Water"]
                 },
                 {
                   category: "Complimentary Services",
@@ -103,7 +103,7 @@ const PackagesPage = () => {
                     "Nadaswaram",
                     "Thallam",
                     "Welcome Board",
-                    "Certificate Processing"
+                    "Marriage Certificate Processing"
                   ]
                 }
               ]}
@@ -124,6 +124,10 @@ const PackagesPage = () => {
                   ]
                 },
                 {
+                  category: "Starters",
+                  items: ["Alsa (served at dining)"]
+                },
+                {
                   category: "Main Course",
                   items: [
                     {
@@ -134,16 +138,12 @@ const PackagesPage = () => {
                       ]
                     },
                     {
-                      heading: "Curry Dishes",
-                      items: ["2 Curries (Veg & Non-Veg)"]
+                      heading: "Mini Sadhya with fish curry",
+                      items: ["Traditional Kerala Sadhya Items with fish curry"]
                     },
                     {
                       heading: "Fry Items",
                       items: ["Chicken Fry"]
-                    },
-                    {
-                      heading: "Breads",
-                      items: ["2 Breads"]
                     },
                     {
                       heading: "Accompaniments",
@@ -151,7 +151,6 @@ const PackagesPage = () => {
                         "Salad",
                         "Curd Salad",
                         "Pickle",
-                        "Coconut Chutney"
                       ]
                     }
                   ]
@@ -168,7 +167,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
-                    "Certificate Processing"
+                    "Marriage Certificate Processing"
                   ]
                 }
               ]}
@@ -185,10 +184,12 @@ const PackagesPage = () => {
                   items: [
                     "Fresh Juice (2 Seasonal Fruits)",
                     "Water Juice (1)",
-                    "Coffee",
-                    "Bottled Water",
-                    "Lemon Tea"
+                    "Coffee"
                   ]
+                },
+                {
+                  category: "Starters",
+                  items: ["Alsa (served at dining)"]
                 },
                 {
                   category: "Main Course",
@@ -207,8 +208,7 @@ const PackagesPage = () => {
                     {
                       heading: "Fry Items",
                       items: [
-                        "Chicken Fry (Lunch)",
-                        "Chicken Tikka (Dinner)"
+                        "Chicken Fry",
                       ]
                     },
                     {
@@ -232,13 +232,13 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Refreshments",
-                  items: ["Hot Water", "Black Tea"]
+                  items: ["Botteled Water", "Hot Water", "Black Tea"]
                 },
                 {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
-                    "Certificate Processing"
+                    "Marriage Certificate Processing"
                   ]
                 }
               ]}
@@ -271,13 +271,14 @@ const PackagesPage = () => {
                       heading: "Rice & Biryani",
                       items: [
                         "Ghee Rice",
-                        "Fried Rice"
+                        "Chicken Fried Rice",
+                        "Vegetable Fried Rice"
                       ]
                     },
                     {
                       heading: "Curry Dishes",
                       items: [
-                        "Chicken Curry",
+                        "2 Non Veg Curries",
                         "Veg Curry"
                       ]
                     },
@@ -298,8 +299,7 @@ const PackagesPage = () => {
                       items: [
                         "Salad",
                         "Curd Salad",
-                        "Pickle",
-                        "Coconut Chutney"
+                        "Pickle"
                       ]
                     }
                   ]
@@ -316,7 +316,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
-                    "Certificate Processing"
+                    "Marriage Certificate Processing"
                   ]
                 }
               ]}
@@ -333,9 +333,7 @@ const PackagesPage = () => {
                   items: [
                     "Fresh Juice (2 Seasonal Fruits)",
                     "Water Juice (1)",
-                    "Coffee",
-                    "Bottled Water",
-                    "Lemon Tea"
+                    "Coffee"
                   ]
                 },
                 {
@@ -348,21 +346,17 @@ const PackagesPage = () => {
                     {
                       heading: "Rice & Biryani",
                       items: [
-                        "Mutton Biryani",
+                        "Beef Biryani",
                         "Chicken Mandi"
                       ]
                     },
                     {
-                      heading: "Curry Dishes",
-                      items: ["Fish Curry"]
-                    },
-                    {
-                      category: "Fry Items",
+                      heading: "Fry Items",
                       items: ["Chicken Fry"]
                     },
                     {
-                      heading: "Mini Sadhya",
-                      items: ["Traditional Kerala Sadhya Items"]
+                      heading: "Mini Sadhya with fish curry",
+                      items: ["Traditional Kerala Sadhya Items with fish curry"]
                     },
                     {
                       heading: "Accompaniments",
@@ -370,7 +364,6 @@ const PackagesPage = () => {
                         "Salad",
                         "Curd Salad",
                         "Pickle",
-                        "Coconut Chutney"
                       ]
                     }
                   ]
@@ -387,7 +380,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
-                    "Certificate Processing"
+                    "Marriage Certificate Processing"
                   ]
                 }
               ]}
@@ -405,8 +398,7 @@ const PackagesPage = () => {
                     "Fresh Juice (2 Seasonal Fruits)",
                     "Water Juice (1)",
                     "Coffee",
-                    "Bottled Water",
-                    "Herbal Tea Counter"
+                    
                   ]
                 },
                 {
@@ -428,25 +420,26 @@ const PackagesPage = () => {
                     },
                     {
                       heading: "Curry Dishes",
-                      items: ["Fish Curry"]
+                      items: ["Fish Curry", "Chicken or Beef Curry", "Veg Curry"]
                     },
                     {
                       heading: "Fry Items",
                       items: [
-                        "Chicken Fry (Lunch)",
-                        "Chicken Tikka (Dinner)"
+                        "Chicken Tikka"
                       ]
                     },
                     {
-                      heading: "Mini Sadhya",
-                      items: ["Traditional Kerala Sadhya Items"]
-                    },
-                    {
-                      heading: "Breads & Accompaniments",
+                      heading: "Breads",
                       items: [
                         "White Khubz",
-                        "Hummus & Mayo (Dinner)",
-                        "Porotta & Neypathil",
+                        "Porotta",
+                        "Neypathil",
+                      ]
+                    },
+                    {
+                      heading: "Accompaniments",
+                      items: [
+                        "Hummus & Mayo",
                         "Salad",
                         "Curd Salad",
                         "Pickle",
@@ -464,13 +457,13 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Refreshments",
-                  items: ["Hot Water", "Black Tea"]
+                  items: ["Bottled Water", "Hot Water", "Herbal Tea Counter"]
                 },
                 {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
-                    "Certificate Processing"
+                    "Marriage Certificate Processing"
                   ]
                 }
               ]}
