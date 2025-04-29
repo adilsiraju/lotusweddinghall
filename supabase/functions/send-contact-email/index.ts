@@ -10,7 +10,8 @@ interface ContactFormData {
   name: string;
   email: string;
   phone: string;
-  subject: string;
+  eventDate?: string;
+  eventType?: string;
   message: string;
 }
 
@@ -23,7 +24,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     // Parse the request body
     const formData: ContactFormData = await req.json();
-    const { name, email, phone, subject, message } = formData;
+    const { name, email, phone, eventDate, eventType, message } = formData;
 
     // Validate form data
     if (!name || !email || !message) {
@@ -42,7 +43,8 @@ const handler = async (req: Request): Promise<Response> => {
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
-      <p><strong>Subject:</strong> ${subject || 'General Inquiry'}</p>
+      <p><strong>Event Date:</strong> ${eventDate || 'Not provided'}</p>
+      <p><strong>Event Type:</strong> ${eventType || 'Not provided'}</p>
       <h3>Message:</h3>
       <p>${message.replace(/\n/g, '<br>')}</p>
     `;
@@ -57,7 +59,7 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: 'Lotus Wedding Hall <website@lotusweddinghall.com>',
         to: ['lotusweddinghall@gmail.com'],
-        subject: `[Website Contact] ${subject || 'New Inquiry'}`,
+        subject: `[Website Contact] ${eventType ? eventType : 'New Inquiry'}`,
         html: emailContent,
         reply_to: email
       })

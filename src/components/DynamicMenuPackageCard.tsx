@@ -13,7 +13,11 @@ interface DynamicMenuPackageCardProps {
 
 const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) => {
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919207102999', '_blank');
+    // Generate pre-written message with package details
+    const message = `Hello! I'm interested in booking the "${packageData.title}" package at Lotus Wedding & Banquet Hall. Can you provide more information about availability and pricing options? Thank you.`;
+    
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/919207102999?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const renderMenuItems = (items: MenuItem[] = []) => {

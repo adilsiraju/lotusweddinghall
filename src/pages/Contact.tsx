@@ -24,7 +24,8 @@ const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   phone: z.string().optional(),
-  subject: z.string().min(2, { message: 'Subject must be at least 2 characters.' }),
+  eventDate: z.string().optional(),
+  eventType: z.string().optional(),
   message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
 });
 
@@ -38,7 +39,8 @@ const ContactPage = () => {
       name: '',
       email: '',
       phone: '',
-      subject: '',
+      eventDate: '',
+      eventType: '',
       message: '',
     },
   });
@@ -137,7 +139,7 @@ const ContactPage = () => {
                 
                 <div className="flex items-start">
                   <div className="bg-lotus-cream p-3 rounded-full text-lotus-gold mr-4">
-                    <Instagram strokeWidth={2} className="h-6 w-6" />
+                    <Instagram strokeWidth={1.5} className="h-6 w-6" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg">Social Media</h3>
@@ -218,18 +220,43 @@ const ContactPage = () => {
                       
                       <FormField
                         control={form.control}
-                        name="subject"
+                        name="eventDate"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Subject</FormLabel>
+                            <FormLabel>Event Date (Optional)</FormLabel>
                             <FormControl>
-                              <Input placeholder="Subject of your message" {...field} />
+                              <Input type="date" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
+                    
+                    <FormField
+                      control={form.control}
+                      name="eventType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Event Type (Optional)</FormLabel>
+                          <FormControl>
+                            <select
+                              id="eventType"
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              {...field}
+                            >
+                              <option value="">Select Event Type</option>
+                              <option value="Wedding">Wedding</option>
+                              <option value="Reception">Reception</option>
+                              <option value="Corporate Event">Corporate Event</option>
+                              <option value="Birthday Celebration">Birthday Celebration</option>
+                              <option value="Other">Other</option>
+                            </select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                     
                     <FormField
                       control={form.control}
