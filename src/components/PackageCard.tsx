@@ -2,6 +2,8 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+import { useInView } from 'framer-motion';
 
 interface PackageProps {
   title: string;
@@ -11,6 +13,7 @@ interface PackageProps {
   popular?: boolean;
   image?: string;
   className?: string;
+  delay?: number;
 }
 
 const PackageCard = ({ 
@@ -20,20 +23,33 @@ const PackageCard = ({
   price, 
   popular = false,
   image,
-  className
+  className,
+  delay = 0
 }: PackageProps) => {
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <div className={cn(
-      "overflow-hidden rounded-2xl transition-all duration-300 group relative",
-      popular ? "shadow-xl" : "shadow-lg",
-      className
-    )}>
+    <motion.div 
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, delay }}
+      whileHover={{ y: -8 }}
+      className={cn(
+        "overflow-hidden rounded-2xl transition-all duration-300 h-full flex flex-col",
+        popular ? "shadow-xl" : "shadow-lg",
+        className
+      )}
+    >
       {image && (
         <div className="relative h-48 overflow-hidden">
-          <img 
+          <motion.img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="w-full h-full object-cover"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.7 }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
           {popular && (
@@ -45,7 +61,7 @@ const PackageCard = ({
       )}
       
       <div className={cn(
-        "p-6",
+        "p-6 flex flex-col flex-grow",
         image ? "bg-white" : popular ? "bg-lotus-navy text-white" : "bg-white"
       )}>
         <h3 className="font-playfair text-2xl font-medium mb-2">{title}</h3>
@@ -60,11 +76,11 @@ const PackageCard = ({
           </span>
         </div>
         
-        <ul className="mb-6 space-y-2">
+        <ul className="mb-6 space-y-2 flex-grow">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start">
               <svg xmlns="http://www.w3.org/2000/svg" className={cn(
-                "h-5 w-5 mr-2 mt-1",
+                "h-5 w-5 mr-2 mt-1 flex-shrink-0",
                 popular && !image ? "text-lotus-gold" : "text-lotus-navy"
               )} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -78,7 +94,7 @@ const PackageCard = ({
         
         <Button 
           className={cn(
-            "w-full font-medium",
+            "w-full font-medium mt-auto",
             popular 
               ? "bg-lotus-gold hover:bg-lotus-gold/90 text-white" 
               : "bg-lotus-navy hover:bg-lotus-navy/90 text-white"
@@ -87,7 +103,7 @@ const PackageCard = ({
           Book This Package
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
