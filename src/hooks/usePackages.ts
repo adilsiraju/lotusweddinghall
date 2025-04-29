@@ -22,6 +22,9 @@ export const usePackages = (options?: UsePackagesOptions) => {
         query = query.eq('active', true);
       }
 
+      // Order by order_index to respect custom ordering
+      query = query.order('order_index');
+
       const { data: packagesData, error: packagesError } = await query;
       if (packagesError) throw packagesError;
       

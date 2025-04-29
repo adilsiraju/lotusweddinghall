@@ -164,6 +164,7 @@ export type Database = {
           description: string
           id: string
           note: string | null
+          order_index: number | null
           popular: boolean
           price: string
           title: string
@@ -175,6 +176,7 @@ export type Database = {
           description: string
           id?: string
           note?: string | null
+          order_index?: number | null
           popular?: boolean
           price: string
           title: string
@@ -186,6 +188,7 @@ export type Database = {
           description?: string
           id?: string
           note?: string | null
+          order_index?: number | null
           popular?: boolean
           price?: string
           title?: string

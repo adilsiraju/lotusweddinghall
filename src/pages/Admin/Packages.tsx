@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { usePackages } from '@/hooks/usePackages';
 import { useQueryClient } from '@tanstack/react-query';
@@ -39,7 +40,8 @@ import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { 
   PlusCircle, FileText, Trash2, Edit, 
-  ChevronRight, Package, Star, Check, X, Utensils, Plus
+  ChevronRight, Package, Star, Check, X, Utensils, Plus,
+  ChevronUp, ChevronDown, Move
 } from 'lucide-react';
 
 const AdminPackages = () => {
@@ -134,10 +136,24 @@ const AdminPackages = () => {
           description: "Package updated successfully",
         });
       } else {
-        // Create new package
+        // Create new package - find the highest order_index and add 1
+        const { data: maxOrderData } = await supabase
+          .from('packages')
+          .select('order_index')
+          .order('order_index', { ascending: false })
+          .limit(1);
+          
+        const nextOrderIndex = maxOrderData && maxOrderData.length > 0 
+          ? (maxOrderData[0].order_index + 1) 
+          : 0;
+        
+        // Create new package with the next order index
         const { error } = await supabase
           .from('packages')
-          .insert(packageData);
+          .insert({
+            ...packageData,
+            order_index: nextOrderIndex
+          });
           
         if (error) throw error;
         
@@ -218,6 +234,58 @@ const AdminPackages = () => {
       toast({
         title: "Success",
         description: "Package deleted successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Package reordering functions
+  const handleMovePackage = async (packageId: string, direction: 'up' | 'down') => {
+    try {
+      // Find the current package and its index
+      const currentIndex = packages.findIndex(p => p.id === packageId);
+      if (currentIndex === -1) return;
+      
+      // Calculate the target index
+      const targetIndex = direction === 'up' 
+        ? Math.max(0, currentIndex - 1)
+        : Math.min(packages.length - 1, currentIndex + 1);
+        
+      // If there's no change in position, return
+      if (targetIndex === currentIndex) return;
+      
+      // Get the target package
+      const targetPackage = packages[targetIndex];
+      
+      // Swap order indexes
+      const currentOrderIndex = packages[currentIndex].order_index;
+      const targetOrderIndex = targetPackage.order_index;
+      
+      // Update both packages with new order indexes
+      const updates = [
+        supabase.from('packages')
+          .update({ order_index: targetOrderIndex })
+          .eq('id', packageId),
+          
+        supabase.from('packages')
+          .update({ order_index: currentOrderIndex })
+          .eq('id', targetPackage.id)
+      ];
+      
+      await Promise.all(updates);
+      
+      // Refresh the data
+      queryClient.invalidateQueries({ queryKey: ['packages'] });
+      refetch();
+      
+      toast({
+        title: "Success",
+        description: `Package moved ${direction}`,
       });
     } catch (error: any) {
       toast({
@@ -704,7 +772,12 @@ const AdminPackages = () => {
       </div>
       
       <Card className="p-6">
-        <h2 className="text-lg font-medium mb-4">All Packages</h2>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-medium">All Packages</h2>
+          <div className="text-sm text-gray-500">
+            Drag or use arrows to reorder packages
+          </div>
+        </div>
         
         {packages.length === 0 ? (
           <div className="text-center py-8">
@@ -722,26 +795,50 @@ const AdminPackages = () => {
           </div>
         ) : (
           <Accordion type="multiple" className="w-full">
-            {packages.map((pkg) => (
+            {packages.map((pkg, index) => (
               <AccordionItem value={pkg.id} key={pkg.id}>
-                <AccordionTrigger className="hover:no-underline">
-                  <div className="flex items-center justify-between w-full pr-4">
-                    <div className="flex items-center">
-                      {pkg.popular && (
-                        <Star className="h-4 w-4 mr-2 text-yellow-500 fill-yellow-500" />
-                      )}
-                      <span className="font-medium">{pkg.title}</span>
-                      {!pkg.active && (
-                        <span className="ml-2 text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded">
-                          Hidden
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-sm font-normal text-right">
-                      <div className="font-medium text-lotus-navy">{pkg.price}</div>
-                    </div>
+                <div className="flex items-center">
+                  <div className="flex flex-col items-center mr-2 space-y-1">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleMovePackage(pkg.id, 'up')}
+                      disabled={index === 0}
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="h-6 w-6 p-0"
+                      onClick={() => handleMovePackage(pkg.id, 'down')}
+                      disabled={index === packages.length - 1}
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
                   </div>
-                </AccordionTrigger>
+                  <div className="flex-grow">
+                    <AccordionTrigger className="hover:no-underline">
+                      <div className="flex items-center justify-between w-full pr-4">
+                        <div className="flex items-center">
+                          {pkg.popular && (
+                            <Star className="h-4 w-4 mr-2 text-yellow-500 fill-yellow-500" />
+                          )}
+                          <span className="font-medium">{pkg.title}</span>
+                          {!pkg.active && (
+                            <span className="ml-2 text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded">
+                              Hidden
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm font-normal text-right">
+                          <div className="font-medium text-lotus-navy">{pkg.price}</div>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                  </div>
+                </div>
                 
                 <AccordionContent>
                   <div className="space-y-4 pl-4 py-2">
