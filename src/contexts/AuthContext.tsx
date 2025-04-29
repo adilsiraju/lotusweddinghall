@@ -66,9 +66,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setIsAdmin(!!data);
             setLoading(false);
           })
-          .catch(() => {
+          .catch((error) => {
             setIsAdmin(false);
             setLoading(false);
+            console.error('Error checking admin status:', error);
           });
       } else {
         setLoading(false);
