@@ -1,22 +1,11 @@
+
 import React from 'react';
 import Hero from '@/components/Hero';
 import DynamicMenuPackageCard from '@/components/DynamicMenuPackageCard';
 import { Button } from '@/components/ui/button';
 import { usePackages } from '@/hooks/usePackages';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-// Create a new QueryClient instance
-const queryClient = new QueryClient();
 
 const PackagesPage = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <PackagesContent />
-    </QueryClientProvider>
-  );
-};
-
-const PackagesContent = () => {
   const { data: packages = [], isLoading } = usePackages();
   
   const handleWhatsAppClick = () => {

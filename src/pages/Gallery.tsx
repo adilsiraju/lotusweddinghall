@@ -2,22 +2,8 @@
 import React from 'react';
 import Hero from '@/components/Hero';
 import DynamicImageGallery from '@/components/DynamicImageGallery';
-import { useGalleryImages } from '@/hooks/useGalleryImages';
-import { useVenueAreas } from '@/hooks/useVenueAreas';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
-// Create a new QueryClient instance
-const queryClient = new QueryClient();
 
 const GalleryPage = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <GalleryContent />
-    </QueryClientProvider>
-  );
-};
-
-const GalleryContent = () => {
   return (
     <div className="min-h-screen">
       <Hero 
