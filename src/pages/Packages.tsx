@@ -66,7 +66,7 @@ const PackagesPage = () => {
                   items: [
                     {
                       heading: "Rice",
-                      items: ["Rice"]
+                      items: ["Ponni Rice"]
                     },
                     {
                       heading: "Traditional Curries",
@@ -147,19 +147,16 @@ const PackagesPage = () => {
                   category: "Main Course",
                   items: [
                     {
-                      heading: "Rice & Biryani",
+                      heading: "Rice",
                       items: [
                         "Beef Biryani",
-                        "Chicken Mandi"
+                        "Chicken Mandi",
+                        "Mini Sadhya with fish curry"
                       ]
                     },
                     {
                       heading: "Fry Items",
                       items: ["Chicken Fry"]
-                    },
-                    {
-                      heading: "Mini Sadhya with fish curry",
-                      items: ["Traditional Kerala Sadhya Items with fish curry"]
                     },
                     {
                       heading: "Accompaniments",
@@ -211,7 +208,7 @@ const PackagesPage = () => {
                   category: "Main Course",
                   items: [
                     {
-                      heading: "Rice & Biryani",
+                      heading: "Rice",
                       items: [
                         "Mutton Biryani",
                         "Chicken Mandi"
@@ -283,7 +280,7 @@ const PackagesPage = () => {
                   category: "Main Course",
                   items: [
                     {
-                      heading: "Rice & Biryani",
+                      heading: "Rice",
                       items: [
                         "Ghee Rice",
                         "Chicken Fried Rice",
@@ -359,7 +356,7 @@ const PackagesPage = () => {
                   category: "Main Course",
                   items: [
                     {
-                      heading: "Rice & Biryani",
+                      heading: "Rice",
                       items: [
                         "Chicken Lagoon Biryani",
                         "Ghee Rice"
@@ -413,7 +410,7 @@ const PackagesPage = () => {
             <MenuPackageCard
               title="Platinum Package"
               description="Luxury dining experience with premium selections and exclusive features"
-              price="652"
+              price="700"
               menu={[
                 {
                   category: "Welcome Drinks",
@@ -434,7 +431,7 @@ const PackagesPage = () => {
                   category: "Main Course",
                   items: [
                     {
-                      heading: "Rice & Biryani",
+                      heading: "Rice",
                       items: [
                         "Mutton Biryani",
                         "Chicken Alfaham Mandi"
@@ -472,13 +469,12 @@ const PackagesPage = () => {
                 {
                   category: "Dessert",
                   items: [
-                    "Chocolate Fountain",
                     "Cake Set"
                   ]
                 },
                 {
                   category: "Refreshments",
-                  items: ["Bottled Water", "Hot Water", "Herbal Tea Counter"]
+                  items: ["Bottled Water", "Hot Water", "Lime Tea"]
                 },
                 {
                   category: "Complimentary Services",
