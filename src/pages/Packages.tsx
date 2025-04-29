@@ -64,7 +64,9 @@ const PackagesPage = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 {packages.map(pkg => (
-                  <DynamicMenuPackageCard key={pkg.id} packageData={pkg} />
+                  <div key={pkg.id} className="min-h-[600px] flex">
+                    <DynamicMenuPackageCard packageData={pkg} />
+                  </div>
                 ))}
                 {packages.length === 0 && (
                   <div className="col-span-3 text-center py-10">

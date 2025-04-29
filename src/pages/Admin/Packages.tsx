@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePackages } from '@/hooks/usePackages';
 import { useQueryClient } from '@tanstack/react-query';
 import { Card } from '@/components/ui/card';
@@ -30,11 +29,17 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet';
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent
+} from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { 
   PlusCircle, FileText, Trash2, Edit, 
-  ChevronRight, Package, Star, Check, X, Utensils
+  ChevronRight, Package, Star, Check, X, Utensils, Plus
 } from 'lucide-react';
 
 const AdminPackages = () => {
@@ -63,6 +68,11 @@ const AdminPackages = () => {
   const [menuItemName, setMenuItemName] = useState('');
   const [isHeading, setIsHeading] = useState(false);
   const [parentItemId, setParentItemId] = useState<string | null>(null);
+  const [selectedCategoryForItem, setSelectedCategoryForItem] = useState<any | null>(null);
+  const [stayInItemForm, setStayInItemForm] = useState(false);
+  
+  // Category navigation
+  const [activePackageId, setActivePackageId] = useState<string | null>(null);
   
   const resetPackageForm = () => {
     setSelectedPackage(null);
@@ -80,12 +90,17 @@ const AdminPackages = () => {
     setIsAddingCategory(false);
   };
   
-  const resetMenuItemForm = () => {
-    setMenuItemCategoryId('');
+  const resetMenuItemForm = (completeReset = true) => {
+    if (completeReset) {
+      setMenuItemCategoryId('');
+      setSelectedCategoryForItem(null);
+    }
     setMenuItemName('');
     setIsHeading(false);
     setParentItemId(null);
-    setIsAddingMenuItem(false);
+    if (!stayInItemForm) {
+      setIsAddingMenuItem(false);
+    }
   };
 
   const handleSubmitPackage = async (e: React.FormEvent) => {
@@ -316,7 +331,7 @@ const AdminPackages = () => {
       // Refresh the data
       queryClient.invalidateQueries({ queryKey: ['packages'] });
       refetch();
-      resetMenuItemForm();
+      resetMenuItemForm(false); // Only reset the form fields, not the category
     } catch (error: any) {
       toast({
         title: "Error",
@@ -357,6 +372,25 @@ const AdminPackages = () => {
       });
     }
   };
+
+  // Set the selected category data when the ID changes
+  useEffect(() => {
+    if (menuItemCategoryId) {
+      const category = packages.flatMap(p => p.categories || [])
+        .find(c => c.id === menuItemCategoryId);
+      
+      if (category) {
+        setSelectedCategoryForItem(category);
+      }
+    }
+  }, [menuItemCategoryId, packages]);
+
+  // Set active package ID if not set and packages are available
+  useEffect(() => {
+    if (packages.length > 0 && !activePackageId) {
+      setActivePackageId(packages[0].id);
+    }
+  }, [packages, activePackageId]);
 
   if (isLoading) {
     return <div className="flex items-center justify-center h-full">
@@ -526,7 +560,7 @@ const AdminPackages = () => {
             </SheetContent>
           </Sheet>
           
-          <Sheet>
+          <Sheet open={isAddingMenuItem} onOpenChange={setIsAddingMenuItem}>
             <SheetTrigger asChild>
               <Button variant="outline">
                 <Utensils className="mr-2 h-4 w-4" />
@@ -541,22 +575,44 @@ const AdminPackages = () => {
               <form onSubmit={handleSubmitMenuItem} className="space-y-6 pt-6">
                 <div className="space-y-2">
                   <Label htmlFor="menu-category">Select Category</Label>
-                  <select
-                    id="menu-category"
-                    value={menuItemCategoryId}
-                    onChange={(e) => setMenuItemCategoryId(e.target.value)}
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    required
-                  >
-                    <option value="" disabled>Select a category</option>
-                    {packages.flatMap(pkg => 
-                      pkg.categories?.map(category => (
-                        <option key={category.id} value={category.id}>
-                          {pkg.title} - {category.name}
-                        </option>
-                      ))
-                    )}
-                  </select>
+                  <div className="max-h-48 overflow-y-auto border rounded-md p-2">
+                    <Tabs defaultValue={activePackageId || ''} onValueChange={(value) => setActivePackageId(value)}>
+                      <TabsList className="w-full h-auto flex flex-wrap">
+                        {packages.map(pkg => (
+                          <TabsTrigger key={pkg.id} value={pkg.id} className="flex-grow">
+                            {pkg.title}
+                          </TabsTrigger>
+                        ))}
+                      </TabsList>
+                      
+                      {packages.map(pkg => (
+                        <TabsContent key={pkg.id} value={pkg.id}>
+                          <div className="space-y-2 mt-2">
+                            {pkg.categories?.length ? (
+                              pkg.categories.map(category => (
+                                <div 
+                                  key={category.id} 
+                                  className={`p-2 border rounded-md cursor-pointer hover:bg-gray-50 ${menuItemCategoryId === category.id ? 'bg-lotus-navy/10 border-lotus-navy' : ''}`}
+                                  onClick={() => setMenuItemCategoryId(category.id)}
+                                >
+                                  {category.name}
+                                </div>
+                              ))
+                            ) : (
+                              <div className="text-center text-gray-500 py-4">No categories in this package</div>
+                            )}
+                          </div>
+                        </TabsContent>
+                      ))}
+                    </Tabs>
+                  </div>
+                  
+                  {selectedCategoryForItem && (
+                    <div className="flex items-center p-2 bg-lotus-navy/5 rounded-md">
+                      <span className="font-medium">Selected: </span>
+                      <span className="ml-1">{selectedCategoryForItem.name}</span>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="space-y-2">
@@ -602,21 +658,44 @@ const AdminPackages = () => {
                   </div>
                 )}
                 
-                <SheetFooter className="pt-4">
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    checked={stayInItemForm}
+                    onCheckedChange={setStayInItemForm}
+                    id="stay-in-form"
+                  />
+                  <Label htmlFor="stay-in-form">Stay in form to add multiple items</Label>
+                </div>
+                
+                <SheetFooter className="pt-4 flex flex-col sm:flex-row gap-2">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={resetMenuItemForm}
+                    onClick={() => resetMenuItemForm(true)}
+                    className="w-full sm:w-auto order-1 sm:order-none"
                   >
                     Cancel
                   </Button>
-                  <Button
-                    type="submit"
-                    className="bg-lotus-navy"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Adding..." : "Add Menu Item"}
-                  </Button>
+                  
+                  <div className="flex gap-2 w-full sm:w-auto">
+                    <Button
+                      type="submit"
+                      className="bg-lotus-navy flex-1"
+                      disabled={isSubmitting || !menuItemCategoryId}
+                    >
+                      {isSubmitting ? "Adding..." : "Add Item"}
+                    </Button>
+                    
+                    {stayInItemForm && (
+                      <Button
+                        type="submit"
+                        className="bg-lotus-gold"
+                        disabled={isSubmitting || !menuItemCategoryId}
+                      >
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </SheetFooter>
               </form>
             </SheetContent>
@@ -726,14 +805,28 @@ const AdminPackages = () => {
                             <div key={category.id} className="bg-gray-50 p-3 rounded-md">
                               <div className="flex justify-between items-center mb-2">
                                 <h4 className="font-medium">{category.name}</h4>
-                                <Button
-                                  size="sm"
-                                  variant="ghost"
-                                  onClick={() => handleDeleteCategory(category)}
-                                  className="h-7 px-2"
-                                >
-                                  <Trash2 className="h-3.5 w-3.5 text-red-500" />
-                                </Button>
+                                <div className="flex items-center gap-2">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    className="h-7 px-2"
+                                    onClick={() => {
+                                      setMenuItemCategoryId(category.id);
+                                      setIsAddingMenuItem(true);
+                                    }}
+                                  >
+                                    <Plus className="h-3.5 w-3.5 text-lotus-navy" />
+                                    <span className="ml-1">Add Item</span>
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="ghost"
+                                    onClick={() => handleDeleteCategory(category)}
+                                    className="h-7 px-2"
+                                  >
+                                    <Trash2 className="h-3.5 w-3.5 text-red-500" />
+                                  </Button>
+                                </div>
                               </div>
                               
                               {(!category.items || category.items.length === 0) ? (
