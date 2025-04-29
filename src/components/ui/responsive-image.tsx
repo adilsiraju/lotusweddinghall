@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 
 interface ResponsiveImageProps {
   src: string;
@@ -22,6 +22,11 @@ interface ResponsiveImageProps {
   animateOnView?: boolean;
 }
 
+// Separate HTML attributes from motion props to avoid conflicts
+type ResponsiveImageCombinedProps = ResponsiveImageProps & 
+  Omit<React.ImgHTMLAttributes<HTMLImageElement>, keyof HTMLMotionProps<"img"> | 'width' | 'height'> & 
+  Omit<HTMLMotionProps<"img">, 'src' | 'alt' | 'width' | 'height'>;
+
 const ResponsiveImage = ({
   src,
   alt,
@@ -40,8 +45,17 @@ const ResponsiveImage = ({
   animateOnHover = false,
   animateOnView = false,
   ...props
-}: ResponsiveImageProps & React.ImgHTMLAttributes<HTMLImageElement>) => {
+}: ResponsiveImageCombinedProps) => {
   const [isLoaded, setIsLoaded] = React.useState(false);
+  
+  // Separate motion-specific props from standard HTML image attributes
+  const motionProps: Partial<HTMLMotionProps<"img">> = {
+    whileHover: animateOnHover ? { scale: 1.05 } : undefined,
+    initial: animateOnView ? { opacity: 0, scale: 0.95 } : undefined,
+    whileInView: animateOnView ? { opacity: 1, scale: 1 } : undefined,
+    viewport: animateOnView ? { once: true, margin: "-100px" } : undefined,
+    transition: { duration: 0.5 }
+  };
   
   return (
     <div 
@@ -80,11 +94,7 @@ const ResponsiveImage = ({
           objectFit,
           objectPosition,
         }}
-        whileHover={animateOnHover ? { scale: 1.05 } : undefined}
-        initial={animateOnView ? { opacity: 0, scale: 0.95 } : undefined}
-        whileInView={animateOnView ? { opacity: 1, scale: 1 } : undefined}
-        viewport={animateOnView ? { once: true, margin: "-100px" } : undefined}
-        transition={{ duration: 0.5 }}
+        {...motionProps}
         {...props}
       />
     </div>
