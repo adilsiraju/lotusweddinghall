@@ -1,9 +1,24 @@
 import React from 'react';
 import Hero from '@/components/Hero';
-import MenuPackageCard from '@/components/MenuPackageCard';
+import DynamicMenuPackageCard from '@/components/DynamicMenuPackageCard';
 import { Button } from '@/components/ui/button';
+import { usePackages } from '@/hooks/usePackages';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Create a new QueryClient instance
+const queryClient = new QueryClient();
 
 const PackagesPage = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <PackagesContent />
+    </QueryClientProvider>
+  );
+};
+
+const PackagesContent = () => {
+  const { data: packages = [], isLoading } = usePackages();
+  
   const handleWhatsAppClick = () => {
     window.open('https://wa.me/919207102999', '_blank');
   };
@@ -18,7 +33,8 @@ const PackagesPage = () => {
       />
 
       <section className="py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">          <div className="max-w-3xl mx-auto text-center mb-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-8">
             <h2 className="section-heading mx-auto">Menu Packages</h2>
             <p className="text-gray-600 text-lg mt-4">
               Experience the finest Kerala cuisine with our specially curated menu packages
@@ -51,442 +67,24 @@ const PackagesPage = () => {
             </div>
           </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
-            <MenuPackageCard
-              title="Traditional Sadhya"
-              description="Traditional Kerala feast with complete religious ceremony services"
-              price="430"
-              menu={[
-                {
-                  category: "Welcome Drink",
-                  items: ["Lemon Juice"]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    {
-                      heading: "Rice",
-                      items: ["Ponni Rice"]
-                    },
-                    {
-                      heading: "Traditional Curries",
-                      items: [
-                        "Sambar",
-                        "Aviyal",
-                        "Kootu Curry",
-                        "Olan",
-                        "Pachadi",
-                        "Kalan",
-                        "Kichadi",
-                        "Puli Inji"
-                      ]
-                    },
-                    {
-                      heading: "Accompaniments",
-                      items: [
-                        "Thoran",
-                        "Pickle",
-                        "Salt",
-                        "Papadam",
-                        "Neyy (Ghee)",
-                        "Rasam",
-                        "Moru"
-                      ]
-                    },
-                    {
-                      heading: "Snacks",
-                      items: [
-                        "Nendra Chips",
-                        "Sharkara Upperi (Jaggery Banana Chips)",
-                        "Banana"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  category: "Desserts",
-                  items: ["Parippu Pradhaman", "Palada Pradhaman"]
-                },
-                {
-                  category: "Refreshments",
-                  items: ["Hot Water"]
-                },
-                {
-                  category: "Complimentary Services",
-                  items: [
-                    "Puja setup",
-                    "Pujari",
-                    "Nadaswaram",
-                    "Thallam",
-                    "Welcome Board",
-                    "Basic Stage Décor",
-                    "Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
-
-            <MenuPackageCard
-              title="Silver Package"
-              description="Classic wedding feast with a perfect blend of traditional and modern cuisine"
-              price="495"
-              menu={[
-                {
-                  category: "Welcome Drinks",
-                  items: [
-                    "Fresh Juice (2 Seasonal Fruits)",
-                    "Water Juice (1)",
-                    "Coffee"
-                  ]
-                },
-                {
-                  category: "Starters",
-                  items: ["Alsa (served at dining)"]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    {
-                      heading: "Rice",
-                      items: [
-                        "Beef Biryani",
-                        "Chicken Mandi",
-                        "Mini Sadhya with fish curry"
-                      ]
-                    },
-                    {
-                      heading: "Fry Items",
-                      items: ["Chicken Fry"]
-                    },
-                    {
-                      heading: "Accompaniments",
-                      items: [
-                        "Salad",
-                        "Curd Salad",
-                        "Pickle",
-                      ]
-                    }
-                  ]
-                },
-                {
-                  category: "Dessert",
-                  items: ["Choice of: Mysore Pak / Jalebi / Halwa (Carrot, Beetroot, or Ash Gourd)"]
-                },
-                {
-                  category: "Refreshments",
-                  items: ["Hot Water", "Black Tea"]
-                },
-                {
-                  category: "Complimentary Services",
-                  items: [
-                    "Welcome Board",
-                    "Basic Stage Décor",
-                    "Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
-
-            <MenuPackageCard
-              title="Gold Package"
-              description="Premium dining experience with enhanced menu selections"
-              price="595"
-              menu={[
-                {
-                  category: "Welcome Drinks",
-                  items: [
-                    "Fresh Juice (2 Seasonal Fruits)",
-                    "Water Juice (1)",
-                    "Coffee"
-                  ]
-                },
-                {
-                  category: "Starters",
-                  items: ["Alsa (served at dining)"]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    {
-                      heading: "Rice",
-                      items: [
-                        "Mutton Biryani",
-                        "Chicken Mandi"
-                      ]
-                    },
-                    {
-                      heading: "Breads",
-                      items: ["2 Breads"]
-                    },
-                    {
-                      heading: "Curry Dishes",
-                      items: ["2 Curries (Veg & Non-Veg)"]
-                    },
-                    {
-                      heading: "Fry Items",
-                      items: [
-                        "Chicken Fry",
-                      ]
-                    },
-                    {
-                      heading: "Accompaniments",
-                      items: [
-                        "Salad",
-                        "Curd Salad",
-                        "Pickle"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  category: "Dessert",
-                  items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
-                },
-                {
-                  category: "Refreshments",
-                  items: ["Botteled Water", "Hot Water", "Black Tea"]
-                },
-                {
-                  category: "Complimentary Services",
-                  items: [
-                    "Welcome Board",
-                    "Basic Stage Décor",
-                    "Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            <MenuPackageCard
-              title="Reception Package 1"
-              description="Perfect blend of continental and Kerala cuisine for reception celebrations"
-              price="510"
-              menu={[
-                {
-                  category: "Welcome Drinks",
-                  items: [
-                    "Fresh Juice (2 Seasonal Fruits)",
-                    "Water Juice (1)",
-                    "Coffee"
-                  ]
-                },
-                {
-                  category: "Starters",
-                  items: ["Chicken Macaroni & Raw Mango Salad (served at dining)"]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    {
-                      heading: "Rice",
-                      items: [
-                        "Ghee Rice",
-                        "Chicken Fried Rice",
-                        "Vegetable Fried Rice"
-                      ]
-                    },
-                    {
-                      heading: "Breads",
-                      items: ["2 Breads"]
-                    },
-                    {
-                      heading: "Curry Dishes",
-                      items: [
-                        "2 Non Veg Curries",
-                        "Veg Curry"
-                      ]
-                    },
-                    {
-                      heading: "Fry Items",
-                      items: [
-                        "Chicken Fry",
-                        "Chilli Chicken",
-                        "Gobi Manchurian"
-                      ]
-                    },
-                    {
-                      heading: "Accompaniments",
-                      items: [
-                        "Salad",
-                        "Curd Salad",
-                        "Pickle"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  category: "Dessert",
-                  items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
-                },
-                {
-                  category: "Refreshments",
-                  items: ["Hot Water", "Black Tea"]
-                },
-                {
-                  category: "Complimentary Services",
-                  items: [
-                    "Welcome Board",
-                    "Basic Stage Décor",
-                    "Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
-
-            <MenuPackageCard
-              title="Reception Package 2"
-              description="Elegant reception feast featuring signature dishes"
-              price="515"
-              menu={[
-                {
-                  category: "Welcome Drinks",
-                  items: [
-                    "Fresh Juice (2 Seasonal Fruits)",
-                    "Water Juice (1)",
-                    "Coffee"
-                  ]
-                },
-                {
-                  category: "Starters",
-                  items: ["Chicken Macaroni & Raw Mango Salad (served at dining)"]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    {
-                      heading: "Rice",
-                      items: [
-                        "Chicken Lagoon Biryani",
-                        "Ghee Rice"
-                      ]
-                    },
-                    {
-                      heading: "Fry Items",
-                      items: ["Chicken Fry"]
-                    },
-                    
-                    {
-                      heading: "Breads",
-                      items: ["2 Breads"]
-                    },
-                    {
-                      heading: "Curry Dishes",
-                      items: [
-                        "2 Non Veg Curries",
-                        "Veg Curry"
-                      ]
-                    },
-                    {
-                      heading: "Accompaniments",
-                      items: [
-                        "Salad",
-                        "Curd Salad",
-                        "Pickle",
-                      ]
-                    }
-                  ]
-                },
-                {
-                  category: "Dessert",
-                  items: ["Choice of: Mysore Pak / Jalebi / Halwa"]
-                },
-                {
-                  category: "Refreshments",
-                  items: ["Hot Water", "Black Tea"]
-                },
-                {
-                  category: "Complimentary Services",
-                  items: [
-                    "Welcome Board",
-                    "Basic Stage Décor",
-                    "Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
-
-            <MenuPackageCard
-              title="Platinum Package"
-              description="Luxury dining experience with premium selections and exclusive features"
-              price="700"
-              menu={[
-                {
-                  category: "Welcome Drinks",
-                  items: [
-                    "Fresh Juice (2 Seasonal Fruits)",
-                    "Water Juice (1)",
-                    "Coffee"
-                  ]
-                },
-                {
-                  category: "Starters",
-                  items: [
-                    "Alsa (served at dining)",
-                    "Chicken Lollipop / Fish Fingers / Cutlet"
-                  ]
-                },
-                {
-                  category: "Main Course",
-                  items: [
-                    {
-                      heading: "Rice",
-                      items: [
-                        "Mutton Biryani",
-                        "Chicken Alfaham Mandi"
-                      ]
-                    },
-                    {
-                      heading: "Breads",
-                      items: [
-                        "White Khubz",
-                        "Porotta",
-                        "Neypathil",
-                      ]
-                    },
-                    {
-                      heading: "Curry Dishes",
-                      items: ["Fish Curry", "Chicken or Beef Curry", "Veg Curry"]
-                    },
-                    {
-                      heading: "Fry Items",
-                      items: [
-                        "Chicken Tikka"
-                      ]
-                    },
-                    {
-                      heading: "Accompaniments",
-                      items: [
-                        "Hummus & Mayo",
-                        "Salad",
-                        "Curd Salad",
-                        "Pickle",
-                      ]
-                    }
-                  ]
-                },
-                {
-                  category: "Dessert",
-                  items: [
-                    "Cake Set"
-                  ]
-                },
-                {
-                  category: "Refreshments",
-                  items: ["Bottled Water", "Hot Water", "Lime Tea"]
-                },
-                {
-                  category: "Complimentary Services",
-                  items: [
-                    "Welcome Board",
-                    "Basic Stage Décor",
-                    "Marriage Certificate Processing"
-                  ]
-                }
-              ]}
-            />
-          </div>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <div className="animate-spin h-10 w-10 border-4 border-lotus-navy border-t-transparent rounded-full"></div>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                {packages.map(pkg => (
+                  <DynamicMenuPackageCard key={pkg.id} packageData={pkg} />
+                ))}
+                {packages.length === 0 && (
+                  <div className="col-span-3 text-center py-10">
+                    <p className="text-gray-500">No packages available at the moment. Please check back later.</p>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </section>
 

@@ -1,74 +1,23 @@
 
 import React from 'react';
 import Hero from '@/components/Hero';
-import ImageGallery from '@/components/ImageGallery';
+import DynamicImageGallery from '@/components/DynamicImageGallery';
+import { useGalleryImages } from '@/hooks/useGalleryImages';
+import { useVenueAreas } from '@/hooks/useVenueAreas';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Create a new QueryClient instance
+const queryClient = new QueryClient();
 
 const GalleryPage = () => {
-  const galleryCategories = ["Weddings", "Receptions", "Kerala Sadhya", "Decor", "Venue"];
-  
-  const galleryImages = [
-    {
-      src: "/gallery/wedding-hall.jpg",
-      alt: "Grand Wedding Hall",
-      category: "Venue"
-    },
-    {
-      src: "/gallery/wedding-ceremony.jpg",
-      alt: "Traditional Wedding Ceremony",
-      category: "Weddings"
-    },
-    {
-      src: "/gallery/reception.jpg",
-      alt: "Elegant Reception Setup",
-      category: "Receptions"
-    },
-    {
-      src: "/gallery/sadhya.jpg",
-      alt: "Traditional Kerala Sadhya",
-      category: "Kerala Sadhya"
-    },
-    {
-      src: "/gallery/table-setting.jpg",
-      alt: "Luxury Table Setting",
-      category: "Decor"
-    },
-    {
-      src: "/gallery/venue-exterior.jpg",
-      alt: "Venue Exterior",
-      category: "Venue"
-    },
-    {
-      src: "/gallery/venue-entrance.jpg",
-      alt: "Grand Entrance",
-      category: "Venue"
-    },
-    {
-      src: "/gallery/wedding-decor.jpg",
-      alt: "Wedding Decoration",
-      category: "Decor"
-    },
-    {
-      src: "/gallery/malabar-cuisine.jpg",
-      alt: "Malabar Cuisine Spread",
-      category: "Kerala Sadhya"
-    },
-    {
-      src: "/gallery/reception-party.jpg",
-      alt: "Reception Celebration",
-      category: "Receptions"
-    },
-    {
-      src: "/gallery/mandap.jpg",
-      alt: "Traditional Wedding Mandap",
-      category: "Weddings"
-    },
-    {
-      src: "/gallery/venue-night.jpg",
-      alt: "Venue at Night",
-      category: "Venue"
-    }
-  ];
+  return (
+    <QueryClientProvider client={queryClient}>
+      <GalleryContent />
+    </QueryClientProvider>
+  );
+};
 
+const GalleryContent = () => {
   return (
     <div className="min-h-screen">
       <Hero 
@@ -87,10 +36,7 @@ const GalleryPage = () => {
             </p>
           </div>
           
-          <ImageGallery 
-            images={galleryImages}
-            categories={galleryCategories}
-          />
+          <DynamicImageGallery />
         </div>
       </section>
 

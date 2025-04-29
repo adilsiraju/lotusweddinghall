@@ -9,13 +9,237 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      admin_profiles: {
+        Row: {
+          created_at: string
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      gallery_images: {
+        Row: {
+          active: boolean
+          alt_text: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string
+          order_index: number
+          title: string
+          updated_at: string
+          venue_area_id: string
+        }
+        Insert: {
+          active?: boolean
+          alt_text: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url: string
+          order_index?: number
+          title: string
+          updated_at?: string
+          venue_area_id: string
+        }
+        Update: {
+          active?: boolean
+          alt_text?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string
+          order_index?: number
+          title?: string
+          updated_at?: string
+          venue_area_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_images_venue_area_id_fkey"
+            columns: ["venue_area_id"]
+            isOneToOne: false
+            referencedRelation: "venue_areas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      menu_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          order_index: number
+          package_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          order_index?: number
+          package_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          order_index?: number
+          package_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_categories_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "packages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      menu_items: {
+        Row: {
+          category_id: string
+          created_at: string
+          id: string
+          is_heading: boolean
+          name: string
+          order_index: number
+          parent_item_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          id?: string
+          is_heading?: boolean
+          name: string
+          order_index?: number
+          parent_item_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          id?: string
+          is_heading?: boolean
+          name?: string
+          order_index?: number
+          parent_item_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "menu_items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "menu_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "menu_items_parent_item_id_fkey"
+            columns: ["parent_item_id"]
+            isOneToOne: false
+            referencedRelation: "menu_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      packages: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string
+          id: string
+          note: string | null
+          popular: boolean
+          price: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description: string
+          id?: string
+          note?: string | null
+          popular?: boolean
+          price: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string
+          id?: string
+          note?: string | null
+          popular?: boolean
+          price?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      venue_areas: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          order_index: number
+          parent_area_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          order_index?: number
+          parent_area_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          order_index?: number
+          parent_area_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "venue_areas_parent_area_id_fkey"
+            columns: ["parent_area_id"]
+            isOneToOne: false
+            referencedRelation: "venue_areas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
