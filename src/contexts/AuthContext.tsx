@@ -57,20 +57,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (session?.user) {
         // Check if the user is an admin
-        supabase
-          .from('admin_profiles')
-          .select('id')
-          .eq('id', session.user.id)
-          .single()
-          .then(({ data }) => {
+        const checkAdminStatus = async () => {
+          try {
+            const { data, error } = await supabase
+              .from('admin_profiles')
+              .select('id')
+              .eq('id', session.user.id)
+              .single();
+
+            if (error) throw error;
             setIsAdmin(!!data);
-            setLoading(false);
-          })
-          .catch((error) => {
+          } catch (error) {
             setIsAdmin(false);
-            setLoading(false);
             console.error('Error checking admin status:', error);
-          });
+          } finally {
+            setLoading(false);
+          }
+        };
+        
+        checkAdminStatus();
       } else {
         setLoading(false);
       }

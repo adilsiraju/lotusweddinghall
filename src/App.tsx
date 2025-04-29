@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Pages
@@ -15,13 +15,14 @@ import NotFound from './pages/NotFound';
 // Admin Pages
 import AdminLogin from './pages/Admin/Login';
 import AdminDashboard from './pages/Admin/Dashboard';
+import AdminGallery from './pages/Admin/Gallery';
+import AdminPackages from './pages/Admin/Packages';
 
 // Layouts
 import AdminLayout from './components/layouts/AdminLayout';
+import MainLayout from './components/layouts/MainLayout';
 
 // Components
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -38,24 +39,19 @@ function App() {
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="dashboard" element={<AdminDashboard />} />
-              {/* Add more admin routes later */}
+              <Route path="gallery" element={<AdminGallery />} />
+              <Route path="packages" element={<AdminPackages />} />
             </Route>
 
-            {/* Main Website Routes */}
-            <Route path="/" element={
-              <>
-                <Navigation />
-                <Routes>
-                  <Route index element={<Index />} />
-                  <Route path="gallery" element={<Gallery />} />
-                  <Route path="packages" element={<Packages />} />
-                  <Route path="about" element={<About />} />
-                  <Route path="contact" element={<Contact />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-                <Footer />
-              </>
-            } />
+            {/* Main Website Routes with shared Navigation and Footer */}
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Index />} />
+              <Route path="gallery" element={<Gallery />} />
+              <Route path="packages" element={<Packages />} />
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
           <Toaster />
         </Router>
