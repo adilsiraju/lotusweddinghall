@@ -1,109 +1,63 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { Package } from '@/types/database';
 
-interface PackageProps {
-  title: string;
-  description: string;
-  features: string[];
-  price: string;
-  popular?: boolean;
-  image?: string;
-  className?: string;
-  delay?: number;
+interface PackageCardProps {
+  package: Package;
+  showDetails?: boolean;
+  onClick?: () => void;
 }
 
-const PackageCard = ({ 
-  title, 
-  description, 
-  features, 
-  price, 
-  popular = false,
-  image,
-  className,
-  delay = 0
-}: PackageProps) => {
-  const ref = React.useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+const PackageCard = ({ package: pkg, showDetails = false, onClick }: PackageCardProps) => {
+  const handleBookNowClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    
+    // Generate pre-written message with package details
+    const message = `Hello! I'm interested in booking the "${pkg.title}" package at Lotus Wedding & Banquet Hall. Can you provide more information about availability and options? Thank you.`;
+    
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/919207102999?text=${encodeURIComponent(message)}`, '_blank');
+  };
 
   return (
-    <motion.div 
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -8 }}
-      className={cn(
-        "overflow-hidden rounded-2xl transition-all duration-300 h-full flex flex-col",
-        popular ? "shadow-xl" : "shadow-lg",
-        className
-      )}
+    <div 
+      className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 relative cursor-pointer ${pkg.popular ? 'border-lotus-gold' : ''}`}
+      onClick={onClick}
     >
-      {image && (
-        <div className="relative h-48 overflow-hidden">
-          <motion.img 
-            src={image} 
-            alt={title} 
-            className="w-full h-full object-cover"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.7 }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-          {popular && (
-            <div className="absolute top-4 right-4 bg-lotus-gold text-white text-sm font-medium px-3 py-1 rounded-full">
-              Most Popular
-            </div>
-          )}
+      {pkg.popular && (
+        <div className="bg-lotus-gold text-white text-xs px-3 py-1 absolute top-0 right-0">
+          POPULAR
         </div>
       )}
       
-      <div className={cn(
-        "p-6 flex flex-col flex-grow",
-        image ? "bg-white" : popular ? "bg-lotus-navy text-white" : "bg-white"
-      )}>
-        <h3 className="font-playfair text-2xl font-medium mb-2">{title}</h3>
-        <p className={cn(
-          "mb-4",
-          image ? "text-gray-600" : popular && !image ? "text-gray-200" : "text-gray-600"
-        )}>{description}</p>
-        
-        <div className="mb-6">
-          <span className="font-playfair text-3xl font-semibold">
-            {price}
-          </span>
+      <div className="p-6">
+        <h3 className="text-xl sm:text-2xl font-playfair font-medium mb-2">{pkg.title}</h3>
+        <div className="flex items-baseline mb-4">
+          <span className="text-2xl font-semibold">₹{pkg.price}</span>
+          <span className="text-gray-500 ml-1">/plate</span>
         </div>
         
-        <ul className="mb-6 space-y-2 flex-grow">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className={cn(
-                "h-5 w-5 mr-2 mt-1 flex-shrink-0",
-                popular && !image ? "text-lotus-gold" : "text-lotus-navy"
-              )} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className={cn(
-                image ? "text-gray-700" : popular && !image ? "text-gray-100" : "text-gray-700"
-              )}>{feature}</span>
-            </li>
-          ))}
-        </ul>
+        {showDetails ? (
+          <p className="text-gray-600 mb-4">{pkg.description}</p>
+        ) : (
+          <p className="text-gray-600 mb-4 line-clamp-2">{pkg.description}</p>
+        )}
+        
+        {pkg.note && showDetails && (
+          <div className="bg-gray-50 p-3 rounded-md text-sm mb-4">
+            <p className="text-gray-600">{pkg.note}</p>
+          </div>
+        )}
         
         <Button 
-          className={cn(
-            "w-full font-medium mt-auto",
-            popular 
-              ? "bg-lotus-gold hover:bg-lotus-gold/90 text-white" 
-              : "bg-lotus-navy hover:bg-lotus-navy/90 text-white"
-          )}
+          className="btn-primary w-full"
+          onClick={handleBookNowClick}
         >
-          Book This Package
+          Book Now
         </Button>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

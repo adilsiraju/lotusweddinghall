@@ -1,14 +1,24 @@
-
 import React from 'react';
 import Hero from '@/components/Hero';
 import FeatureCard from '@/components/FeatureCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useFeaturedGalleryImages } from '@/hooks/useFeaturedGalleryImages';
+import ResponsiveImage from '@/components/ui/responsive-image';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 const IndexPage = () => {
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919207102999', '_blank');
+  const { data: featuredImages = [], isLoading: isLoadingImages } = useFeaturedGalleryImages();
+  
+  // Helper function to generate WhatsApp message URL with pre-filled text
+  const generateWhatsAppUrl = (message: string) => {
+    return `https://wa.me/919207102999?text=${encodeURIComponent(message)}`;
+  };
+
+  const handleBookNowClick = () => {
+    const message = "Hello! I would like to book Lotus Wedding & Banquet Hall for an event. Please provide me with availability and details.";
+    window.open(generateWhatsAppUrl(message), '_blank');
   };
 
   return (
@@ -138,40 +148,70 @@ const IndexPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-2 overflow-hidden rounded-lg relative group">
-              <img 
-                src="/gallery/wedding-hall.jpg" 
-                alt="Decorated Wedding Hall" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          {isLoadingImages ? (
+            <div className="flex justify-center py-12">
+              <LoadingSpinner size="lg" />
             </div>
-            <div className="overflow-hidden rounded-lg relative group">
-              <img 
-                src="/gallery/table-setting.jpg" 
-                alt="Elegant Table Setting" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          ) : featuredImages.length === 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-2 overflow-hidden rounded-lg relative group">
+                <img 
+                  src="/gallery/wedding-hall.jpg" 
+                  alt="Decorated Wedding Hall" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+              </div>
+              <div className="overflow-hidden rounded-lg relative group">
+                <img 
+                  src="/gallery/table-setting.jpg" 
+                  alt="Elegant Table Setting" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+              </div>
+              <div className="overflow-hidden rounded-lg relative group">
+                <img 
+                  src="/gallery/sadhya.jpg" 
+                  alt="Traditional Kerala Sadhya" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+              </div>
+              <div className="md:col-span-2 overflow-hidden rounded-lg relative group">
+                <img 
+                  src="/gallery/reception.jpg" 
+                  alt="Wedding Reception" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+              </div>
             </div>
-            <div className="overflow-hidden rounded-lg relative group">
-              <img 
-                src="/gallery/sadhya.jpg" 
-                alt="Traditional Kerala Sadhya" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {featuredImages.slice(0, 4).map((image, index) => (
+                <div 
+                  key={image.id} 
+                  className={cn(
+                    "overflow-hidden rounded-lg relative group",
+                    (index === 0 || index === 3) && featuredImages.length >= 4 ? "md:col-span-2" : ""
+                  )}
+                >
+                  <ResponsiveImage 
+                    src={image.image_url} 
+                    alt={image.alt_text} 
+                    className="w-full h-full object-cover"
+                    aspectRatio="aspect-[4/3]"
+                    animateOnHover
+                  />
+                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="text-white font-medium text-lg px-4 text-center">{image.title}</span>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="md:col-span-2 overflow-hidden rounded-lg relative group">
-              <img 
-                src="/gallery/reception.jpg" 
-                alt="Wedding Reception" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
-            </div>
-          </div>
+          )}
 
           <div className="text-center mt-10">
             <Button className="btn-primary" onClick={() => window.location.href='/gallery'}>
@@ -220,7 +260,7 @@ const IndexPage = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
-              onClick={handleWhatsAppClick}
+              onClick={handleBookNowClick}
               className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg"
             >
               Book Now

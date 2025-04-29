@@ -19,6 +19,7 @@ export interface GalleryImage {
   image_url: string;
   order_index: number;
   active: boolean;
+  featured: boolean;
   created_at: string;
   updated_at: string;
 }

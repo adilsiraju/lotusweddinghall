@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useVenueAreas } from '@/hooks/useVenueAreas';
 import { useGalleryImages } from '@/hooks/useGalleryImages';
@@ -25,13 +26,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
-import { PlusCircle, Trash2, Upload, ImageIcon } from 'lucide-react';
+import { PlusCircle, Trash2, Upload, ImageIcon, Star } from 'lucide-react';
 import VenueAreaForm from '@/components/VenueAreaForm';
 import { VenueArea } from '@/types/database';
 
 const AdminGallery = () => {
   const { data: venueAreas = [], isLoading: isLoadingAreas, refetch: refetchAreas } = useVenueAreas();
-  const { data: galleryImages = [], isLoading: isLoadingImages, refetch: refetchImages } = useGalleryImages();
+  const { data: galleryImages = [], isLoading: isLoadingImages, refetch: refetchImages } = useGalleryImages({ includeInactive: true });
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -46,6 +47,7 @@ const AdminGallery = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [selectedAreaId, setSelectedAreaId] = useState<string>('');
   const [isActive, setIsActive] = useState(true);
+  const [isFeatured, setIsFeatured] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -59,6 +61,7 @@ const AdminGallery = () => {
     setImageFile(null);
     setSelectedAreaId(venueAreas.length > 0 ? venueAreas[0].id : '');
     setIsActive(true);
+    setIsFeatured(false);
     setImagePreview(null);
   };
   
@@ -115,6 +118,7 @@ const AdminGallery = () => {
             alt_text: imageTitle, // Alt text is the same as title
             description: imageDescription || null,
             active: isActive,
+            featured: isFeatured,
             updated_at: new Date().toISOString(),
           })
           .eq('id', selectedImage.id);
@@ -126,7 +130,8 @@ const AdminGallery = () => {
           description: "Image updated successfully",
         });
         
-        queryClient.invalidateQueries({ queryKey: ['gallery'] });
+        queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
+        queryClient.invalidateQueries({ queryKey: ['featured-gallery-images'] });
         resetForm();
         setIsDialogOpen(false);
         return;
@@ -172,6 +177,7 @@ const AdminGallery = () => {
             description: imageDescription || null,
             image_url: publicUrl,
             active: isActive,
+            featured: isFeatured,
             updated_at: new Date().toISOString(),
           })
           .eq('id', selectedImage.id);
@@ -199,6 +205,7 @@ const AdminGallery = () => {
             description: imageDescription || null,
             image_url: publicUrl,
             active: isActive,
+            featured: isFeatured,
             order_index: nextOrderIndex,
           });
           
@@ -210,7 +217,8 @@ const AdminGallery = () => {
         description: `Image ${isEditMode ? 'updated' : 'uploaded'} successfully`,
       });
       
-      queryClient.invalidateQueries({ queryKey: ['gallery'] });
+      queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-gallery-images'] });
       resetForm();
       setIsDialogOpen(false);
     } catch (error: any) {
@@ -232,8 +240,38 @@ const AdminGallery = () => {
     setImageDescription(image.description || '');
     setSelectedAreaId(image.venue_area_id);
     setIsActive(image.active);
+    setIsFeatured(image.featured);
     setImagePreview(image.image_url);
     setIsDialogOpen(true);
+  };
+  
+  // Toggle featured status
+  const handleToggleFeatured = async (image: any) => {
+    try {
+      const { error } = await supabase
+        .from('gallery_images')
+        .update({
+          featured: !image.featured,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', image.id);
+        
+      if (error) throw error;
+      
+      toast({
+        title: "Success",
+        description: `Image ${!image.featured ? 'added to' : 'removed from'} featured images`,
+      });
+      
+      queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-gallery-images'] });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
   };
   
   // Handle delete image
@@ -269,7 +307,8 @@ const AdminGallery = () => {
         description: "Image deleted successfully",
       });
       
-      queryClient.invalidateQueries({ queryKey: ['gallery'] });
+      queryClient.invalidateQueries({ queryKey: ['gallery-images'] });
+      queryClient.invalidateQueries({ queryKey: ['featured-gallery-images'] });
     } catch (error: any) {
       toast({
         title: "Error",
@@ -390,6 +429,15 @@ const AdminGallery = () => {
                   <Label htmlFor="image-active">Active (visible on website)</Label>
                 </div>
                 
+                <div className="flex items-center space-x-2 pt-2">
+                  <Checkbox 
+                    id="image-featured"
+                    checked={isFeatured}
+                    onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
+                  />
+                  <Label htmlFor="image-featured">Featured (show on homepage)</Label>
+                </div>
+                
                 <DialogFooter className="pt-4">
                   <Button 
                     type="button" 
@@ -467,12 +515,25 @@ const AdminGallery = () => {
                           Hidden
                         </div>
                       )}
+                      {image.featured && (
+                        <div className="absolute top-2 left-2 bg-lotus-gold text-white text-xs px-2 py-1 rounded flex items-center">
+                          <Star className="h-3 w-3 mr-1" /> Featured
+                        </div>
+                      )}
                     </div>
                     <div className="p-3">
                       <h3 className="font-medium truncate">{image.title}</h3>
                       <p className="text-sm text-gray-500">{venueArea?.name || 'Unknown area'}</p>
                       
                       <div className="mt-3 flex justify-end gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="outline"
+                          onClick={() => handleToggleFeatured(image)}
+                          className={image.featured ? "bg-lotus-gold/10" : ""}
+                        >
+                          <Star className={`h-4 w-4 ${image.featured ? "fill-lotus-gold text-lotus-gold" : ""}`} />
+                        </Button>
                         <Button 
                           size="sm" 
                           variant="outline"

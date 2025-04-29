@@ -33,6 +33,7 @@ export type Database = {
           alt_text: string
           created_at: string
           description: string | null
+          featured: boolean
           id: string
           image_url: string
           order_index: number
@@ -45,6 +46,7 @@ export type Database = {
           alt_text: string
           created_at?: string
           description?: string | null
+          featured?: boolean
           id?: string
           image_url: string
           order_index?: number
@@ -57,6 +59,7 @@ export type Database = {
           alt_text?: string
           created_at?: string
           description?: string | null
+          featured?: boolean
           id?: string
           image_url?: string
           order_index?: number
