@@ -119,6 +119,7 @@ const PackagesPage = () => {
                     "Nadaswaram",
                     "Thallam",
                     "Welcome Board",
+                    "Basic Stage Décor",
                     "Marriage Certificate Processing"
                   ]
                 }
@@ -182,6 +183,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
+                    "Basic Stage Décor",
                     "Marriage Certificate Processing"
                   ]
                 }
@@ -191,7 +193,7 @@ const PackagesPage = () => {
             <MenuPackageCard
               title="Gold Package"
               description="Premium dining experience with enhanced menu selections"
-              price="575"
+              price="595"
               menu={[
                 {
                   category: "Welcome Drinks",
@@ -234,8 +236,7 @@ const PackagesPage = () => {
                       items: [
                         "Salad",
                         "Curd Salad",
-                        "Pickle",
-                        "Coconut Chutney"
+                        "Pickle"
                       ]
                     }
                   ]
@@ -252,6 +253,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
+                    "Basic Stage Décor",
                     "Marriage Certificate Processing"
                   ]
                 }
@@ -329,6 +331,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
+                    "Basic Stage Décor",
                     "Marriage Certificate Processing"
                   ]
                 }
@@ -338,7 +341,7 @@ const PackagesPage = () => {
             <MenuPackageCard
               title="Reception Package 2"
               description="Elegant reception feast featuring signature dishes"
-              price="495"
+              price="515"
               menu={[
                 {
                   category: "Welcome Drinks",
@@ -350,7 +353,7 @@ const PackagesPage = () => {
                 },
                 {
                   category: "Starters",
-                  items: ["Alsa (served at dining)"]
+                  items: ["Chicken Macaroni & Raw Mango Salad (served at dining)"]
                 },
                 {
                   category: "Main Course",
@@ -358,17 +361,25 @@ const PackagesPage = () => {
                     {
                       heading: "Rice & Biryani",
                       items: [
-                        "Beef Biryani",
-                        "Chicken Mandi"
+                        "Chicken Lagoon Biryani",
+                        "Ghee Rice"
                       ]
                     },
                     {
                       heading: "Fry Items",
                       items: ["Chicken Fry"]
                     },
+                    
                     {
-                      heading: "Mini Sadhya with fish curry",
-                      items: ["Traditional Kerala Sadhya Items with fish curry"]
+                      heading: "Breads",
+                      items: ["2 Breads"]
+                    },
+                    {
+                      heading: "Curry Dishes",
+                      items: [
+                        "2 Non Veg Curries",
+                        "Veg Curry"
+                      ]
                     },
                     {
                       heading: "Accompaniments",
@@ -392,6 +403,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
+                    "Basic Stage Décor",
                     "Marriage Certificate Processing"
                   ]
                 }
@@ -453,7 +465,6 @@ const PackagesPage = () => {
                         "Salad",
                         "Curd Salad",
                         "Pickle",
-                        "Coconut Chutney"
                       ]
                     }
                   ]
@@ -473,6 +484,7 @@ const PackagesPage = () => {
                   category: "Complimentary Services",
                   items: [
                     "Welcome Board",
+                    "Basic Stage Décor",
                     "Marriage Certificate Processing"
                   ]
                 }
