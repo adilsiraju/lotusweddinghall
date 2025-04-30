@@ -45,12 +45,11 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
     // Split the note by line breaks
     const lines = note.split(/\r?\n/).filter(line => line.trim() !== '');
     
-    return (
-      <ul className="space-y-1.5">
+    return (      <ul className="space-y-2">
         {lines.map((line, index) => (
-          <li key={index} className="text-gray-600 flex items-start">
-            <span className="text-lotus-gold mr-2 flex-shrink-0">•</span>
-            <span className="text-left">{line}</span>
+          <li key={index} className="flex items-start">
+            <div className="w-1 h-1 rounded-full bg-lotus-gold/60 mt-2 mr-3 flex-shrink-0"></div>
+            <span className="text-left text-gray-700 leading-relaxed">{line}</span>
           </li>
         ))}
       </ul>
@@ -85,15 +84,17 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
                 </CollapsibleContent>
               </Collapsible>
             ))}
-            
-            {/* Notes Section - only displayed if there are notes */}
+              {/* Notes Section - only displayed if there are notes */}
             {packageData.note && (
               <Collapsible defaultOpen={false}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-navy/5 hover:bg-lotus-navy/10 transition-colors">
-                  <span className="text-lotus-navy font-medium text-left">Notes</span>
-                  <ChevronDown className="h-4 w-4 text-lotus-navy transition-transform duration-200 ease-out" />
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-gold/10 hover:bg-lotus-gold/20 transition-colors border-2 border-lotus-gold/20">
+                  <div className="flex items-center space-x-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-lotus-gold"></span>
+                    <span className="text-lotus-navy font-medium text-left">Important Notes</span>
+                  </div>
+                  <ChevronDown className="h-4 w-4 text-lotus-gold transition-transform duration-200 ease-out" />
                 </CollapsibleTrigger>
-                <CollapsibleContent className="pt-2 space-y-3">
+                <CollapsibleContent className="pt-3 space-y-3 px-4 pb-2">
                   {renderNoteLines(packageData.note)}
                 </CollapsibleContent>
               </Collapsible>
