@@ -77,6 +77,56 @@ export type Database = {
           },
         ]
       }
+      gallery_videos: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          embed_url: string
+          featured: boolean
+          id: string
+          order_index: number
+          platform: string
+          title: string
+          updated_at: string
+          venue_area_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          embed_url: string
+          featured?: boolean
+          id?: string
+          order_index?: number
+          platform: string
+          title: string
+          updated_at?: string
+          venue_area_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          embed_url?: string
+          featured?: boolean
+          id?: string
+          order_index?: number
+          platform?: string
+          title?: string
+          updated_at?: string
+          venue_area_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_videos_venue_area_id_fkey"
+            columns: ["venue_area_id"]
+            isOneToOne: false
+            referencedRelation: "venue_areas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       menu_categories: {
         Row: {
           created_at: string

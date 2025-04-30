@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useVenueAreas } from '@/hooks/useVenueAreas';
 import { useGalleryImages } from '@/hooks/useGalleryImages';
@@ -25,9 +24,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from '@/integrations/supabase/client';
 import { PlusCircle, Trash2, Upload, ImageIcon, Star } from 'lucide-react';
 import VenueAreaForm from '@/components/VenueAreaForm';
+import VideoManagementSection from '@/components/VideoManagementSection';
 import { VenueArea } from '@/types/database';
 
 const AdminGallery = () => {
@@ -35,6 +36,7 @@ const AdminGallery = () => {
   const { data: galleryImages = [], isLoading: isLoadingImages, refetch: refetchImages } = useGalleryImages({ includeInactive: true });
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState('images');
 
   // Filter by venue area
   const [selectedVenueAreaId, setSelectedVenueAreaId] = useState<string>('all');
@@ -336,32 +338,160 @@ const AdminGallery = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold">Gallery Management</h1>
         <div className="flex gap-2">
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-lotus-navy" onClick={() => {
-                resetForm();
-                setIsDialogOpen(true);
-              }}>
-                <PlusCircle className="mr-2 h-4 w-4" />
-                Add Image
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle>{isEditMode ? 'Edit Image' : 'Add New Image'}</DialogTitle>
-              </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-4 pt-2">
-                <div className="space-y-2">
-                  <Label htmlFor="venue-area">Venue Area</Label>
+          <VenueAreaForm 
+            parentAreas={venueAreas}
+            onSuccess={() => refetchAreas()}
+          />
+        </div>
+      </div>
+      
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid grid-cols-2 w-64 mb-4">
+          <TabsTrigger value="images">Images</TabsTrigger>
+          <TabsTrigger value="videos">Videos</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="images" className="mt-0">
+          <div className="flex justify-end mb-4">
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-lotus-navy" onClick={() => {
+                  resetForm();
+                  setIsDialogOpen(true);
+                }}>
+                  <PlusCircle className="mr-2 h-4 w-4" />
+                  Add Image
+                </Button>
+              </DialogTrigger>
+              
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle>{isEditMode ? 'Edit Image' : 'Add New Image'}</DialogTitle>
+                </DialogHeader>
+                
+                <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="venue-area">Venue Area</Label>
+                    <Select 
+                      value={selectedAreaId} 
+                      onValueChange={setSelectedAreaId}
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select venue area" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {venueAreas.map((area) => (
+                          <SelectItem key={area.id} value={area.id}>
+                            {area.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="image-title">Image Title</Label>
+                    <Input
+                      id="image-title"
+                      value={imageTitle}
+                      onChange={handleImageTitleChange}
+                      placeholder="Enter image title"
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      This will also be used as the alt text for accessibility
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="image-description">Description (Optional)</Label>
+                    <Textarea
+                      id="image-description"
+                      value={imageDescription}
+                      onChange={(e) => setImageDescription(e.target.value)}
+                      placeholder="Enter image description"
+                      rows={3}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="image-file">Select Image</Label>
+                    <div className="flex items-center gap-2">
+                      <Input
+                        id="image-file"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className={isEditMode ? "" : "required:border-red-500"}
+                        required={!isEditMode}
+                      />
+                    </div>
+                  </div>
+                  
+                  {imagePreview && (
+                    <div className="mt-4">
+                      <img 
+                        src={imagePreview} 
+                        alt="Preview" 
+                        className="max-h-48 max-w-full object-contain border rounded" 
+                      />
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center space-x-2 pt-2">
+                    <Checkbox 
+                      id="image-active"
+                      checked={isActive}
+                      onCheckedChange={(checked) => setIsActive(checked as boolean)}
+                    />
+                    <Label htmlFor="image-active">Active (visible on website)</Label>
+                  </div>
+                  
+                  <div className="flex items-center space-x-2 pt-2">
+                    <Checkbox 
+                      id="image-featured"
+                      checked={isFeatured}
+                      onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
+                    />
+                    <Label htmlFor="image-featured">Featured (show on homepage)</Label>
+                  </div>
+                  
+                  <DialogFooter className="pt-4">
+                    <Button 
+                      type="button" 
+                      variant="outline"
+                      onClick={() => setIsDialogOpen(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button 
+                      type="submit" 
+                      className="bg-lotus-navy"
+                      disabled={isUploading}
+                    >
+                      {isUploading ? 'Uploading...' : isEditMode ? 'Update Image' : 'Upload Image'}
+                    </Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
+          </div>
+          
+          <Card>
+            <CardContent className="p-6">
+              <div className="mb-6">
+                <Label htmlFor="filter-area" className="block mb-2">Filter by Venue Area</Label>
+                <div className="flex gap-2">
                   <Select 
-                    value={selectedAreaId} 
-                    onValueChange={setSelectedAreaId}
-                    required
+                    value={selectedVenueAreaId} 
+                    onValueChange={setSelectedVenueAreaId}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select venue area" />
+                      <SelectValue placeholder="All Areas" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="all">All Areas</SelectItem>
                       {venueAreas.map((area) => (
                         <SelectItem key={area.id} value={area.id}>
                           {area.name}
@@ -370,193 +500,82 @@ const AdminGallery = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="image-title">Image Title</Label>
-                  <Input
-                    id="image-title"
-                    value={imageTitle}
-                    onChange={handleImageTitleChange}
-                    placeholder="Enter image title"
-                    required
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    This will also be used as the alt text for accessibility
-                  </p>
+              </div>
+              
+              {filteredImages.length === 0 ? (
+                <div className="text-center py-10">
+                  <ImageIcon className="mx-auto h-12 w-12 text-gray-300" />
+                  <p className="mt-4 text-gray-500">No images found. Add your first image.</p>
                 </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="image-description">Description (Optional)</Label>
-                  <Textarea
-                    id="image-description"
-                    value={imageDescription}
-                    onChange={(e) => setImageDescription(e.target.value)}
-                    placeholder="Enter image description"
-                    rows={3}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="image-file">Select Image</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id="image-file"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileChange}
-                      className={isEditMode ? "" : "required:border-red-500"}
-                      required={!isEditMode}
-                    />
-                  </div>
-                </div>
-                
-                {imagePreview && (
-                  <div className="mt-4">
-                    <img 
-                      src={imagePreview} 
-                      alt="Preview" 
-                      className="max-h-48 max-w-full object-contain border rounded" 
-                    />
-                  </div>
-                )}
-                
-                <div className="flex items-center space-x-2 pt-2">
-                  <Checkbox 
-                    id="image-active"
-                    checked={isActive}
-                    onCheckedChange={(checked) => setIsActive(checked as boolean)}
-                  />
-                  <Label htmlFor="image-active">Active (visible on website)</Label>
-                </div>
-                
-                <div className="flex items-center space-x-2 pt-2">
-                  <Checkbox 
-                    id="image-featured"
-                    checked={isFeatured}
-                    onCheckedChange={(checked) => setIsFeatured(checked as boolean)}
-                  />
-                  <Label htmlFor="image-featured">Featured (show on homepage)</Label>
-                </div>
-                
-                <DialogFooter className="pt-4">
-                  <Button 
-                    type="button" 
-                    variant="outline"
-                    onClick={() => setIsDialogOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                  <Button 
-                    type="submit" 
-                    className="bg-lotus-navy"
-                    disabled={isUploading}
-                  >
-                    {isUploading ? 'Uploading...' : isEditMode ? 'Update Image' : 'Upload Image'}
-                  </Button>
-                </DialogFooter>
-              </form>
-            </DialogContent>
-          </Dialog>
-          
-          <VenueAreaForm 
-            parentAreas={venueAreas}
-            onSuccess={() => refetchAreas()}
-          />
-        </div>
-      </div>
-      
-      <Card>
-        <CardContent className="p-6">
-          <div className="mb-6">
-            <Label htmlFor="filter-area" className="block mb-2">Filter by Venue Area</Label>
-            <div className="flex gap-2">
-              <Select 
-                value={selectedVenueAreaId} 
-                onValueChange={setSelectedVenueAreaId}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="All Areas" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Areas</SelectItem>
-                  {venueAreas.map((area) => (
-                    <SelectItem key={area.id} value={area.id}>
-                      {area.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          
-          {filteredImages.length === 0 ? (
-            <div className="text-center py-10">
-              <ImageIcon className="mx-auto h-12 w-12 text-gray-300" />
-              <p className="mt-4 text-gray-500">No images found. Add your first image.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {filteredImages.map((image) => {
-                const venueArea = venueAreas.find(area => area.id === image.venue_area_id);
-                
-                return (
-                  <div 
-                    key={image.id} 
-                    className={`border rounded-md overflow-hidden ${!image.active ? 'opacity-60' : ''}`}
-                  >
-                    <div className="relative h-48">
-                      <img 
-                        src={image.image_url} 
-                        alt={image.alt_text} 
-                        className="w-full h-full object-cover"
-                      />
-                      {!image.active && (
-                        <div className="absolute top-2 right-2 bg-gray-600 text-white text-xs px-2 py-1 rounded">
-                          Hidden
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {filteredImages.map((image) => {
+                    const venueArea = venueAreas.find(area => area.id === image.venue_area_id);
+                    
+                    return (
+                      <div 
+                        key={image.id} 
+                        className={`border rounded-md overflow-hidden ${!image.active ? 'opacity-60' : ''}`}
+                      >
+                        <div className="relative h-48">
+                          <img 
+                            src={image.image_url} 
+                            alt={image.alt_text} 
+                            className="w-full h-full object-cover"
+                          />
+                          {!image.active && (
+                            <div className="absolute top-2 right-2 bg-gray-600 text-white text-xs px-2 py-1 rounded">
+                              Hidden
+                            </div>
+                          )}
+                          {image.featured && (
+                            <div className="absolute top-2 left-2 bg-lotus-gold text-white text-xs px-2 py-1 rounded flex items-center">
+                              <Star className="h-3 w-3 mr-1" /> Featured
+                            </div>
+                          )}
                         </div>
-                      )}
-                      {image.featured && (
-                        <div className="absolute top-2 left-2 bg-lotus-gold text-white text-xs px-2 py-1 rounded flex items-center">
-                          <Star className="h-3 w-3 mr-1" /> Featured
+                        <div className="p-3">
+                          <h3 className="font-medium truncate">{image.title}</h3>
+                          <p className="text-sm text-gray-500">{venueArea?.name || 'Unknown area'}</p>
+                          
+                          <div className="mt-3 flex justify-end gap-2">
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleToggleFeatured(image)}
+                              className={image.featured ? "bg-lotus-gold/10" : ""}
+                            >
+                              <Star className={`h-4 w-4 ${image.featured ? "fill-lotus-gold text-lotus-gold" : ""}`} />
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline"
+                              onClick={() => handleEditImage(image)}
+                            >
+                              Edit
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="destructive"
+                              onClick={() => handleDeleteImage(image)}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                      )}
-                    </div>
-                    <div className="p-3">
-                      <h3 className="font-medium truncate">{image.title}</h3>
-                      <p className="text-sm text-gray-500">{venueArea?.name || 'Unknown area'}</p>
-                      
-                      <div className="mt-3 flex justify-end gap-2">
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleToggleFeatured(image)}
-                          className={image.featured ? "bg-lotus-gold/10" : ""}
-                        >
-                          <Star className={`h-4 w-4 ${image.featured ? "fill-lotus-gold text-lotus-gold" : ""}`} />
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => handleEditImage(image)}
-                        >
-                          Edit
-                        </Button>
-                        <Button 
-                          size="sm" 
-                          variant="destructive"
-                          onClick={() => handleDeleteImage(image)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+        
+        <TabsContent value="videos" className="mt-0">
+          <VideoManagementSection />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
