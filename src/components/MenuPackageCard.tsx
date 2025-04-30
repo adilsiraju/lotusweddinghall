@@ -49,6 +49,25 @@ const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageP
     );
   };
 
+  // Function to split note text into lines and render as bullet points
+  const renderNoteLines = (note: string) => {
+    if (!note) return null;
+    
+    // Split the note by line breaks
+    const lines = note.split(/\r?\n/).filter(line => line.trim() !== '');
+    
+    return (
+      <ul className="space-y-1.5">
+        {lines.map((line, index) => (
+          <li key={index} className="text-gray-600 flex items-start">
+            <span className="text-lotus-gold mr-2">•</span>
+            <span>{line}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -62,7 +81,6 @@ const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageP
             <h3 className="font-playfair text-2xl font-medium">{title}</h3>
             <p className="text-3xl font-bold text-lotus-gold">₹{price} <span className="text-sm font-normal">per head*</span></p>
             <p className="text-sm text-gray-200">{description}</p>
-            {note && <p className="text-sm text-gray-200 italic mt-2">{note}</p>}
           </div>
         </CardHeader>
         <CardContent className="p-6 flex flex-col justify-between flex-grow">
@@ -82,6 +100,19 @@ const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageP
                 </CollapsibleContent>
               </Collapsible>
             ))}
+            
+            {/* Notes Section - only displayed if there are notes */}
+            {note && (
+              <Collapsible defaultOpen={false}>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-navy/5 hover:bg-lotus-navy/10 transition-colors">
+                  <span className="text-lotus-navy font-medium">Notes</span>
+                  <ChevronDown className="h-4 w-4 text-lotus-navy transition-transform duration-200 ease-out" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pt-2 space-y-3">
+                  {renderNoteLines(note)}
+                </CollapsibleContent>
+              </Collapsible>
+            )}
           </div>
         </CardContent>
       </Card>

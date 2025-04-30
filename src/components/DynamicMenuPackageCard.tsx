@@ -38,6 +38,25 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
     });
   };
 
+  // Function to split note text into lines and render as bullet points
+  const renderNoteLines = (note: string) => {
+    if (!note) return null;
+    
+    // Split the note by line breaks
+    const lines = note.split(/\r?\n/).filter(line => line.trim() !== '');
+    
+    return (
+      <ul className="space-y-1.5">
+        {lines.map((line, index) => (
+          <li key={index} className="text-gray-600 flex items-start">
+            <span className="text-lotus-gold mr-2 flex-shrink-0">•</span>
+            <span className="text-left">{line}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -51,7 +70,6 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
             <h3 className="font-playfair text-2xl font-medium">{packageData.title}</h3>
             <p className="text-3xl font-bold text-lotus-gold">₹{packageData.price} <span className="text-sm font-normal">per head*</span></p>
             <p className="text-sm text-gray-200">{packageData.description}</p>
-            {packageData.note && <p className="text-sm text-gray-200 italic mt-2">{packageData.note}</p>}
           </div>
         </CardHeader>
         <CardContent className="p-6 flex flex-col justify-between flex-grow">
@@ -67,6 +85,19 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
                 </CollapsibleContent>
               </Collapsible>
             ))}
+            
+            {/* Notes Section - only displayed if there are notes */}
+            {packageData.note && (
+              <Collapsible defaultOpen={false}>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-navy/5 hover:bg-lotus-navy/10 transition-colors">
+                  <span className="text-lotus-navy font-medium text-left">Notes</span>
+                  <ChevronDown className="h-4 w-4 text-lotus-navy transition-transform duration-200 ease-out" />
+                </CollapsibleTrigger>
+                <CollapsibleContent className="pt-2 space-y-3">
+                  {renderNoteLines(packageData.note)}
+                </CollapsibleContent>
+              </Collapsible>
+            )}
           </div>
         </CardContent>
       </Card>
