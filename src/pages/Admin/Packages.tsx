@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { usePackages } from '@/hooks/usePackages';
 import { useQueryClient } from '@tanstack/react-query';
@@ -463,9 +464,11 @@ const AdminPackages = () => {
   }, [packages, activePackageId]);
 
   if (isLoading) {
-    return <div className="flex items-center justify-center h-full">
-      <div className="animate-spin h-10 w-10 border-4 border-lotus-navy border-t-transparent rounded-full"></div>
-    </div>;
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="animate-spin h-10 w-10 border-4 border-lotus-navy border-t-transparent rounded-full"></div>
+      </div>
+    );
   }
 
   return (
@@ -962,4 +965,43 @@ const AdminPackages = () => {
                                       </div>
                                       
                                       {/* Sub-items */}
-                                      {
+                                      {item.children && item.children.length > 0 && (
+                                        <ul className="ml-4 mt-1 space-y-1 border-l-2 border-gray-200 pl-2">
+                                          {item.children.map(subItem => (
+                                            <li key={subItem.id} className="relative">
+                                              <div className="flex justify-between items-center">
+                                                <span>{subItem.name}</span>
+                                                <Button
+                                                  size="sm"
+                                                  variant="ghost"
+                                                  onClick={() => handleDeleteMenuItem(subItem)}
+                                                  className="h-5 px-1.5"
+                                                >
+                                                  <Trash2 className="h-2.5 w-2.5 text-red-500" />
+                                                </Button>
+                                              </div>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      )}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        )}
+      </Card>
+    </div>
+  );
+};
+
+export default AdminPackages;
