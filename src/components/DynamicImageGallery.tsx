@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { VenueArea, GalleryImage } from '@/types/database';
 import { useVenueAreas } from '@/hooks/useVenueAreas';
 import { useGalleryImages } from '@/hooks/useGalleryImages';
+import { Button } from '@/components/ui/button';
 
 interface DynamicImageGalleryProps {
   className?: string;
@@ -11,6 +12,7 @@ interface DynamicImageGalleryProps {
 const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
   const [activeAreaId, setActiveAreaId] = useState<string | null>(null);
   const [activeSubAreaId, setActiveSubAreaId] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState<number>(6); // Initially show 6 images
   
   const { data: venueAreas = [], isLoading: areasLoading } = useVenueAreas();
   const { data: galleryImages = [], isLoading: imagesLoading } = useGalleryImages();
@@ -29,8 +31,7 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
     const area = venueAreas.find(area => area.id === activeAreaId);
     return area?.childAreas || [];
   }, [activeAreaId, venueAreas]);
-  
-  // Filter images based on selected area/subarea
+    // Filter images based on selected area/subarea
   const filteredImages = useMemo(() => {
     if (!activeAreaId && !activeSubAreaId) {
       return galleryImages;
@@ -56,6 +57,14 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
     return galleryImages;
   }, [activeAreaId, activeSubAreaId, galleryImages, venueAreas]);
 
+  // Get visible subset of filtered images based on visibleCount
+  const visibleImages = useMemo(() => {
+    return filteredImages.slice(0, visibleCount);
+  }, [filteredImages, visibleCount]);
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 6); // Load 6 more images
+  };
   const handleAreaClick = (area: VenueArea) => {
     if (activeAreaId === area.id) {
       setActiveAreaId(null);
@@ -64,6 +73,7 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
       setActiveAreaId(area.id);
       setActiveSubAreaId(null);
     }
+    setVisibleCount(6); // Reset to initial count when changing area
   };
 
   const handleSubAreaClick = (subArea: VenueArea) => {
@@ -72,6 +82,7 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
     } else {
       setActiveSubAreaId(subArea.id);
     }
+    setVisibleCount(6); // Reset to initial count when changing subarea
   };
 
   if (isLoading) {
@@ -90,10 +101,10 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
             !activeAreaId
               ? "bg-lotus-navy text-white border-lotus-navy"
               : "bg-transparent text-lotus-navy border-gray-300 hover:border-lotus-navy"
-          )}
-          onClick={() => {
+          )}          onClick={() => {
             setActiveAreaId(null);
             setActiveSubAreaId(null);
+            setVisibleCount(6); // Reset to initial count when showing all
           }}
         >
           All
@@ -143,11 +154,9 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
             </button>
           ))}
         </div>
-      )}
-
-      {/* Gallery grid */}
+      )}      {/* Gallery grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredImages.map((image) => (
+        {visibleImages.map((image) => (
           <div
             key={image.id}
             className="group overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-500 relative aspect-square"
@@ -168,6 +177,18 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
       {filteredImages.length === 0 && (
         <div className="text-center py-10">
           <p className="text-gray-500">No images found for this selection.</p>
+        </div>
+      )}
+
+      {/* Load More button - only show if there are more images to load */}
+      {visibleImages.length < filteredImages.length && (
+        <div className="flex justify-center mt-10">
+          <Button 
+            onClick={handleLoadMore}
+            className="bg-lotus-navy hover:bg-lotus-navy/90"
+          >
+            Load More
+          </Button>
         </div>
       )}
     </div>

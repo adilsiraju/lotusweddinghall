@@ -466,12 +466,13 @@ const VideoManagementSection = () => {
         )}
       </div>
         {/* Add/Edit Video Dialog */}      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg sm:max-h-[85vh] overflow-y-auto flex flex-col">
+        <DialogContent className="max-w-lg sm:max-h-[85vh] overflow-hidden flex flex-col">
           <DialogHeader>
             <DialogTitle>{isEditMode ? 'Edit Video' : 'Add New Video'}</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4 pt-2 flex-1 overflow-y-auto pr-1">
-            {/* Title */}
+          <form onSubmit={handleSubmit} className="flex flex-col flex-1">
+            <div className="flex-1 overflow-y-auto pr-1 space-y-4 pt-2">
+              {/* Title */}
             <div className="space-y-2">
               <Label htmlFor="title">Video Title</Label>
               <Input
@@ -584,11 +585,12 @@ const VideoManagementSection = () => {
                 id="featured" 
                 checked={formData.featured}
                 onCheckedChange={(checked) => setFormData(prev => ({ ...prev, featured: !!checked }))}
-              />
-              <Label htmlFor="featured" className="cursor-pointer">Featured</Label>
+              />              <Label htmlFor="featured" className="cursor-pointer">Featured</Label>
             </div>
-              {/* Form Actions */}
-            <DialogFooter className="mt-4 sticky bottom-0 pt-2 bg-white z-10">
+            </div>
+              
+            {/* Form Actions */}
+            <DialogFooter className="mt-4 sticky bottom-0 pt-2 bg-white z-10 border-t">
               <Button 
                 type="button" 
                 variant="outline"
