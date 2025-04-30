@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { VenueArea, GalleryImage } from '@/types/database';
 import { useVenueAreas } from '@/hooks/useVenueAreas';
@@ -13,6 +13,25 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
   const [activeAreaId, setActiveAreaId] = useState<string | null>(null);
   const [activeSubAreaId, setActiveSubAreaId] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState<number>(6); // Initially show 6 images
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  
+  // Check if device is mobile on initial load
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      // Adjust initial visible count based on screen size
+      setVisibleCount(window.innerWidth < 768 ? 3 : 6);
+    };
+    
+    // Check immediately
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   const { data: venueAreas = [], isLoading: areasLoading } = useVenueAreas();
   const { data: galleryImages = [], isLoading: imagesLoading } = useGalleryImages();
@@ -92,28 +111,26 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
   }
 
   return (
-    <div className={cn("", className)}>
-      {/* Main area filters */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
+    <div className={cn("", className)}>      {/* Main area filters - scrollable on mobile */}
+      <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2 px-1 -mx-1">
         <button
           className={cn(
-            "px-4 py-2 rounded-full border transition-all",
+            "px-4 py-2 rounded-full border transition-all whitespace-nowrap",
             !activeAreaId
               ? "bg-lotus-navy text-white border-lotus-navy"
               : "bg-transparent text-lotus-navy border-gray-300 hover:border-lotus-navy"
-          )}          onClick={() => {
+          )}onClick={() => {
             setActiveAreaId(null);
             setActiveSubAreaId(null);
-            setVisibleCount(6); // Reset to initial count when showing all
+            setVisibleCount(isMobile ? 3 : 6); // Reset to initial count based on device
           }}
         >
           All
         </button>
         {venueAreas.map(area => (
-          <button
-            key={area.id}
+          <button            key={area.id}
             className={cn(
-              "px-4 py-2 rounded-full border transition-all",
+              "px-4 py-2 rounded-full border transition-all whitespace-nowrap",
               activeAreaId === area.id
                 ? "bg-lotus-navy text-white border-lotus-navy"
                 : "bg-transparent text-lotus-navy border-gray-300 hover:border-lotus-navy"
@@ -123,14 +140,12 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
             {area.name}
           </button>
         ))}
-      </div>
-
-      {/* Subarea filters (only show if a parent area is selected and it has children) */}
+      </div>      {/* Subarea filters - scrollable on mobile */}
       {activeParentArea && subAreas.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+        <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2 px-1 -mx-1">
           <button
             className={cn(
-              "px-3 py-1 text-sm rounded-full border transition-all",
+              "px-3 py-1 text-sm rounded-full border transition-all whitespace-nowrap",
               !activeSubAreaId
                 ? "bg-lotus-gold text-white border-lotus-gold"
                 : "bg-transparent text-lotus-gold border-gray-300 hover:border-lotus-gold"
@@ -140,10 +155,9 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
             All {activeParentArea.name}
           </button>
           {subAreas.map(subArea => (
-            <button
-              key={subArea.id}
+            <button              key={subArea.id}
               className={cn(
-                "px-3 py-1 text-sm rounded-full border transition-all",
+                "px-3 py-1 text-sm rounded-full border transition-all whitespace-nowrap",
                 activeSubAreaId === subArea.id
                   ? "bg-lotus-gold text-white border-lotus-gold"
                   : "bg-transparent text-lotus-gold border-gray-300 hover:border-lotus-gold"
@@ -154,8 +168,8 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
             </button>
           ))}
         </div>
-      )}      {/* Gallery grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      )}      {/* Gallery grid - adjusted for better mobile view */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {visibleImages.map((image) => (
           <div
             key={image.id}
@@ -165,10 +179,10 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
               src={image.image_url}
               alt={image.alt_text}
               className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
+              loading="lazy"
+            />            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-              <span className="text-white font-medium text-lg">{image.title}</span>
+              <span className="text-white font-medium text-lg text-center px-4">{image.title}</span>
             </div>
           </div>
         ))}
@@ -178,16 +192,15 @@ const DynamicImageGallery = ({ className }: DynamicImageGalleryProps) => {
         <div className="text-center py-10">
           <p className="text-gray-500">No images found for this selection.</p>
         </div>
-      )}
-
-      {/* Load More button - only show if there are more images to load */}
+      )}      {/* Load More button - enhanced for mobile */}
       {visibleImages.length < filteredImages.length && (
         <div className="flex justify-center mt-10">
           <Button 
             onClick={handleLoadMore}
-            className="bg-lotus-navy hover:bg-lotus-navy/90"
+            className="bg-lotus-navy hover:bg-lotus-navy/90 px-6 sm:px-8 py-2 w-full sm:w-auto max-w-[250px]"
+            aria-label="Load more images"
           >
-            Load More
+            Load More ({filteredImages.length - visibleImages.length} remaining)
           </Button>
         </div>
       )}
