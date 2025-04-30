@@ -103,58 +103,31 @@ const AboutPage = () => {
               The passionate professionals dedicated to making your event perfect.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="relative mb-6 mx-auto w-48 h-48 rounded-full overflow-hidden">
+            <div className="flex flex-col md:flex-row justify-center gap-16 max-w-3xl mx-auto">
+            <div className="text-center flex flex-col items-center">
+              <div className="relative mb-6 w-48 h-48 rounded-full overflow-hidden">
                 <img 
                   src="/team/director.jpg" 
-                  alt="Rajesh Menon - Director" 
+                  alt="Siraju Ettammal - Director" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="font-playfair text-xl font-medium">Rajesh Menon</h3>
+              <h3 className="font-playfair text-xl font-medium">Siraju Ettammal</h3>
               <p className="text-lotus-navy font-medium mb-2">Founder & Director</p>
-              <p className="text-gray-600">With 20+ years of hospitality experience, Rajesh leads our team with passion and vision.</p>
+              <p className="text-gray-600 max-w-xs">Visionary behind Lotus, leading with tradition, trust, and hospitality excellence.</p>
             </div>
             
-            <div className="text-center">
-              <div className="relative mb-6 mx-auto w-48 h-48 rounded-full overflow-hidden">
+            <div className="text-center flex flex-col items-center">
+              <div className="relative mb-6 w-48 h-48 rounded-full overflow-hidden">
                 <img 
-                  src="/team/event-manager.jpg" 
-                  alt="Priya Thomas - Event Manager" 
+                  src="/team/jmd.jpg" 
+                  alt="Adil Siraju - JMD" 
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="font-playfair text-xl font-medium">Priya Thomas</h3>
-              <p className="text-lotus-navy font-medium mb-2">Event Manager</p>
-              <p className="text-gray-600">Priya ensures every event runs flawlessly with meticulous attention to detail.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="relative mb-6 mx-auto w-48 h-48 rounded-full overflow-hidden">
-                <img 
-                  src="/team/chef.jpg" 
-                  alt="Anoop Kumar - Head Chef" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="font-playfair text-xl font-medium">Anoop Kumar</h3>
-              <p className="text-lotus-navy font-medium mb-2">Head Chef</p>
-              <p className="text-gray-600">Master of Kerala cuisine with expertise in both traditional and modern culinary arts.</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="relative mb-6 mx-auto w-48 h-48 rounded-full overflow-hidden">
-                <img 
-                  src="/team/decor.jpg" 
-                  alt="Lakshmi Nair - Decor Specialist" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="font-playfair text-xl font-medium">Lakshmi Nair</h3>
-              <p className="text-lotus-navy font-medium mb-2">Decor Specialist</p>
-              <p className="text-gray-600">Lakshmi transforms our spaces into magical settings that reflect your unique vision.</p>
+              <h3 className="font-playfair text-xl font-medium">Adil Siraju</h3>
+              <p className="text-lotus-navy font-medium mb-2">JMD - Digital Strategy & Brand Experience</p>
+              <p className="text-gray-600 max-w-xs">Driving the Lotus’s digital presence, design, and modern guest experience.</p>
             </div>
           </div>
         </div>
@@ -176,49 +149,82 @@ const AboutPage = () => {
             
             {/* Timeline Items */}
             <div className="relative z-10">
-              {/* 2005 */}
+              {/* 2019 */}
               <div className="timeline-item mb-16">
                 <div className="flex items-center justify-center mb-4">
-                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2005</div>
+                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2019</div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
-                  <h3 className="font-playfair text-xl font-medium mb-2">Founding of Lotus</h3>
-                  <p className="opacity-80">Lotus Wedding Hall was established as a family-run venue with a capacity of 150 guests.</p>
-                </div>
-              </div>
-              
-              {/* 2010 */}
-              <div className="timeline-item mb-16">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2010</div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
-                  <h3 className="font-playfair text-xl font-medium mb-2">Major Expansion</h3>
-                  <p className="opacity-80">Expanded our facilities to accommodate up to 300 guests and introduced our signature Kerala Sadhya catering services.</p>
-                </div>
-              </div>
-              
-              {/* 2015 */}
-              <div className="timeline-item mb-16">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2015</div>
-                </div>
-                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
-                  <h3 className="font-playfair text-xl font-medium mb-2">Award-Winning Venue</h3>
-                  <p className="opacity-80">Recognized as Kerala's Best Wedding Venue and expanded our culinary offerings to include Malabar cuisine.</p>
+                  <h3 className="font-playfair text-xl font-medium mb-2">The Beginning</h3>
+                  <p className="opacity-80">Lotus Wedding & Banquet Hall was born in 2019 with a vision to create a premium space where families could celebrate life’s most important milestones in a setting rooted in tradition and elegance.</p>
                 </div>
               </div>
               
               {/* 2020 */}
-              <div className="timeline-item">
+              <div className="timeline-item mb-16">
                 <div className="flex items-center justify-center mb-4">
                   <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2020</div>
                 </div>
                 <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
-                  <h3 className="font-playfair text-xl font-medium mb-2">Luxury Renovation</h3>
-                  <p className="opacity-80">Complete renovation and modernization of our facilities with increased capacity for up to 500 guests.</p>
+                  <h3 className="font-playfair text-xl font-medium mb-2">The Challenge</h3>
+                  <p className="opacity-80">Just as Lotus was finding its rhythm, the COVID-19 pandemic brought celebrations to a standstill. Like many in the industry, we paused operations—but used the time to reflect, adapt, and prepare for a stronger comeback.</p>
                 </div>
               </div>
+              
+              {/* 2021 */}
+              <div className="timeline-item mb-16">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2021</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                  <h3 className="font-playfair text-xl font-medium mb-2">A New Chapter</h3>
+                  <p className="opacity-80">Lotus reopened with a full-scale renovation, upgrading our interiors, lighting, kitchen, and guest amenities. We redesigned the entire venue to offer a more luxurious and spacious experience while staying true to our cultural essence.</p>
+                </div>
+              </div>
+                {/* 2022 */}
+              <div className="timeline-item mb-16">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2022</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                  <h3 className="font-playfair text-xl font-medium mb-2">Rebuilding Trust</h3>
+                  <p className="opacity-80">With safety, quality, and hospitality at the forefront, 2022 marked the return of grand events. We began hosting weddings, receptions, and community gatherings once again—restoring confidence and joy among families.</p>
+                </div>
+              </div>
+
+              {/* 2023 */}
+              <div className="timeline-item mb-16">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2023</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                  <h3 className="font-playfair text-xl font-medium mb-2">Digital Innovation</h3>
+                  <p className="opacity-80">We embraced technology with a complete digital transformation—launching our interactive website, virtual venue tours, and a comprehensive event planning portal to provide a seamless experience for our guests.</p>
+                </div>
+              </div>
+
+              {/* 2024 */}
+              <div className="timeline-item mb-16">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2024</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                  <h3 className="font-playfair text-xl font-medium mb-2">Sustainability Focus</h3>
+                  <p className="opacity-80">Committed to environmental responsibility, we implemented eco-friendly practices across our operations—from energy-efficient lighting and water conservation to reducing single-use plastics and partnering with sustainable vendors.</p>
+                </div>
+              </div>
+
+              {/* 2025 */}
+              <div className="timeline-item">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-lotus-gold text-white text-xl font-medium py-2 px-4 rounded-full">2025</div>
+                </div>
+                <div className="bg-white/10 rounded-lg p-6 backdrop-blur-sm">
+                  <h3 className="font-playfair text-xl font-medium mb-2">Evolving With Vision</h3>
+                  <p className="opacity-80">Now in 2025, Lotus stands as a symbol of resilience, grace, and excellence in wedding hospitality. With technology and tradition working hand in hand, we continue to innovate and serve with heart.</p>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
