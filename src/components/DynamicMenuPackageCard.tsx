@@ -1,7 +1,23 @@
-
 import React from 'react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { ChevronDown } from 'lucide-react';
+import { 
+  ChevronDown, 
+  Utensils, 
+  FileText, 
+  DollarSign,
+  Coffee,
+  Soup,
+  Pizza,
+  Cake,
+  Salad,
+  Fish,
+  Wine,
+  Apple,
+  Beef,
+  Sandwich,
+  GlassWater,
+  Gift
+} from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { motion } from 'framer-motion';
 import { Package, MenuCategory, MenuItem } from '@/types/database';
@@ -56,6 +72,39 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
     );
   };
 
+  // Function to get the appropriate icon based on category name
+  const getCategoryIcon = (categoryName: string) => {
+    const name = categoryName.toLowerCase();
+      if (name.includes('starter') || name.includes('appetizer')) {
+      return <Soup className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('main') || name.includes('course') || name.includes('entrée')) {
+      return <Beef className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('dessert') || name.includes('sweet')) {
+      return <Cake className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('salad') || name.includes('vegetable')) {
+      return <Salad className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('seafood') || name.includes('fish')) {
+      return <Fish className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('drink') || name.includes('beverage')) {
+      return <Wine className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('refreshment')) {
+      return <GlassWater className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('complimentary') || name.includes('complementary')) {
+      return <Gift className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('fruit') || name.includes('fresh')) {
+      return <Apple className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('break') || name.includes('snack')) {
+      return <Sandwich className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('coffee') || name.includes('tea')) {
+      return <Coffee className="w-4 h-4 text-lotus-gold" />;
+    } else if (name.includes('pizza') || name.includes('bread')) {
+      return <Pizza className="w-4 h-4 text-lotus-gold" />;
+    }
+    
+    // Default icon
+    return <Utensils className="w-4 h-4 text-lotus-gold" />;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -76,7 +125,10 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
             {packageData.categories?.map((category) => (
               <Collapsible key={category.id} defaultOpen={false}>
                 <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-navy/5 hover:bg-lotus-navy/10 transition-colors">
-                  <span className="text-lotus-navy font-medium text-left">{category.name}</span>
+                  <span className="flex items-center gap-2 text-lotus-navy font-medium text-left">
+                    {getCategoryIcon(category.name)}
+                    {category.name}
+                  </span>
                   <ChevronDown className="h-4 w-4 text-lotus-navy transition-transform duration-200 ease-out" />
                 </CollapsibleTrigger>
                 <CollapsibleContent className="pt-2 space-y-3">
@@ -84,12 +136,12 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
                 </CollapsibleContent>
               </Collapsible>
             ))}
-              {/* Notes Section - only displayed if there are notes */}
+            {/* Notes Section - only displayed if there are notes */}
             {packageData.note && (
               <Collapsible defaultOpen={false}>
                 <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-gold/10 hover:bg-lotus-gold/20 transition-colors border-2 border-lotus-gold/20">
                   <div className="flex items-center space-x-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-lotus-gold"></span>
+                    <FileText className="w-4 h-4 text-lotus-gold" />
                     <span className="text-lotus-navy font-medium text-left">Important Notes</span>
                   </div>
                   <ChevronDown className="h-4 w-4 text-lotus-gold transition-transform duration-200 ease-out" />
