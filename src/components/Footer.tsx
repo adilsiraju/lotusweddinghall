@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import AnimateOnScroll from './ui/animate-on-scroll';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-lotus-navy text-white pt-16 pb-8">
       <div className="container mx-auto px-4">
@@ -102,7 +104,7 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} Lotus Wedding & Banquet Hall. All rights reserved.
+              &copy; {currentYear} Lotus Wedding & Banquet Hall. All rights reserved.
             </p>
             <div className="flex space-x-4 text-gray-400 text-sm">
               <Link to="/privacy" className="hover:text-lotus-gold transition-colors">Privacy Policy</Link>

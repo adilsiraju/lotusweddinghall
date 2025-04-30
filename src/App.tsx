@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
@@ -25,13 +24,14 @@ import MainLayout from './components/layouts/MainLayout';
 // Components
 import { Toaster } from "./components/ui/toaster";
 import { AuthProvider } from './contexts/AuthContext';
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 // Create a client
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
+    <ErrorBoundary>
       <AuthProvider>
         <Router>
           <Routes>
@@ -56,7 +56,7 @@ function App() {
           <Toaster />
         </Router>
       </AuthProvider>
-    </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
