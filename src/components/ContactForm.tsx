@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,20 +7,53 @@ import { useToast } from '@/components/ui/use-toast';
 
 const ContactForm = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, submit the form data to a backend service
+    setIsSubmitting(true);
     
+    // Get form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string || '';
+    const eventDate = formData.get('eventDate') as string || '';
+    const eventType = formData.get('eventType') as string || '';
+    const message = formData.get('message') as string;
+    
+    // Create formatted message for WhatsApp
+    const whatsappMessage = encodeURIComponent(
+      `*New Inquiry from Website*\n\n` +
+      `*Name:* ${name}\n` +
+      `*Email:* ${email}\n` +
+      `*Phone:* ${phone}\n` +
+      `*Event Date:* ${eventDate}\n` +
+      `*Event Type:* ${eventType}\n\n` +
+      `*Message:*\n${message}`
+    );
+    
+    // WhatsApp phone number - Indian format (omitting the + prefix)
+    const whatsappNumber = "919207102999";
+    
+    // Create WhatsApp URL
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+    
+    // Show toast notification
     toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
+      title: "Message Ready!",
+      description: "Redirecting you to WhatsApp to send your message.",
       duration: 5000,
     });
     
     // Reset form
-    const form = e.target as HTMLFormElement;
     form.reset();
+    setIsSubmitting(false);
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -117,8 +150,9 @@ const ContactForm = () => {
           type="submit"
           className="bg-lotus-navy hover:bg-lotus-navy/90 text-white px-6"
           size="lg"
+          disabled={isSubmitting}
         >
-          Send Message
+          {isSubmitting ? "Preparing Message..." : "Send via WhatsApp"}
         </Button>
       </div>
     </form>
