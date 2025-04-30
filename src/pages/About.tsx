@@ -20,15 +20,22 @@ const AboutPage = () => {
             <div>
               <h2 className="section-heading">Our Story</h2>
               <p className="text-gray-600 mb-6">
-                Founded in 2005, Lotus Wedding & Banquet Hall began with a vision to create a venue that honors Kerala's rich cultural traditions while providing modern luxury and convenience for life's most special celebrations.
+                Founded in 2019, Lotus Wedding & Banquet Hall was envisioned as a space where Kerala’s timeless traditions could meet the comfort and style of modern celebrations.
               </p>
               <p className="text-gray-600 mb-6">
-                What started as a modest family-run banquet hall has grown into one of Kerala's most prestigious venues, hosting thousands of weddings and events over the years while maintaining the warm, personal touch that has been our hallmark from the beginning.
+                Though our journey began just before the world faced an unexpected pause, the challenges of the pandemic became a moment of reflection and reinvention. In 2021, Lotus underwent a complete transformation—renovating its interiors, upgrading guest experiences, and reemerging as a premium wedding and event destination.
+              </p>
+              <p className="text-gray-600 mb-6">
+                Though our journey began just before the world faced an unexpected pause, the challenges of the pandemic became a moment of reflection and reinvention. In 2021, Lotus underwent a complete transformation—renovating its interiors, upgrading guest experiences, and reemerging as a premium wedding and event destination.
+              </p>
+              <p className="text-gray-600 mb-6">
+                What began as a humble, family-run initiative has blossomed into one of the region’s most trusted venues for weddings, receptions, and cultural gatherings. Over the years, we’ve remained committed to offering not just a space, but an experience—rich in heritage, elegance, and care.
               </p>
               <p className="text-gray-600">
-                Today, Lotus continues to blend traditional Kerala hospitality with contemporary elegance, creating memorable experiences for every guest who walks through our doors.
+                Today, Lotus continues to grow with a blend of traditional hospitality and modern sophistication, creating meaningful moments for every guest who walks through our doors.
               </p>
-            </div>            <div className="relative">
+            </div>            
+            <div className="relative">
               <img 
                 src="/about/venue-history.jpg" 
                 alt="Lotus Venue History" 
