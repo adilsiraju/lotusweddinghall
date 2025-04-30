@@ -465,14 +465,12 @@ const VideoManagementSection = () => {
           </div>
         )}
       </div>
-      
-      {/* Add/Edit Video Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-lg">
+        {/* Add/Edit Video Dialog */}      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-lg sm:max-h-[85vh] overflow-y-auto flex flex-col">
           <DialogHeader>
             <DialogTitle>{isEditMode ? 'Edit Video' : 'Add New Video'}</DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+          <form onSubmit={handleSubmit} className="space-y-4 pt-2 flex-1 overflow-y-auto pr-1">
             {/* Title */}
             <div className="space-y-2">
               <Label htmlFor="title">Video Title</Label>
@@ -589,9 +587,8 @@ const VideoManagementSection = () => {
               />
               <Label htmlFor="featured" className="cursor-pointer">Featured</Label>
             </div>
-            
-            {/* Form Actions */}
-            <DialogFooter className="pt-4">
+              {/* Form Actions */}
+            <DialogFooter className="mt-4 sticky bottom-0 pt-2 bg-white z-10">
               <Button 
                 type="button" 
                 variant="outline"
@@ -605,8 +602,7 @@ const VideoManagementSection = () => {
                 className="bg-lotus-navy"
                 disabled={isSaving}
               >
-                {isSaving ? 'Saving...' : isEditMode ? 'Update Video' : 'Add Video'}
-              </Button>
+                {isSaving ? 'Saving...' : isEditMode ? 'Update Video' : 'Add Video'}              </Button>
             </DialogFooter>
           </form>
         </DialogContent>
