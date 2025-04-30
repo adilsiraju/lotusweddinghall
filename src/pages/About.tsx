@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Hero from '@/components/Hero';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const AboutPage = () => {
   return (
@@ -27,12 +28,13 @@ const AboutPage = () => {
               <p className="text-gray-600">
                 Today, Lotus continues to blend traditional Kerala hospitality with contemporary elegance, creating memorable experiences for every guest who walks through our doors.
               </p>
-            </div>
-            <div className="relative">
+            </div>            <div className="relative">
               <img 
                 src="/about/venue-history.jpg" 
                 alt="Lotus Venue History" 
                 className="rounded-lg shadow-xl"
+                loading="eager"
+                decoding="async"
               />
               <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-lotus-gold rounded-lg -z-10"></div>
             </div>
@@ -104,12 +106,13 @@ const AboutPage = () => {
             </p>
           </div>
             <div className="flex flex-col md:flex-row justify-center gap-16 max-w-3xl mx-auto">
-            <div className="text-center flex flex-col items-center">
-              <div className="relative mb-6 w-48 h-48 rounded-full overflow-hidden">
-                <img 
+            <div className="text-center flex flex-col items-center">              <div className="relative mb-6 w-48 h-48 rounded-full overflow-hidden">
+                <OptimizedImage 
                   src="/team/director.jpg" 
                   alt="Siraju Ettammal - Director" 
                   className="w-full h-full object-cover"
+                  width={192}
+                  height={192}
                 />
               </div>
               <h3 className="font-playfair text-xl font-medium">Siraju Ettammal</h3>
@@ -117,12 +120,13 @@ const AboutPage = () => {
               <p className="text-gray-600 max-w-xs">Visionary behind Lotus, leading with tradition, trust, and hospitality excellence.</p>
             </div>
             
-            <div className="text-center flex flex-col items-center">
-              <div className="relative mb-6 w-48 h-48 rounded-full overflow-hidden">
-                <img 
+            <div className="text-center flex flex-col items-center">              <div className="relative mb-6 w-48 h-48 rounded-full overflow-hidden">
+                <OptimizedImage 
                   src="/team/jmd.jpg" 
                   alt="Adil Siraju - JMD" 
                   className="w-full h-full object-cover"
+                  width={192}
+                  height={192}
                 />
               </div>
               <h3 className="font-playfair text-xl font-medium">Adil Siraju</h3>

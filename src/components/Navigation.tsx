@@ -9,9 +9,8 @@ const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
   const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919207102999', '_blank');
+    window.open('https://wa.me/919207102999?text=Hello%20Lotus%20Wedding%20Hall%2C%20I%27m%20interested%20in%20booking%20your%20venue%20for%20an%20upcoming%20event.%20Could%20you%20please%20provide%20information%20about%20availability%20and%20packages%3F', '_blank');
   };
 
   // Close mobile menu when route changes

@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="col-span-1 md:col-span-1 lg:col-span-1">
               <div className="flex items-center mb-4">
                 <img src="/logo-white.png" alt="Lotus Wedding Hall" className="h-12" />
-                <span className="ml-2 font-playfair text-xl font-medium">Lotus</span>
+                <span className="ml-2 font-playfair text-xl font-medium">Lotus Wedding & Banquet Hall</span>
               </div>
               <p className="text-gray-300 mb-4">
                 Creating unforgettable moments for your special celebrations with elegance and warmth since 2019.
