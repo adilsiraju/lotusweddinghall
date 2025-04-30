@@ -43,9 +43,9 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="h-full"
+      className="w-full"
     >
-      <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl border-lotus-navy/10">
+      <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl border-lotus-navy/10">
         <CardHeader className="bg-gradient-to-br from-lotus-navy to-lotus-navy/90 text-white p-6 flex-shrink-0">
           <div className="space-y-2">
             <h3 className="font-playfair text-2xl font-medium">{packageData.title}</h3>

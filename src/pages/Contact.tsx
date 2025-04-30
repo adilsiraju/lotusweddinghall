@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { supabase } from '@/integrations/supabase/client';
 import Hero from '@/components/Hero';
 import { Button } from '@/components/ui/button';
 import {
@@ -49,26 +48,43 @@ const ContactPage = () => {
     setIsSubmitting(true);
     
     try {
-      // Call our Supabase Edge Function to send the email
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: values,
-      });
+      // Format the message for WhatsApp
+      const formattedMessage = `
+*New Inquiry from Website*
+---------------------------
+*Name:* ${values.name}
+*Email:* ${values.email}
+*Phone:* ${values.phone || 'Not provided'}
+*Event Date:* ${values.eventDate || 'Not provided'}
+*Event Type:* ${values.eventType || 'Not provided'}
+---------------------------
+*Message:*
+${values.message}
+      `;
       
-      if (error) throw error;
+      // Encode for URL
+      const encodedMessage = encodeURIComponent(formattedMessage);
       
+      // Create WhatsApp URL
+      const whatsappUrl = `https://wa.me/919207102999?text=${encodedMessage}`;
+      
+      // Show success message
       toast({
-        title: "Message Sent",
-        description: "Thank you! We've received your message and will get back to you soon.",
+        title: "Redirecting to WhatsApp",
+        description: "You'll be redirected to WhatsApp to send your message.",
       });
+      
+      // Open WhatsApp in new window
+      window.open(whatsappUrl, '_blank');
       
       form.reset();
     } catch (error: any) {
-      console.error('Failed to send message:', error);
+      console.error('Failed to process form:', error);
       
       toast({
         variant: "destructive",
-        title: "Failed to Send",
-        description: "There was a problem sending your message. Please try again or contact us directly.",
+        title: "Error",
+        description: "There was a problem processing your request. Please try again or contact us directly.",
       });
     } finally {
       setIsSubmitting(false);
@@ -284,9 +300,9 @@ const ContactPage = () => {
                       {isSubmitting ? (
                         <>
                           <LoadingSpinner size="sm" color="white" className="mr-2" />
-                          Sending...
+                          Processing...
                         </>
-                      ) : "Send Message"}
+                      ) : "Send via WhatsApp"}
                     </Button>
                   </form>
                 </Form>

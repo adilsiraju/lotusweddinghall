@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Hero from '@/components/Hero';
 import DynamicMenuPackageCard from '@/components/DynamicMenuPackageCard';
@@ -64,7 +63,7 @@ const PackagesPage = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 {packages.map(pkg => (
-                  <div key={pkg.id} className="min-h-[600px] flex">
+                  <div key={pkg.id} className="flex">
                     <DynamicMenuPackageCard packageData={pkg} />
                   </div>
                 ))}
