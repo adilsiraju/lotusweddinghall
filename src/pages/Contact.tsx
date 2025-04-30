@@ -315,6 +315,10 @@ ${values.message}
       {/* Map Section */}
       <section className="py-10 bg-gray-50">
         <div className="container mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-playfair font-medium text-gray-900">Visit Our Venue</h2>
+            <p className="text-gray-600 mt-2">Find us at the heart of Thalassery, near the Railway Station</p>
+          </div>
           <div className="rounded-lg overflow-hidden shadow-md h-[400px] md:h-[500px]">
             <iframe 
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3906.145304390272!2d75.49123757592926!3d11.754812488459844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba42779a8cf3017%3A0xc57e010b220f9efd!2sLotus%20Wedding%20%26%20Banquet%20Hall!5e0!3m2!1sen!2sin!4v1745989385836!5m2!1sen!2sin"
@@ -330,6 +334,7 @@ ${values.message}
           </div>
         </div>
       </section>
+      
     </div>
   );
 };
