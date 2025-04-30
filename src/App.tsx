@@ -1,3 +1,4 @@
+
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
@@ -32,30 +33,32 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<AdminDashboard />} />
-              <Route path="gallery" element={<AdminGallery />} />
-              <Route path="packages" element={<AdminPackages />} />
-            </Route>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="gallery" element={<AdminGallery />} />
+                <Route path="packages" element={<AdminPackages />} />
+              </Route>
 
-            {/* Main Website Routes with shared Navigation and Footer */}
-            <Route path="/" element={<MainLayout />}>
-              <Route index element={<Index />} />
-              <Route path="gallery" element={<Gallery />} />
-              <Route path="packages" element={<Packages />} />
-              <Route path="about" element={<About />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-          <Toaster />
-        </Router>
-      </AuthProvider>
+              {/* Main Website Routes with shared Navigation and Footer */}
+              <Route path="/" element={<MainLayout />}>
+                <Route index element={<Index />} />
+                <Route path="gallery" element={<Gallery />} />
+                <Route path="packages" element={<Packages />} />
+                <Route path="about" element={<About />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+            <Toaster />
+          </Router>
+        </AuthProvider>
+      </QueryClientProvider>
     </ErrorBoundary>
   );
 }
