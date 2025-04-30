@@ -8,8 +8,8 @@ import { usePackages } from '@/hooks/usePackages';
 const PackagesPage = () => {
   const { data: packages = [], isLoading } = usePackages();
   
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919207102999', '_blank');
+  const handleCallClick = () => {
+    window.location.href = 'tel:+919207102999';
   };
 
   return (
@@ -138,10 +138,10 @@ const PackagesPage = () => {
             We understand that every celebration is unique. Contact us to create a personalized package tailored to your specific requirements.
           </p>
           <Button 
-            onClick={handleWhatsAppClick}
+            onClick={handleCallClick}
             className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg"
           >
-            Contact Us on WhatsApp
+            Call Us Now
           </Button>
         </div>
       </section>

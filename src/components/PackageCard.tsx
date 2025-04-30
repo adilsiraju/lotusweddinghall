@@ -10,16 +10,6 @@ interface PackageCardProps {
 }
 
 const PackageCard = ({ package: pkg, showDetails = false, onClick }: PackageCardProps) => {
-  const handleBookNowClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    
-    // Generate pre-written message with package details
-    const message = `Hello! I'm interested in booking the "${pkg.title}" package at Lotus Wedding & Banquet Hall. Can you provide more information about availability and options? Thank you.`;
-    
-    // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/919207102999?text=${encodeURIComponent(message)}`, '_blank');
-  };
-
   return (
     <div 
       className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 relative cursor-pointer ${pkg.popular ? 'border-lotus-gold' : ''}`}
@@ -49,13 +39,6 @@ const PackageCard = ({ package: pkg, showDetails = false, onClick }: PackageCard
             <p className="text-gray-600">{pkg.note}</p>
           </div>
         )}
-        
-        <Button 
-          className="btn-primary w-full"
-          onClick={handleBookNowClick}
-        >
-          Book Now
-        </Button>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { usePackages } from '@/hooks/usePackages';
 import { useQueryClient } from '@tanstack/react-query';
@@ -76,6 +75,7 @@ const AdminPackages = () => {
   // Category navigation
   const [activePackageId, setActivePackageId] = useState<string | null>(null);
   
+  // Reset form functions - keep these as they are
   const resetPackageForm = () => {
     setSelectedPackage(null);
     setPackageTitle('');
@@ -105,6 +105,7 @@ const AdminPackages = () => {
     }
   };
 
+  // Form submission handlers - keep these as they are
   const handleSubmitPackage = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -178,6 +179,7 @@ const AdminPackages = () => {
     }
   };
 
+  // Other handler functions - keep these as they are
   const handleEditPackage = (pkg: any) => {
     setSelectedPackage(pkg);
     setPackageTitle(pkg.title);
@@ -244,7 +246,7 @@ const AdminPackages = () => {
     }
   };
 
-  // Package reordering functions
+  // Keep all other handlers as they are
   const handleMovePackage = async (packageId: string, direction: 'up' | 'down') => {
     try {
       // Find the current package and its index
@@ -468,10 +470,10 @@ const AdminPackages = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-semibold">Packages Management</h1>
         
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Sheet>
             <SheetTrigger asChild>
               <Button className="bg-lotus-navy">
@@ -479,7 +481,7 @@ const AdminPackages = () => {
                 Add Package
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-full sm:max-w-md overflow-y-auto">
+            <SheetContent className="w-full overflow-y-auto">
               <SheetHeader>
                 <SheetTitle>
                   {isEditingPackage ? 'Edit Package' : 'Add New Package'}
@@ -541,17 +543,18 @@ const AdminPackages = () => {
                   <Label htmlFor="popular">Mark as Popular</Label>
                 </div>
                 
-                <SheetFooter className="pt-4">
+                <SheetFooter className="pt-4 flex flex-col sm:flex-row gap-2">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={resetPackageForm}
+                    className="w-full sm:w-auto"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-lotus-navy"
+                    className="bg-lotus-navy w-full sm:w-auto"
                     disabled={isSubmitting}
                   >
                     {isSubmitting
@@ -573,7 +576,7 @@ const AdminPackages = () => {
                 Add Category
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-full sm:max-w-md">
+            <SheetContent className="w-full overflow-y-auto">
               <SheetHeader>
                 <SheetTitle>Add Menu Category</SheetTitle>
               </SheetHeader>
@@ -608,17 +611,18 @@ const AdminPackages = () => {
                   />
                 </div>
                 
-                <SheetFooter className="pt-4">
+                <SheetFooter className="pt-4 flex flex-col sm:flex-row gap-2">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={resetCategoryForm}
+                    className="w-full sm:w-auto"
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-lotus-navy"
+                    className="bg-lotus-navy w-full sm:w-auto"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Adding..." : "Add Category"}
@@ -635,7 +639,7 @@ const AdminPackages = () => {
                 Add Menu Item
               </Button>
             </SheetTrigger>
-            <SheetContent className="w-full sm:max-w-md">
+            <SheetContent className="w-full overflow-y-auto">
               <SheetHeader>
                 <SheetTitle>Add Menu Item</SheetTitle>
               </SheetHeader>
@@ -643,11 +647,11 @@ const AdminPackages = () => {
               <form onSubmit={handleSubmitMenuItem} className="space-y-6 pt-6">
                 <div className="space-y-2">
                   <Label htmlFor="menu-category">Select Category</Label>
-                  <div className="max-h-48 overflow-y-auto border rounded-md p-2">
+                  <div className="max-h-36 overflow-y-auto border rounded-md p-2">
                     <Tabs defaultValue={activePackageId || ''} onValueChange={(value) => setActivePackageId(value)}>
                       <TabsList className="w-full h-auto flex flex-wrap">
                         {packages.map(pkg => (
-                          <TabsTrigger key={pkg.id} value={pkg.id} className="flex-grow">
+                          <TabsTrigger key={pkg.id} value={pkg.id} className="flex-grow max-w-[50%] text-xs sm:text-sm">
                             {pkg.title}
                           </TabsTrigger>
                         ))}
@@ -771,11 +775,11 @@ const AdminPackages = () => {
         </div>
       </div>
       
-      <Card className="p-6">
-        <div className="flex justify-between items-center mb-4">
+      <Card className="p-4 md:p-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
           <h2 className="text-lg font-medium">All Packages</h2>
-          <div className="text-sm text-gray-500">
-            Drag or use arrows to reorder packages
+          <div className="text-xs md:text-sm text-gray-500">
+            Tap arrows to reorder packages
           </div>
         </div>
         
@@ -825,7 +829,7 @@ const AdminPackages = () => {
                           {pkg.popular && (
                             <Star className="h-4 w-4 mr-2 text-yellow-500 fill-yellow-500" />
                           )}
-                          <span className="font-medium">{pkg.title}</span>
+                          <span className="font-medium truncate max-w-[150px] sm:max-w-none">{pkg.title}</span>
                           {!pkg.active && (
                             <span className="ml-2 text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded">
                               Hidden
@@ -841,7 +845,7 @@ const AdminPackages = () => {
                 </div>
                 
                 <AccordionContent>
-                  <div className="space-y-4 pl-4 py-2">
+                  <div className="space-y-4 pl-2 md:pl-4 py-2">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <h3 className="text-sm font-semibold mb-1">Description</h3>
@@ -900,7 +904,7 @@ const AdminPackages = () => {
                         <div className="space-y-4">
                           {pkg.categories?.map((category) => (
                             <div key={category.id} className="bg-gray-50 p-3 rounded-md">
-                              <div className="flex justify-between items-center mb-2">
+                              <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
                                 <h4 className="font-medium">{category.name}</h4>
                                 <div className="flex items-center gap-2">
                                   <Button
@@ -931,13 +935,13 @@ const AdminPackages = () => {
                                   No items in this category.
                                 </div>
                               ) : (
-                                <ul className="space-y-1 pl-4">
+                                <ul className="space-y-1 pl-2 md:pl-4">
                                   {category.items?.filter(item => !item.parent_item_id).map((item) => (
                                     <li key={item.id}>
                                       <div className="flex justify-between items-center">
-                                        <div className="flex items-center">
+                                        <div className="flex items-center flex-wrap">
                                           {item.is_heading && (
-                                            <span className="text-xs bg-lotus-navy text-white px-1.5 py-0.5 rounded mr-2">
+                                            <span className="text-xs bg-lotus-navy text-white px-1.5 py-0.5 rounded mr-2 mb-1">
                                               Heading
                                             </span>
                                           )}
@@ -958,46 +962,4 @@ const AdminPackages = () => {
                                       </div>
                                       
                                       {/* Sub-items */}
-                                      {item.children && item.children.length > 0 && (
-                                        <ul className="pl-4 mt-1 space-y-1">
-                                          {item.children.map((subItem) => (
-                                            <li key={subItem.id}>
-                                              <div className="flex justify-between items-center">
-                                                <div className="flex items-center">
-                                                  <ChevronRight className="h-3 w-3 mr-1 text-gray-400" />
-                                                  <span>{subItem.name}</span>
-                                                </div>
-                                                <Button
-                                                  size="sm"
-                                                  variant="ghost"
-                                                  onClick={() => handleDeleteMenuItem(subItem)}
-                                                  className="h-6 px-2"
-                                                >
-                                                  <Trash2 className="h-3 w-3 text-red-500" />
-                                                </Button>
-                                              </div>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      )}
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        )}
-      </Card>
-    </div>
-  );
-};
-
-export default AdminPackages;
+                                      {

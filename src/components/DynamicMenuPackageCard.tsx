@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { motion } from 'framer-motion';
@@ -12,14 +11,6 @@ interface DynamicMenuPackageCardProps {
 }
 
 const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) => {
-  const handleWhatsAppClick = () => {
-    // Generate pre-written message with package details
-    const message = `Hello! I'm interested in booking the "${packageData.title}" package at Lotus Wedding & Banquet Hall. Can you provide more information about availability and pricing options? Thank you.`;
-    
-    // Open WhatsApp with pre-filled message
-    window.open(`https://wa.me/919207102999?text=${encodeURIComponent(message)}`, '_blank');
-  };
-
   const renderMenuItems = (items: MenuItem[] = []) => {
     return items.map((item) => {
       if (item.is_heading && item.children?.length) {
@@ -77,12 +68,6 @@ const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) =>
               </Collapsible>
             ))}
           </div>
-          <Button 
-            onClick={handleWhatsAppClick}
-            className="w-full mt-6 bg-lotus-gold hover:bg-lotus-gold/90 text-white"
-          >
-            Book This Package
-          </Button>
         </CardContent>
       </Card>
     </motion.div>

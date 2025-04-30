@@ -9,8 +9,9 @@ const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919207102999?text=Hello%20Lotus%20Wedding%20Hall%2C%20I%27m%20interested%20in%20booking%20your%20venue%20for%20an%20upcoming%20event.%20Could%20you%20please%20provide%20information%20about%20availability%20and%20packages%3F', '_blank');
+  
+  const handleCallClick = () => {
+    window.location.href = 'tel:+919207102999';
   };
 
   // Close mobile menu when route changes
@@ -77,10 +78,10 @@ const Navigation = () => {
           <NavLink to="/contact" currentPath={location.pathname}>Contact</NavLink>
           <Button 
             size="sm" 
-            onClick={handleWhatsAppClick}
+            onClick={handleCallClick}
             className="ml-6 bg-lotus-gold hover:bg-lotus-gold/90 text-white transition-all duration-300 font-medium px-5 py-2"
           >
-            Book Now
+            Call Now
           </Button>
         </nav>
 
@@ -127,7 +128,7 @@ const Navigation = () => {
               <MobileNavLink to="/about" currentPath={location.pathname}>About Us</MobileNavLink>
               <MobileNavLink to="/contact" currentPath={location.pathname}>Contact</MobileNavLink>
               <div className="px-4 py-3 mt-2">
-                <Button onClick={handleWhatsAppClick} className="w-full bg-lotus-gold hover:bg-lotus-gold/90 text-white">Book Now</Button>
+                <Button onClick={handleCallClick} className="w-full bg-lotus-gold hover:bg-lotus-gold/90 text-white">Call Now</Button>
               </div>
             </nav>
           </motion.div>

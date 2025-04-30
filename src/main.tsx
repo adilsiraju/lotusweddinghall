@@ -1,3 +1,4 @@
+
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -11,6 +12,9 @@ const criticalImages = [
   '/team/jmd.jpg',
   '/about/venue-history.jpg'
 ];
+
+// Add a phone icon to preload to ensure it loads quickly for call buttons
+criticalImages.push('/icons/phone.svg');
 
 criticalImages.forEach(src => {
   const link = document.createElement('link');

@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { motion } from 'framer-motion';
@@ -25,10 +24,6 @@ interface MenuPackageProps {
 }
 
 const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageProps) => {
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/919207102999', '_blank');
-  };
-
   const renderMenuItem = (item: string | MenuSubSection) => {
     if (typeof item === 'string') {
       return (
@@ -88,12 +83,6 @@ const MenuPackageCard = ({ title, description, price, menu, note }: MenuPackageP
               </Collapsible>
             ))}
           </div>
-          <Button 
-            onClick={handleWhatsAppClick}
-            className="w-full mt-6 bg-lotus-gold hover:bg-lotus-gold/90 text-white"
-          >
-            Book This Package
-          </Button>
         </CardContent>
       </Card>
     </motion.div>
