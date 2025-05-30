@@ -5,13 +5,14 @@ import DynamicImageGallery from '@/components/DynamicImageGallery';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { AlertCircle } from 'lucide-react';
 import { useGalleryVideos } from '@/hooks/useGalleryVideos';
+import { VideoPlatform } from '@/utils/videoUtils';
 
 // Interface for video data
 interface VideoData {
   id: string;
   title: string;
   embed_url: string;
-  platform: 'youtube' | 'instagram' | 'vimeo' | 'facebook';
+  platform: VideoPlatform;
   description?: string | null;
 }
 
@@ -132,24 +133,32 @@ const GalleryPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {eventVideos.length > 0 ? (
-                eventVideos.map(video => (
-                  <div key={video.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="aspect-w-16 aspect-h-9">
-                      <AspectRatio ratio={16/9} className="bg-gray-100">
-                        {renderVideo(video)}
-                      </AspectRatio>
+                eventVideos.map(video => {
+                  // Type assertion to ensure platform is the correct type
+                  const typedVideo: VideoData = {
+                    ...video,
+                    platform: video.platform as VideoPlatform
+                  };
+                  
+                  return (
+                    <div key={video.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                      <div className="aspect-w-16 aspect-h-9">
+                        <AspectRatio ratio={16/9} className="bg-gray-100">
+                          {renderVideo(typedVideo)}
+                        </AspectRatio>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-medium text-lotus-navy">{video.title}</h3>
+                        {video.description && (
+                          <p className="text-gray-600 mt-1 text-sm">{video.description}</p>
+                        )}
+                        <p className="text-sm text-gray-500 mt-1">
+                          Watch on {video.platform.charAt(0).toUpperCase() + video.platform.slice(1)}
+                        </p>
+                      </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-medium text-lotus-navy">{video.title}</h3>
-                      {video.description && (
-                        <p className="text-gray-600 mt-1 text-sm">{video.description}</p>
-                      )}
-                      <p className="text-sm text-gray-500 mt-1">
-                        Watch on {video.platform.charAt(0).toUpperCase() + video.platform.slice(1)}
-                      </p>
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <div className="col-span-full text-center py-10">
                   <div className="max-w-md mx-auto">

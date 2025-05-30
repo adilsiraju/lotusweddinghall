@@ -74,6 +74,8 @@ export function getPlatformDisplayName(platform: VideoPlatform): string {
     case 'vimeo': return 'Vimeo';
     case 'instagram': return 'Instagram';
     case 'facebook': return 'Facebook';
-    default: return platform.charAt(0).toUpperCase() + platform.slice(1);
+    default:
+      // This should never happen with proper typing, but we'll provide a fallback
+      return String(platform).charAt(0).toUpperCase() + String(platform).slice(1);
   }
 }
