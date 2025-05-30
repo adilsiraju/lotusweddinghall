@@ -5,10 +5,11 @@ import { Package } from '@/types/database';
 interface PackageCardProps {
   package: Package;
   showDetails?: boolean;
+  hidePricing?: boolean;
   onClick?: () => void;
 }
 
-const PackageCard = ({ package: pkg, showDetails = false, onClick }: PackageCardProps) => {
+const PackageCard = ({ package: pkg, showDetails = false, hidePricing = false, onClick }: PackageCardProps) => {
   return (
     <div 
       className={`bg-white border rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 relative cursor-pointer ${pkg.popular ? 'border-lotus-gold' : ''}`}
@@ -22,10 +23,13 @@ const PackageCard = ({ package: pkg, showDetails = false, onClick }: PackageCard
       
       <div className="p-6">
         <h3 className="text-xl sm:text-2xl font-playfair font-medium mb-2">{pkg.title}</h3>
-        <div className="flex items-baseline mb-4">
-          <span className="text-2xl font-semibold">₹{pkg.price}</span>
-          <span className="text-gray-500 ml-1">/plate</span>
-        </div>
+        
+        {!hidePricing && (
+          <div className="flex items-baseline mb-4">
+            <span className="text-2xl font-semibold">₹{pkg.price}</span>
+            <span className="text-gray-500 ml-1">/plate</span>
+          </div>
+        )}
         
         {showDetails ? (
           <p className="text-gray-600 mb-4">{pkg.description}</p>

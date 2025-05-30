@@ -1,160 +1,117 @@
-import React from 'react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { 
-  ChevronDown, 
-  Utensils, 
-  FileText, 
-  DollarSign,
-  Coffee,
-  Soup,
-  Pizza,
-  Cake,
-  Salad,
-  Fish,
-  Wine,
-  Apple,
-  Beef,
-  Sandwich,
-  GlassWater,
-  Gift
-} from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { motion } from 'framer-motion';
+
+import React, { useState } from 'react';
 import { Package, MenuCategory, MenuItem } from '@/types/database';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface DynamicMenuPackageCardProps {
   packageData: Package;
+  hidePricing?: boolean;
 }
 
-const DynamicMenuPackageCard = ({ packageData }: DynamicMenuPackageCardProps) => {
-  const renderMenuItems = (items: MenuItem[] = []) => {
-    return items.map((item) => {
-      if (item.is_heading && item.children?.length) {
-        return (
-          <div key={item.id} className="space-y-2">
-            <h4 className="text-lotus-navy font-medium text-left">{item.name}</h4>
-            <ul className="space-y-1.5 pl-4">
-              {item.children.map((subItem) => (
-                <li key={subItem.id} className="text-gray-600 flex items-start">
-                  <span className="text-lotus-gold mr-2 flex-shrink-0">•</span>
-                  <span className="text-left">{subItem.name}</span>
-                </li>
-              ))}
-            </ul>
+const DynamicMenuPackageCard = ({ packageData, hidePricing = false }: DynamicMenuPackageCardProps) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const renderMenuItems = (items: MenuItem[], depth = 0) => {
+    return items.map((item) => (
+      <div key={item.id} className={cn("mb-1", depth > 0 && "ml-4")}>
+        {item.is_heading ? (
+          <h5 className={cn(
+            "font-medium text-gray-800 mb-2",
+            depth === 0 ? "text-base" : "text-sm"
+          )}>
+            {item.name}
+          </h5>
+        ) : (
+          <p className={cn(
+            "text-gray-600 mb-1",
+            depth === 0 ? "text-sm" : "text-xs"
+          )}>
+            • {item.name}
+          </p>
+        )}
+        {item.children && item.children.length > 0 && (
+          <div className="ml-2">
+            {renderMenuItems(item.children, depth + 1)}
           </div>
-        );
-      }
-      
-      return (
-        <li key={item.id} className="text-gray-600 flex items-start">
-          <span className="text-lotus-gold mr-2 flex-shrink-0">•</span>
-          <span className="text-left">{item.name}</span>
-        </li>
-      );
-    });
-  };
-
-  // Function to split note text into lines and render as bullet points
-  const renderNoteLines = (note: string) => {
-    if (!note) return null;
-    
-    // Split the note by line breaks
-    const lines = note.split(/\r?\n/).filter(line => line.trim() !== '');
-    
-    return (      <ul className="space-y-2">
-        {lines.map((line, index) => (
-          <li key={index} className="flex items-start">
-            <div className="w-1 h-1 rounded-full bg-lotus-gold/60 mt-2 mr-3 flex-shrink-0"></div>
-            <span className="text-left text-gray-700 leading-relaxed">{line}</span>
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  // Function to get the appropriate icon based on category name
-  const getCategoryIcon = (categoryName: string) => {
-    const name = categoryName.toLowerCase();
-      if (name.includes('starter') || name.includes('appetizer')) {
-      return <Soup className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('main') || name.includes('course') || name.includes('entrée')) {
-      return <Beef className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('dessert') || name.includes('sweet')) {
-      return <Cake className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('salad') || name.includes('vegetable')) {
-      return <Salad className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('seafood') || name.includes('fish')) {
-      return <Fish className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('drink') || name.includes('beverage')) {
-      return <Wine className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('refreshment')) {
-      return <GlassWater className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('complimentary') || name.includes('complementary')) {
-      return <Gift className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('fruit') || name.includes('fresh')) {
-      return <Apple className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('break') || name.includes('snack')) {
-      return <Sandwich className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('coffee') || name.includes('tea')) {
-      return <Coffee className="w-4 h-4 text-lotus-gold" />;
-    } else if (name.includes('pizza') || name.includes('bread')) {
-      return <Pizza className="w-4 h-4 text-lotus-gold" />;
-    }
-    
-    // Default icon
-    return <Utensils className="w-4 h-4 text-lotus-gold" />;
+        )}
+      </div>
+    ));
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-full"
-    >
-      <Card className="flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl border-lotus-navy/10">
-        <CardHeader className="bg-gradient-to-br from-lotus-navy to-lotus-navy/90 text-white p-6 flex-shrink-0">
-          <div className="space-y-2">
-            <h3 className="font-playfair text-2xl font-medium">{packageData.title}</h3>
-            <p className="text-3xl font-bold text-lotus-gold">₹{packageData.price} <span className="text-sm font-normal">per head*</span></p>
-            <p className="text-sm text-gray-200">{packageData.description}</p>
-          </div>
-        </CardHeader>
-        <CardContent className="p-6 flex flex-col justify-between flex-grow">
-          <div className="space-y-4 overflow-y-auto max-h-[400px] scrollbar-thin scrollbar-thumb-lotus-navy/20 scrollbar-track-transparent">
-            {packageData.categories?.map((category) => (
-              <Collapsible key={category.id} defaultOpen={false}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-navy/5 hover:bg-lotus-navy/10 transition-colors">
-                  <span className="flex items-center gap-2 text-lotus-navy font-medium text-left">
-                    {getCategoryIcon(category.name)}
-                    {category.name}
-                  </span>
-                  <ChevronDown className="h-4 w-4 text-lotus-navy transition-transform duration-200 ease-out" />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pt-2 space-y-3">
-                  {renderMenuItems(category.items || [])}
-                </CollapsibleContent>
-              </Collapsible>
-            ))}
-            {/* Notes Section - only displayed if there are notes */}
-            {packageData.note && (
-              <Collapsible defaultOpen={false}>
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-2 rounded-md bg-lotus-gold/10 hover:bg-lotus-gold/20 transition-colors border-2 border-lotus-gold/20">
-                  <div className="flex items-center space-x-2">
-                    <FileText className="w-4 h-4 text-lotus-gold" />
-                    <span className="text-lotus-navy font-medium text-left">Important Notes</span>
-                  </div>
-                  <ChevronDown className="h-4 w-4 text-lotus-gold transition-transform duration-200 ease-out" />
-                </CollapsibleTrigger>
-                <CollapsibleContent className="pt-3 space-y-3 px-4 pb-2">
-                  {renderNoteLines(packageData.note)}
-                </CollapsibleContent>
-              </Collapsible>
+    <Card className={cn(
+      "w-full transition-all duration-300 hover:shadow-lg relative",
+      packageData.popular ? "border-lotus-gold ring-2 ring-lotus-gold/20" : "border-gray-200"
+    )}>
+      {packageData.popular && (
+        <Badge className="absolute -top-2 right-4 bg-lotus-gold hover:bg-lotus-gold/90 text-white">
+          POPULAR
+        </Badge>
+      )}
+      
+      <CardHeader className="pb-4">
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <CardTitle className="text-xl sm:text-2xl font-playfair font-medium mb-2">
+              {packageData.title}
+            </CardTitle>
+            {!hidePricing && (
+              <div className="flex items-baseline mb-3">
+                <span className="text-2xl font-semibold text-lotus-navy">₹{packageData.price}</span>
+                <span className="text-gray-500 ml-1">/plate</span>
+              </div>
             )}
           </div>
+        </div>
+        <CardDescription className="text-gray-600">
+          {packageData.description}
+        </CardDescription>
+        
+        {packageData.note && (
+          <div className="bg-lotus-cream/30 p-3 rounded-md text-sm mt-3">
+            <p className="text-gray-700">{packageData.note}</p>
+          </div>
+        )}
+      </CardHeader>
+
+      {packageData.categories && packageData.categories.length > 0 && (
+        <CardContent className="pt-0">
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center justify-between w-full text-left mb-4 p-3 bg-lotus-navy/5 rounded-lg hover:bg-lotus-navy/10 transition-colors"
+          >
+            <span className="font-medium text-lotus-navy">View Full Menu</span>
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4 text-lotus-navy" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-lotus-navy" />
+            )}
+          </button>
+
+          {isExpanded && (
+            <div className="space-y-6 animate-in slide-in-from-top-2 duration-300">
+              {packageData.categories.map((category) => (
+                <div key={category.id} className="border-l-3 border-lotus-gold pl-4">
+                  <h4 className="font-semibold text-lg text-lotus-navy mb-3 font-playfair">
+                    {category.name}
+                  </h4>
+                  {category.items && category.items.length > 0 ? (
+                    <div className="space-y-1">
+                      {renderMenuItems(category.items)}
+                    </div>
+                  ) : (
+                    <p className="text-gray-500 text-sm italic">No items listed</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
-      </Card>
-    </motion.div>
+      )}
+    </Card>
   );
 };
 
