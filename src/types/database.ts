@@ -24,6 +24,8 @@ export interface GalleryImage {
   updated_at: string;
 }
 
+export type MealType = 'lunch' | 'dinner' | 'both';
+
 export interface Package {
   id: string;
   title: string;
@@ -35,6 +37,7 @@ export interface Package {
   created_at: string;
   updated_at: string;
   order_index: number | null;
+  meal_type: MealType;
   categories?: MenuCategory[];
 }
 

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { usePackages } from '@/hooks/usePackages';
 import { useQueryClient } from '@tanstack/react-query';
@@ -36,6 +35,13 @@ import {
   TabsTrigger,
   TabsContent
 } from '@/components/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
 import { 
@@ -43,6 +49,7 @@ import {
   ChevronRight, Package, Star, Check, X, Utensils, Plus,
   ChevronUp, ChevronDown, Move
 } from 'lucide-react';
+import { MealType } from '@/types/database';
 
 const AdminPackages = () => {
   const { data: packages = [], isLoading, refetch } = usePackages({ includeInactive: true });
@@ -56,6 +63,7 @@ const AdminPackages = () => {
   const [packageDescription, setPackageDescription] = useState('');
   const [packagePrice, setPackagePrice] = useState('');
   const [packageNote, setPackageNote] = useState('');
+  const [packageMealType, setPackageMealType] = useState<MealType>('both');
   const [isPopular, setIsPopular] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -83,6 +91,7 @@ const AdminPackages = () => {
     setPackageDescription('');
     setPackagePrice('');
     setPackageNote('');
+    setPackageMealType('both');
     setIsPopular(false);
     setIsEditingPackage(false);
   };
@@ -117,6 +126,7 @@ const AdminPackages = () => {
         description: packageDescription,
         price: packagePrice,
         note: packageNote || null,
+        meal_type: packageMealType,
         popular: isPopular,
         active: true
       };
@@ -187,6 +197,7 @@ const AdminPackages = () => {
     setPackageDescription(pkg.description);
     setPackagePrice(pkg.price);
     setPackageNote(pkg.note || '');
+    setPackageMealType(pkg.meal_type || 'both');
     setIsPopular(pkg.popular);
     setIsEditingPackage(true);
   };
@@ -527,6 +538,20 @@ const AdminPackages = () => {
                 </div>
                 
                 <div className="space-y-2">
+                  <Label htmlFor="meal-type">Meal Type</Label>
+                  <Select value={packageMealType} onValueChange={(value: MealType) => setPackageMealType(value)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select meal type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="lunch">Lunch Only</SelectItem>
+                      <SelectItem value="dinner">Dinner Only</SelectItem>
+                      <SelectItem value="both">Both Lunch & Dinner</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-2">
                   <Label htmlFor="note">Note (Optional)</Label>
                   <Textarea
                     id="note"
@@ -838,6 +863,9 @@ const AdminPackages = () => {
                               Hidden
                             </span>
                           )}
+                          <span className="ml-2 text-xs bg-lotus-navy/10 text-lotus-navy px-2 py-0.5 rounded capitalize">
+                            {pkg.meal_type}
+                          </span>
                         </div>
                         <div className="text-sm font-normal text-right">
                           <div className="font-medium text-lotus-navy">{pkg.price}</div>

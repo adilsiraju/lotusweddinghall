@@ -216,6 +216,7 @@ export type Database = {
           created_at: string
           description: string
           id: string
+          meal_type: Database["public"]["Enums"]["meal_type"]
           note: string | null
           order_index: number | null
           popular: boolean
@@ -228,6 +229,7 @@ export type Database = {
           created_at?: string
           description: string
           id?: string
+          meal_type?: Database["public"]["Enums"]["meal_type"]
           note?: string | null
           order_index?: number | null
           popular?: boolean
@@ -240,6 +242,7 @@ export type Database = {
           created_at?: string
           description?: string
           id?: string
+          meal_type?: Database["public"]["Enums"]["meal_type"]
           note?: string | null
           order_index?: number | null
           popular?: boolean
@@ -298,7 +301,7 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      meal_type: "lunch" | "dinner" | "both"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -413,6 +416,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      meal_type: ["lunch", "dinner", "both"],
+    },
   },
 } as const

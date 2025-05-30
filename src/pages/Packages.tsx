@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Hero from '@/components/Hero';
 import DynamicMenuPackageCard from '@/components/DynamicMenuPackageCard';
@@ -12,26 +11,17 @@ const PackagesPage = () => {
     window.location.href = 'tel:+919207102999';
   };
 
-  // Function to categorize packages
+  // Function to categorize packages based on meal_type
   const categorizePackages = (packages: any[]) => {
     const lunchPackages: any[] = [];
     const dinnerPackages: any[] = [];
     
     packages.forEach(pkg => {
-      const title = pkg.title.toLowerCase();
-      const description = pkg.description.toLowerCase();
-      
-      // Check if package is specifically for lunch
-      if (title.includes('lunch') || description.includes('lunch')) {
+      // Check the meal_type field from the database
+      if (pkg.meal_type === 'lunch' || pkg.meal_type === 'both') {
         lunchPackages.push(pkg);
       }
-      // Check if package is specifically for dinner
-      else if (title.includes('dinner') || description.includes('dinner')) {
-        dinnerPackages.push(pkg);
-      }
-      // For packages that could apply to both or are general, add to both sections
-      else {
-        lunchPackages.push(pkg);
+      if (pkg.meal_type === 'dinner' || pkg.meal_type === 'both') {
         dinnerPackages.push(pkg);
       }
     });
