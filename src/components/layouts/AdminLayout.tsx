@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Navigate, Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -22,6 +21,11 @@ const AdminLayout = () => {
   // If not logged in or not admin, redirect to admin login
   if (!user || !isAdmin) {
     return <Navigate to="/admin/login" replace state={{ from: location }} />;
+  }
+
+  // If on /admin root path, redirect to dashboard
+  if (location.pathname === '/admin' || location.pathname === '/admin/') {
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
   const handleSignOut = async () => {
