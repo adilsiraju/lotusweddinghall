@@ -1,11 +1,14 @@
 
 import React from 'react';
 import Hero from '@/components/Hero';
-import DynamicImageGallery from '@/components/DynamicImageGallery';
+import { GallerySuspenseWrapper } from '@/components/LazyComponents';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { AlertCircle } from 'lucide-react';
 import { useGalleryVideos } from '@/hooks/useGalleryVideos';
 import { VideoPlatform } from '@/utils/videoUtils';
+
+// Lazy load the gallery component for better performance
+const OptimizedImageGallery = React.lazy(() => import('@/components/OptimizedImageGallery'));
 
 // Interface for video data
 interface VideoData {
@@ -112,7 +115,9 @@ const GalleryPage = () => {
             </p>
           </div>
           
-          <DynamicImageGallery />
+          <GallerySuspenseWrapper>
+            <OptimizedImageGallery />
+          </GallerySuspenseWrapper>
         </div>
       </section>
 

@@ -98,8 +98,9 @@ npm run dev
 
 ### Available Scripts
 - `npm run dev` - Start development server with hot reload
-- `npm run build` - Build production bundle
+- `npm run build` - Build optimized production bundle
 - `npm run build:dev` - Build development bundle
+- `npm run build:analyze` - Build and analyze bundle composition
 - `npm run preview` - Preview production build locally
 - `npm run lint` - Run ESLint for code quality
 
