@@ -58,9 +58,7 @@ const PackagesPage = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 {lunchPackages.map(pkg => (
-                  <div key={`lunch-${pkg.id}`} className="flex">
-                    <DynamicMenuPackageCard packageData={pkg} hidePricing={true} />
-                  </div>
+                  <DynamicMenuPackageCard key={`lunch-${pkg.id}`} packageData={pkg} hidePricing={true} />
                 ))}
                 {lunchPackages.length === 0 && (
                   <div className="col-span-3 text-center py-10">
@@ -84,9 +82,7 @@ const PackagesPage = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 {dinnerPackages.map(pkg => (
-                  <div key={`dinner-${pkg.id}`} className="flex">
-                    <DynamicMenuPackageCard packageData={pkg} hidePricing={true} />
-                  </div>
+                  <DynamicMenuPackageCard key={`dinner-${pkg.id}`} packageData={pkg} hidePricing={true} />
                 ))}
                 {dinnerPackages.length === 0 && (
                   <div className="col-span-3 text-center py-10">
