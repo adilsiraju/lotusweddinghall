@@ -6,6 +6,13 @@ import Footer from '../Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
+/* Page transition variants — subtle opacity crossfade */
+const pageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: { duration: 0.35, ease: 'easeOut' } },
+  exit:    { opacity: 0, transition: { duration: 0.2, ease: 'easeIn' } },
+};
+
 const MainLayout = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const { pathname } = useLocation();
@@ -35,8 +42,18 @@ const MainLayout = () => {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen pt-16"> 
-        <Outlet />
+      <main className="min-h-screen">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={pathname}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
       <Footer />
 
@@ -58,27 +75,7 @@ const MainLayout = () => {
         )}
       </AnimatePresence>
 
-      {/* Page transition */}
-      <div className="fixed inset-0 pointer-events-none z-50">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={pathname}
-            initial={{ scaleY: 0, transformOrigin: 'top' }}
-            animate={{ scaleY: 0 }}
-            exit={{ scaleY: 1, transformOrigin: 'bottom' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="bg-lotus-gold w-full h-screen"
-          />
-        </AnimatePresence>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={pathname + "-2"}
-            initial={{ scaleY: 1, transformOrigin: 'bottom' }}
-            animate={{ scaleY: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } }}
-            className="bg-lotus-gold w-full h-screen"
-          />
-        </AnimatePresence>
-      </div>
+
     </>
   );
 };

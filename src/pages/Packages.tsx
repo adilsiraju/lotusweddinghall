@@ -1,7 +1,6 @@
 import React from 'react';
 import Hero from '@/components/Hero';
 import DynamicMenuPackageCard from '@/components/DynamicMenuPackageCard';
-import { Button } from '@/components/ui/button';
 import { usePackages } from '@/hooks/usePackages';
 
 const PackagesPage = () => {
@@ -32,7 +31,7 @@ const PackagesPage = () => {
   const { lunchPackages, dinnerPackages } = categorizePackages(packages);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-lotus-cream/30">
+    <div style={{ background: 'var(--lotus-void)', color: 'var(--lotus-primary-text)' }}>
       <Hero 
         title="Celebration Packages"
         subtitle="Choose from our curated collection of wedding and event packages"
@@ -42,16 +41,17 @@ const PackagesPage = () => {
       
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin h-10 w-10 border-4 border-lotus-navy border-t-transparent rounded-full"></div>
+          <div className="animate-spin h-10 w-10 border-4 border-t-transparent rounded-full" style={{ borderColor: 'var(--lotus-border)', borderTopColor: 'var(--lotus-gold)' }}></div>
         </div>
       ) : (
         <>
           {/* Lunch Packages Section */}
-          <section className="py-16">
+          <section className="py-20" style={{ background: 'var(--lotus-deep)' }}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-3xl mx-auto text-center mb-12">
-                <h2 className="section-heading mx-auto">Lunch Packages</h2>
-                <p className="text-gray-600 text-lg mt-4">
+                <p className="section-label mb-4">Midday Dining</p>
+                <h2 className="section-heading mx-auto mb-4">Lunch Packages</h2>
+                <p className="text-lg mt-4" style={{ color: 'var(--lotus-muted)' }}>
                   Perfect for daytime celebrations and intimate gatherings featuring authentic Kerala flavors
                 </p>
               </div>
@@ -64,7 +64,7 @@ const PackagesPage = () => {
                 ))}
                 {lunchPackages.length === 0 && (
                   <div className="col-span-3 text-center py-10">
-                    <p className="text-gray-500">No lunch packages available at the moment. Please check back later.</p>
+                    <p style={{ color: 'var(--lotus-muted)' }}>No lunch packages available at the moment. Please check back later.</p>
                   </div>
                 )}
               </div>
@@ -72,11 +72,12 @@ const PackagesPage = () => {
           </section>
 
           {/* Dinner Packages Section */}
-          <section className="py-16 bg-lotus-cream/20">
+          <section className="py-20" style={{ background: 'var(--lotus-void)' }}>
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-3xl mx-auto text-center mb-12">
-                <h2 className="section-heading mx-auto">Dinner Packages</h2>
-                <p className="text-gray-600 text-lg mt-4">
+                <p className="section-label mb-4">Evening Dining</p>
+                <h2 className="section-heading mx-auto mb-4">Dinner Packages</h2>
+                <p className="text-lg mt-4" style={{ color: 'var(--lotus-muted)' }}>
                   Elegant evening dining experiences with elaborate spreads for grand celebrations
                 </p>
               </div>
@@ -89,7 +90,7 @@ const PackagesPage = () => {
                 ))}
                 {dinnerPackages.length === 0 && (
                   <div className="col-span-3 text-center py-10">
-                    <p className="text-gray-500">No dinner packages available at the moment. Please check back later.</p>
+                    <p style={{ color: 'var(--lotus-muted)' }}>No dinner packages available at the moment. Please check back later.</p>
                   </div>
                 )}
               </div>
@@ -98,49 +99,28 @@ const PackagesPage = () => {
         </>
       )}
 
-      <section className="py-16 bg-lotus-navy text-white mt-16 rounded-lg">
+      <section className="py-20 mt-8" style={{ background: 'var(--lotus-surface)', borderTop: '1px solid var(--lotus-border)', borderBottom: '1px solid var(--lotus-border)' }}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h3 className="text-3xl font-playfair font-medium text-center mb-10">
+            <h3 className="text-center mb-10" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 400, color: 'var(--lotus-primary-text)' }}>
               Important Information
             </h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white/5 rounded-lg p-6 backdrop-blur-sm">
-                <h4 className="text-xl font-medium text-lotus-gold mb-4">Package Inclusions</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Venue & facilities with complete setup</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Professional catering services</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Basic décor package</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Beverages and security services</span>
-                  </li>
+              <div className="grid md:grid-cols-2 gap-8">
+              <div className="luxury-card p-6">
+                <h4 className="text-xl font-medium mb-4" style={{ color: 'var(--lotus-gold)', fontFamily: 'Cormorant Garamond, Georgia, serif', fontWeight: 400 }}>Package Inclusions</h4>
+                <ul className="space-y-3" style={{ color: 'var(--lotus-secondary-text)', fontSize: '0.9rem' }}>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Venue &amp; facilities with complete setup</span></li>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Professional catering services</span></li>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Basic decor package</span></li>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Beverages and security services</span></li>
                 </ul>
               </div>
-              <div className="bg-white/5 rounded-lg p-6 backdrop-blur-sm">
-                <h4 className="text-xl font-medium text-lotus-gold mb-4">Additional Notes</h4>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Custom pricing based on final guest count</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Menu customization available on request</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-lotus-gold mr-2">•</span>
-                    <span>Special inclusions for Sadhya packages</span>
-                  </li>
+              <div className="luxury-card p-6">
+                <h4 className="text-xl font-medium mb-4" style={{ color: 'var(--lotus-gold)', fontFamily: 'Cormorant Garamond, Georgia, serif', fontWeight: 400 }}>Additional Notes</h4>
+                <ul className="space-y-3" style={{ color: 'var(--lotus-secondary-text)', fontSize: '0.9rem' }}>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Custom pricing based on final guest count</span></li>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Menu customization available on request</span></li>
+                  <li className="flex items-start"><span className="mr-2" style={{ color: 'var(--lotus-gold)' }}>+</span><span>Special inclusions for Sadhya packages</span></li>
                 </ul>
               </div>
             </div>
@@ -148,20 +128,18 @@ const PackagesPage = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-lotus-navy to-lotus-navy/95 text-white">
+      <section className="py-24" style={{ background: 'var(--lotus-deep)', borderTop: '1px solid var(--lotus-border)' }}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-6">
+          <p className="section-label mb-4">Bespoke Events</p>
+          <h2 className="section-heading mx-auto mb-6">
             Need a Custom Package?
           </h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+          <p className="lead-text mb-8 max-w-2xl mx-auto">
             We understand that every celebration is unique. Contact us to create a personalized package tailored to your specific requirements and get detailed pricing information.
           </p>
-          <Button 
-            onClick={handleCallClick}
-            className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg"
-          >
+          <button onClick={handleCallClick} className="btn-primary">
             Call Us Now
-          </Button>
+          </button>
         </div>
       </section>
     </div>

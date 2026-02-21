@@ -87,10 +87,10 @@ const GalleryPage = () => {
         );
       default:
         return (
-          <div className="flex items-center justify-center bg-gray-100 rounded-lg w-full h-full p-6">
+          <div className="flex items-center justify-center bg-gray-100 rounded-lg w-full h-full p-6" style={{ background: 'var(--lotus-surface)' }}>
             <div className="text-center">
-              <AlertCircle className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-              <p className="text-gray-600">Video cannot be displayed</p>
+              <AlertCircle className="mx-auto h-12 w-12 mb-2" style={{ color: 'var(--lotus-muted)' }} />
+              <p style={{ color: 'var(--lotus-muted)' }}>Video cannot be displayed</p>
             </div>
           </div>
         );
@@ -98,7 +98,7 @@ const GalleryPage = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div style={{ background: 'var(--lotus-void)', color: 'var(--lotus-primary-text)' }}>
       <Hero 
         title="Our Gallery"
         subtitle="Moments of celebration captured in our elegant venue"
@@ -106,11 +106,12 @@ const GalleryPage = () => {
         height="min-h-[50vh] lg:min-h-[60vh]" // Smaller height
       />
       
-      <section className="py-20">
+      <section className="py-24 md:py-32" style={{ background: 'var(--lotus-deep)' }}>
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="section-heading mx-auto">Explore Our Spaces</h2>
-            <p className="text-gray-600">
+            <p className="section-label mb-4">Photography</p>
+            <h2 className="section-heading mx-auto mb-6">Explore Our Spaces</h2>
+            <p style={{ color: 'var(--lotus-muted)' }}>
               Browse through our collection of images showcasing our beautiful venue, past events, and the elegant experiences we create.
             </p>
           </div>
@@ -122,18 +123,19 @@ const GalleryPage = () => {
       </section>
 
       {/* Video Showcase Section */}
-      <section className="py-20 bg-lotus-cream">
+      <section className="py-24 md:py-32" style={{ background: 'var(--lotus-void)' }}>
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="section-heading mx-auto">Event Highlights</h2>
-            <p className="text-gray-600">
+            <p className="section-label mb-4">Video</p>
+            <h2 className="section-heading mx-auto mb-6">Event Highlights</h2>
+            <p style={{ color: 'var(--lotus-muted)' }}>
               Watch videos from some of our most memorable celebrations and events.
             </p>
           </div>
 
           {isLoadingVideos ? (
             <div className="flex items-center justify-center h-40">
-              <div className="animate-spin h-10 w-10 border-4 border-lotus-navy border-t-transparent rounded-full"></div>
+              <div className="animate-spin h-10 w-10 border-4 border-t-transparent rounded-full" style={{ borderColor: 'var(--lotus-border)', borderTopColor: 'var(--lotus-gold)' }}></div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -146,18 +148,18 @@ const GalleryPage = () => {
                   };
                   
                   return (
-                    <div key={video.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div key={video.id} className="luxury-card overflow-hidden">
                       <div className="aspect-w-16 aspect-h-9">
-                        <AspectRatio ratio={16/9} className="bg-gray-100">
+                        <AspectRatio ratio={16/9} style={{ background: 'var(--lotus-surface)' }}>
                           {renderVideo(typedVideo)}
                         </AspectRatio>
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-medium text-lotus-navy">{video.title}</h3>
+                        <h3 className="text-lg font-medium mb-1" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--lotus-primary-text)', fontWeight: 400 }}>{video.title}</h3>
                         {video.description && (
-                          <p className="text-gray-600 mt-1 text-sm">{video.description}</p>
+                          <p className="mt-1 text-sm" style={{ color: 'var(--lotus-muted)' }}>{video.description}</p>
                         )}
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm mt-2" style={{ color: 'var(--lotus-muted)', fontSize: '0.75rem', letterSpacing: '0.05em' }}>
                           Watch on {video.platform.charAt(0).toUpperCase() + video.platform.slice(1)}
                         </p>
                       </div>
@@ -167,9 +169,9 @@ const GalleryPage = () => {
               ) : (
                 <div className="col-span-full text-center py-10">
                   <div className="max-w-md mx-auto">
-                    <AlertCircle className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-                    <p className="text-gray-600 mb-2">No videos available at the moment.</p>
-                    <p className="text-sm text-gray-500">Check back later for event highlight videos.</p>
+                    <AlertCircle className="mx-auto h-12 w-12 mb-2" style={{ color: 'var(--lotus-muted)' }} />
+                    <p className="mb-2" style={{ color: 'var(--lotus-muted)' }}>No videos available at the moment.</p>
+                    <p className="text-sm" style={{ color: 'var(--lotus-muted)' }}>Check back later for event highlight videos.</p>
                   </div>
                 </div>
               )}

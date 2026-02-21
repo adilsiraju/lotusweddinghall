@@ -2,176 +2,219 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  
-  const handleCallClick = () => {
-    window.location.href = 'tel:+919207102999';
-  };
 
-  // Close mobile menu when route changes
+  const handleCallClick = () => { window.location.href = 'tel:+919207102999'; };
+
+  useEffect(() => { setIsMobileMenuOpen(false); }, [location]);
+
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location]);
-
-  // Add scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 60);
+    handleScroll(); // Check on mount
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (isMobileMenuOpen && !(e.target as Element).closest('#mobile-menu') && 
+      if (isMobileMenuOpen && !(e.target as Element).closest('#mobile-menu') &&
           !(e.target as Element).closest('#mobile-menu-button')) {
         setIsMobileMenuOpen(false);
       }
     };
+    if (isMobileMenuOpen) document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
-    if (isMobileMenuOpen) {
-      document.addEventListener('click', handleClickOutside);
-    }
-    
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
+  // Lock body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
   return (
-    <header 
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 py-3 transition-all duration-300',
-        isScrolled ? 'bg-lotus-navy shadow-md' : 'bg-lotus-navy/90 backdrop-blur-sm'
-      )}
-    >
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center group" aria-label="Home">
-          <motion.img 
-            src="/logo-white.png" 
-            alt="Lotus Wedding Hall" 
-            className="h-10 md:h-12 brightness-100"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          />
-          <span className="ml-2 font-playfair text-lg md:text-xl font-semibold text-white">
-            Lotus <span className="hidden sm:inline">Wedding & Banquet Hall</span>
-          </span>
-        </Link>
+    <>
+      <header
+        className={cn(
+          'lotus-header fixed top-0 left-0 right-0 z-[60] transition-all duration-500',
+          isScrolled
+            ? 'py-3 md:py-4 lg:py-5 glass-dark border-b border-[var(--lotus-border)]'
+            : 'py-6 md:py-8 lg:py-10'
+        )}
+        style={!isScrolled ? {
+          background: 'linear-gradient(to bottom, rgba(6,6,6,0.8) 0%, rgba(6,6,6,0.4) 60%, transparent 100%)',
+        } : undefined}
+      >
+        <div className="container mx-auto flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-3 group" aria-label="Lotus Wedding Hall">
+            <img
+              src="/logo-white.png"
+              alt="Lotus"
+              className="h-7 md:h-8 opacity-90 group-hover:opacity-100 transition-opacity"
+            />
+            <div className="flex flex-col gap-[3px] leading-none">
+              <span
+                className="text-[var(--lotus-primary-text)] tracking-[0.12em] uppercase text-[10px] font-inter font-medium opacity-90"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                Lotus
+              </span>
+              <span
+                className="text-[var(--lotus-secondary-text)] tracking-[0.06em] uppercase text-[8px] font-inter opacity-70 hidden sm:block"
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                Wedding &amp; Banquet Hall
+              </span>
+            </div>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center">
-          <NavLink to="/" currentPath={location.pathname}>Home</NavLink>
-          <NavLink to="/gallery" currentPath={location.pathname}>Gallery</NavLink>
-          <NavLink to="/packages" currentPath={location.pathname}>Packages</NavLink>
-          <NavLink to="/about" currentPath={location.pathname}>About Us</NavLink>
-          <NavLink to="/contact" currentPath={location.pathname}>Contact</NavLink>
-          <Button 
-            size="sm" 
-            onClick={handleCallClick}
-            className="ml-6 bg-lotus-gold hover:bg-lotus-gold/90 text-white transition-all duration-300 font-medium px-5 py-2"
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+            {[
+              { to: '/', label: 'Home' },
+              { to: '/gallery', label: 'Gallery' },
+              { to: '/packages', label: 'Packages' },
+              { to: '/about', label: 'About' },
+              { to: '/contact', label: 'Contact' },
+            ].map(({ to, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className={cn(
+                  'nav-link',
+                  location.pathname === to && 'text-[var(--lotus-primary-text)]'
+                )}
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                {label}
+                {location.pathname === to && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute bottom-[-2px] left-0 right-0 h-[1px]"
+                    style={{ background: 'var(--lotus-gold)' }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </Link>
+            ))}
+            <button
+              onClick={handleCallClick}
+              className="btn-ghost-gold text-[10px] ml-2"
+              style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '0.2em' }}
+            >
+              Reserve
+            </button>
+          </nav>
+
+          {/* Mobile menu toggle */}
+          <button
+            id="mobile-menu-button"
+            className="md:hidden relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-[5px]"
+            onClick={(e) => { e.stopPropagation(); setIsMobileMenuOpen(!isMobileMenuOpen); }}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            Call Now
-          </Button>
-        </nav>
+            <span className={cn(
+              'block w-5 h-[1px] bg-[var(--lotus-primary-text)] transition-all duration-300 origin-center',
+              isMobileMenuOpen && 'rotate-45 translate-y-[6px]'
+            )} />
+            <span className={cn(
+              'block w-5 h-[1px] bg-[var(--lotus-primary-text)] transition-all duration-300',
+              isMobileMenuOpen && 'opacity-0 -translate-x-2'
+            )} />
+            <span className={cn(
+              'block w-5 h-[1px] bg-[var(--lotus-primary-text)] transition-all duration-300 origin-center',
+              isMobileMenuOpen && '-rotate-45 -translate-y-[6px]'
+            )} />
+          </button>
+        </div>
+      </header>
 
-        {/* Mobile Menu Button */}
-        <button
-          id="mobile-menu-button"
-          className="md:hidden p-2 z-50 relative"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsMobileMenuOpen(!isMobileMenuOpen);
-          }}
-          aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          <div className={cn(
-            "w-6 h-0.5 mb-1.5 transition-all duration-300 bg-white transform",
-            isMobileMenuOpen && "rotate-45 translate-y-2"
-          )}></div>
-          <div className={cn(
-            "w-6 h-0.5 mb-1.5 transition-all duration-300 bg-white",
-            isMobileMenuOpen && "opacity-0"
-          )}></div>
-          <div className={cn(
-            "w-6 h-0.5 bg-white transition-all duration-300 transform",
-            isMobileMenuOpen && "-rotate-45 -translate-y-2"
-          )}></div>
-        </button>
-      </div>
-
-      {/* Mobile Menu with AnimatePresence for smooth transitions */}
+      {/* Full-screen mobile menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden fixed top-[62px] left-0 w-full bg-lotus-navy/95 backdrop-blur-md z-40 shadow-xl"
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[55] flex flex-col"
+            style={{ background: 'var(--lotus-void)' }}
           >
-            <nav className="container flex flex-col pt-2 pb-4 overflow-hidden">
-              <MobileNavLink to="/" currentPath={location.pathname}>Home</MobileNavLink>
-              <MobileNavLink to="/gallery" currentPath={location.pathname}>Gallery</MobileNavLink>
-              <MobileNavLink to="/packages" currentPath={location.pathname}>Packages</MobileNavLink>
-              <MobileNavLink to="/about" currentPath={location.pathname}>About Us</MobileNavLink>
-              <MobileNavLink to="/contact" currentPath={location.pathname}>Contact</MobileNavLink>
-              <div className="px-4 py-3 mt-2">
-                <Button onClick={handleCallClick} className="w-full bg-lotus-gold hover:bg-lotus-gold/90 text-white">Call Now</Button>
+            {/* Subtle grid overlay — Nothing-inspired */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.03]"
+              style={{
+                backgroundImage: 'linear-gradient(var(--lotus-border) 1px, transparent 1px), linear-gradient(90deg, var(--lotus-border) 1px, transparent 1px)',
+                backgroundSize: '40px 40px',
+              }}
+            />
+            <div className="container mx-auto flex flex-col justify-center h-full py-24 relative">
+              <div className="mb-10">
+                <p className="counter-label mb-0 opacity-60">Navigation</p>
               </div>
-            </nav>
+              <nav className="flex flex-col gap-0">
+                {[
+                  { to: '/', label: 'Home', num: '01' },
+                  { to: '/gallery', label: 'Gallery', num: '02' },
+                  { to: '/packages', label: 'Packages', num: '03' },
+                  { to: '/about', label: 'About', num: '04' },
+                  { to: '/contact', label: 'Contact', num: '05' },
+                ].map(({ to, label, num }, i) => (
+                  <motion.div
+                    key={to}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <Link
+                      to={to}
+                      className={cn(
+                        'group flex items-baseline gap-4 py-5 border-b transition-all duration-200',
+                        'border-[var(--lotus-border)] hover:border-[var(--lotus-gold)]',
+                        location.pathname === to
+                          ? 'text-[var(--lotus-gold)]'
+                          : 'text-[var(--lotus-primary-text)]'
+                      )}
+                    >
+                      <span className="counter-label w-6 shrink-0 opacity-40">{num}</span>
+                      <span
+                        className="text-4xl sm:text-5xl font-light tracking-tight group-hover:translate-x-2 transition-transform duration-200"
+                        style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+                      >
+                        {label}
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="mt-10"
+              >
+                <button
+                  onClick={handleCallClick}
+                  className="btn-ghost-gold"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  Call: +91 92071 02999
+                </button>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
-
-// Desktop Nav Link
-const NavLink = ({ to, currentPath, children }: { to: string; currentPath: string; children: React.ReactNode }) => (
-  <Link 
-    to={to} 
-    className={cn(
-      "nav-link mx-3 py-2 text-white relative",
-      currentPath === to && "font-medium"
-    )}
-  >
-    {children}
-    {currentPath === to && (
-      <motion.span 
-        layoutId="navigation-underline"
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4/5 h-[2px] bg-lotus-gold" 
-      />
-    )}
-  </Link>
-);
-
-// Mobile Nav Link with animation
-const MobileNavLink = ({ to, currentPath, children }: { to: string; currentPath: string; children: React.ReactNode }) => (
-  <motion.div
-    whileTap={{ scale: 0.98 }}
-  >
-    <Link 
-      to={to} 
-      className={cn(
-        "py-3 px-4 block text-white hover:bg-white/10 transition-colors",
-        currentPath === to && "text-lotus-gold font-medium"
-      )}
-    >
-      {children}
-    </Link>
-  </motion.div>
-);
 
 export default Navigation;

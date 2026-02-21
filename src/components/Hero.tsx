@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
@@ -10,8 +9,8 @@ interface HeroProps {
   backgroundImage: string;
   showBookButton?: boolean;
   className?: string;
-  height?: string; // Custom height
-  overlayOpacity?: string; // Custom overlay opacity
+  height?: string;
+  overlayOpacity?: string;
 }
 
 const Hero = ({
@@ -20,134 +19,141 @@ const Hero = ({
   backgroundImage,
   showBookButton = false,
   className,
-  height = 'min-h-[70vh] lg:min-h-[90vh]', // Default height
-  overlayOpacity = 'rgba(0, 0, 0, 0.5)' // Default overlay opacity
-}: HeroProps) => {  
-  const handleCallClick = () => {
-    window.location.href = 'tel:+919207102999';
+  height = 'h-screen',
+}: HeroProps) => {
+  const handleCallClick = () => { window.location.href = 'tel:+919207102999'; };
+  const handleExploreClick = () => { document.getElementById('intro')?.scrollIntoView({ behavior: 'smooth' }); };
+
+  const stagger = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.14, delayChildren: 0.5 } },
   };
-  
-  // Animation variants
-  const containerVariants = {
+  const fadeUp = {
+    hidden: { opacity: 0, y: 32 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
+  };
+  const fadeIn = {
     hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      } 
-    }
-  };
-  
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1,
-      transition: { 
-        duration: 0.7, 
-        ease: "easeOut" 
-      }
-    }
+    visible: { opacity: 1, transition: { duration: 1.2, ease: 'easeOut' } },
   };
 
   return (
-    <div 
-      className={cn(
-        "relative flex items-center justify-center overflow-hidden",
-        height,
-        className
-      )}
-    >      
-      {/* Background image with optimized loading */}
-      <div 
-        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transform scale-[1.02] transition-transform duration-[15s] hover:scale-[1.07]"
+    <div className={cn('relative flex items-end justify-center overflow-hidden bg-[var(--lotus-void)]', height, className)}>
+      {/* Background image */}
+      <motion.div
+        className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat will-change-transform"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+        initial={{ scale: 1.08 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }}
+      />
+
+      {/* Multi-layer gradient overlay — cinematic depth */}
+      <div
+        className="absolute inset-0"
         style={{
-          backgroundImage: `url(${backgroundImage})`,
-        }}
-      >
-        <img 
-          src={backgroundImage} 
-          alt="" 
-          className="hidden" 
-          fetchPriority="high"
-          onLoad={(e) => {
-            // Once image is loaded, update the parent div's background
-            const parent = e.currentTarget.parentElement;
-            if (parent) {
-              parent.style.backgroundImage = `url(${backgroundImage})`;
-            }
-          }}
-        />
-      </div>
-        
-      {/* Overlay gradient for better readability */}
-      <div 
-        className="absolute inset-0" 
-        style={{
-          background: `linear-gradient(to bottom, ${overlayOpacity}, ${overlayOpacity})`
+          background: `
+            linear-gradient(to bottom,
+              rgba(6,6,6,0.25) 0%,
+              rgba(6,6,6,0.10) 30%,
+              rgba(6,6,6,0.20) 55%,
+              rgba(6,6,6,0.70) 80%,
+              rgba(6,6,6,0.92) 100%
+            )`,
         }}
       />
 
-      {/* Content */}
-      <motion.div 
-        className="container mx-auto text-center text-white z-10 px-4 md:px-6"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <motion.h1 
-          className="font-playfair font-semibold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4"
-          variants={itemVariants}
-        >
-          {title}
-        </motion.h1>
-        
-        <motion.p 
-          className="text-lg sm:text-xl md:text-2xl max-w-2xl mx-auto mb-8 opacity-90"
-          variants={itemVariants}
-        >
-          {subtitle}
-        </motion.p>
-        
-        {showBookButton && (
-          <motion.div variants={itemVariants}>
-            <Button 
-              size="lg" 
-              onClick={handleCallClick}
-              className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-6 py-6 text-lg font-medium shadow-lg hover:shadow-xl transform transition-all duration-300 hover:translate-y-[-3px]"
-            >
-              Call Now
-            </Button>
-          </motion.div>
-        )}
-      </motion.div>
+      {/* Thin top border — Mercedes precision detail */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[1px] z-20"
+        style={{ background: 'linear-gradient(to right, transparent, rgba(201,169,110,0.4), transparent)' }}
+      />
 
-      {/* Decorative elements */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent"></div>
-      
-      {/* Scroll indicator */}
-      {height.includes('90vh') && (
-        <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
+      {/* Content — bottom-aligned, left-heavy layout */}
+      <div className="container mx-auto relative z-10 pb-20 md:pb-28 lg:pb-32">
+        <motion.div
+          className="max-w-4xl"
+          initial="hidden"
+          animate="visible"
+          variants={stagger}
         >
-          <span className="text-sm mb-2 text-white/80">Scroll</span>
-          <motion.div
-            className="w-[1.5px] h-8 bg-white/50"
-            initial={{ height: 0 }}
-            animate={{ height: 32 }}
-            transition={{ 
-              delay: 1.8, 
-              duration: 1.5, 
-              repeat: Infinity, 
-              repeatType: "loop" 
+          {/* Category label */}
+          <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+            <div className="w-8 h-[1px]" style={{ background: 'var(--lotus-gold)' }} />
+            <span
+              className="text-[10px] tracking-[0.3em] uppercase font-medium"
+              style={{ color: 'var(--lotus-gold)', fontFamily: 'Inter, sans-serif' }}
+            >
+              Thalassery's Premier Wedding Venue
+            </span>
+          </motion.div>
+
+          {/* Main headline */}
+          <motion.h1
+            variants={fadeUp}
+            className="font-light text-[var(--lotus-primary-text)] mb-6"
+            style={{
+              fontFamily: 'Cormorant Garamond, Georgia, serif',
+              fontSize: 'clamp(2.8rem, 7vw, 6.5rem)',
+              lineHeight: 1.02,
+              letterSpacing: '-0.03em',
             }}
-          />
+          >
+            {title}
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            variants={fadeUp}
+            className="mb-10 max-w-lg"
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: 'clamp(0.875rem, 1.3vw, 1.0625rem)',
+              lineHeight: 1.75,
+              color: 'rgba(245,245,247,0.6)',
+              fontWeight: 300,
+              letterSpacing: '0.01em',
+            }}
+          >
+            {subtitle}
+          </motion.p>
+
+          {/* CTA buttons */}
+          {showBookButton && (
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4">
+              <button onClick={handleCallClick} className="btn-primary">
+                Book a Visit
+              </button>
+              <button onClick={handleExploreClick} className="btn-secondary">
+                Discover More
+              </button>
+            </motion.div>
+          )}
         </motion.div>
-      )}
+      </div>
+
+      {/* Scroll indicator — Apple-style */}
+      <motion.div
+        className="absolute bottom-8 right-8 md:right-12 flex flex-col items-center gap-2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 0.8 }}
+        aria-hidden
+      >
+        <span
+          className="text-[9px] tracking-[0.25em] uppercase"
+          style={{ color: 'rgba(245,245,247,0.4)', fontFamily: 'Inter, sans-serif', writingMode: 'vertical-rl' }}
+        >
+          Scroll
+        </span>
+        <motion.div
+          className="w-[1px]"
+          style={{ background: 'rgba(245,245,247,0.3)' }}
+          initial={{ height: 0 }}
+          animate={{ height: 48 }}
+          transition={{ delay: 2.3, duration: 1.2, repeat: Infinity, repeatType: 'loop', ease: 'easeInOut' }}
+        />
+      </motion.div>
     </div>
   );
 };

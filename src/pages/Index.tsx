@@ -1,278 +1,524 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Hero from '@/components/Hero';
 import FeatureCard from '@/components/FeatureCard';
-import TestimonialCard from '@/components/TestimonialCard';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import { useFeaturedGalleryImages } from '@/hooks/useFeaturedGalleryImages';
 import ResponsiveImage from '@/components/ui/responsive-image';
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import { cn } from '@/lib/utils';
+import { motion, useInView } from 'framer-motion';
 
+/* ── Reusable animation wrapper ─────────────────────────────── */
+const Reveal = ({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 28 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+/* ── Section label helper ───────────────────────────────────── */
+const SectionLabel = ({ children }: { children: React.ReactNode }) => (
+  <div className="section-label">{children}</div>
+);
+
+/* ── Stat block ─────────────────────────────────────────────── */
+const Stat = ({ value, label, delay }: { value: string; label: string; delay?: number }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 24 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: delay ?? 0 }}
+      className="flex flex-col"
+    >
+      <span
+        className="font-light leading-none mb-3"
+        style={{
+          fontFamily: 'Cormorant Garamond, Georgia, serif',
+          fontSize: 'clamp(3.5rem, 7vw, 6rem)',
+          letterSpacing: '-0.04em',
+          color: 'var(--lotus-primary-text)',
+        }}
+      >
+        {value}
+      </span>
+      <div className="w-6 h-[1px] mb-3" style={{ background: 'var(--lotus-gold)' }} />
+      <span
+        className="text-xs tracking-[0.2em] uppercase"
+        style={{ color: 'var(--lotus-muted)', fontFamily: 'Inter, sans-serif' }}
+      >
+        {label}
+      </span>
+    </motion.div>
+  );
+};
+
+/* ── Main Page ──────────────────────────────────────────────── */
 const IndexPage = () => {
   const { data: featuredImages = [], isLoading: isLoadingImages } = useFeaturedGalleryImages();
-  
-  // Helper function to generate WhatsApp message URL with pre-filled text
-  const generateWhatsAppUrl = (message: string) => {
-    return `https://wa.me/919207102999?text=${encodeURIComponent(message)}`;
-  };
 
-  const handleBookNowClick = () => {
-    const message = "Hello! I would like to book Lotus Wedding & Banquet Hall for an event. Please provide me with availability and details.";
-    window.open(generateWhatsAppUrl(message), '_blank');
+  const generateWhatsAppUrl = (msg: string) =>
+    `https://wa.me/919207102999?text=${encodeURIComponent(msg)}`;
+
+  const handleBookNow = () => {
+    const msg =
+      'Hello! I would like to book Lotus Wedding & Banquet Hall for an event. Please provide me with availability and details.';
+    window.open(generateWhatsAppUrl(msg), '_blank');
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <Hero 
-        title="Elegant Celebrations & Cherished Memories"
-        subtitle="Thalassery's premier wedding and event venue with traditional cuisine"
+    <div style={{ background: 'var(--lotus-void)', color: 'var(--lotus-primary-text)' }}>
+      {/* ═══════════════════════════════════════════════
+          1. HERO
+      ═══════════════════════════════════════════════ */}
+      <Hero
+        title="Where Celebrations Become Legend"
+        subtitle="Thalassery's most distinguished wedding and banquet hall, where traditional Kerala heritage meets modern luxury."
         backgroundImage="/hero-wedding.jpg"
         showBookButton={true}
       />
-      
-      {/* Intro Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div className="order-2 md:order-1 animate-fade-in">
-              <h2 className="section-heading">Welcome to Lotus Wedding & Banquet Hall</h2>
-              <p className="text-gray-600 mb-6">
-                Located in the heart of Thalassery, just 150m from the railway station, Lotus Wedding & Banquet Hall offers a perfect blend of tradition and modern elegance for your special celebrations.
+
+      {/* ═══════════════════════════════════════════════
+          2. MANIFESTO — Apple-style "We believe…"
+      ═══════════════════════════════════════════════ */}
+      <section
+        id="intro"
+        className="py-32 md:py-44"
+        style={{ background: 'var(--lotus-deep)' }}
+      >
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16 lg:gap-24 items-start">
+            <Reveal>
+              <SectionLabel>Our Philosophy</SectionLabel>
+              <p
+                className="text-sm leading-relaxed"
+                style={{ color: 'var(--lotus-muted)', fontFamily: 'Inter, sans-serif', fontWeight: 300 }}
+              >
+                Founded in 2019, 150&nbsp;m from Thalassery Railway Station.
               </p>
-              <p className="text-gray-600 mb-6">
-                Since 2019, we've been helping families create cherished memories with our elegant venue, exceptional service, and authentic Kerala cuisine.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button className="btn-primary" onClick={() => window.location.href='/gallery'}>
-                  Explore Our Venue
-                </Button>
-                <Button className="btn-secondary" onClick={() => window.location.href='/contact'}>
-                  Contact Us
-                </Button>
-              </div>
-            </div>
-            <div className="order-1 md:order-2">
-              <div className="relative">
-                <div className="rounded-lg overflow-hidden shadow-lg">
-                  <img 
-                    src="/venue-interior.jpg" 
-                    alt="Lotus Wedding Hall Interior" 
-                    className="w-full h-full object-cover animate-zoom-in"
-                  />
+            </Reveal>
+
+            <div>
+              <Reveal delay={0.1}>
+                <p
+                  className="mb-8 font-light"
+                  style={{
+                    fontFamily: 'Cormorant Garamond, Georgia, serif',
+                    fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
+                    lineHeight: 1.25,
+                    letterSpacing: '-0.025em',
+                    color: 'var(--lotus-primary-text)',
+                  }}
+                >
+                  Every celebration deserves a stage worthy of the memory it will become.
+                </p>
+              </Reveal>
+
+              <Reveal delay={0.18}>
+                <div
+                  className="w-full h-[1px] mb-8"
+                  style={{ background: 'var(--lotus-border)' }}
+                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                  <p className="lead-text">
+                    We blend the warmth of authentic Kerala tradition with the precision of a luxury hospitality
+                    experience. From the first consultation to the final farewell, every detail is curated
+                    with intention.
+                  </p>
+                  <p className="lead-text">
+                    Our grand hall accommodates up to 500 guests. Our chefs craft traditional Sadhya and
+                    Malabar cuisine on-site. Our team handles every coordinate of your day, so you experience
+                    nothing but joy.
+                  </p>
                 </div>
-                <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-lg overflow-hidden shadow-lg hidden md:block">
-                  <img 
-                    src="/food-closeup.jpg" 
-                    alt="Kerala Sadhya Food" 
-                    className="w-full h-full object-cover"
-                  />
+              </Reveal>
+
+              <Reveal delay={0.26}>
+                <div className="flex flex-wrap gap-4 mt-10">
+                  <button
+                    className="btn-primary"
+                    onClick={() => (window.location.href = '/gallery')}
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    Explore Venue
+                  </button>
+                  <button
+                    className="btn-secondary"
+                    onClick={() => (window.location.href = '/contact')}
+                    style={{ fontFamily: 'Inter, sans-serif' }}
+                  >
+                    Get in Touch
+                  </button>
                 </div>
-              </div>
+              </Reveal>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-20 bg-lotus-cream">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="section-heading mx-auto">Our Exclusive Services</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              From breathtaking celebrations to intimate gatherings, we offer a range of services to make your special day truly memorable.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 15.5458C20.4041 14.1102 19.0288 13.0922 17.3998 12.916C17.3993 12.916 17.3988 12.916 17.3982 12.9159C16.5975 12.7926 15.7138 12.9956 15.0647 13.6447C14.3838 14.3256 14.2174 15.2665 14.3839 16.0973L14.4603 16.4729C13.9352 16.1752 13.3631 15.9683 12.7578 15.8658L12.7578 9.94521C14.4055 9.63711 15.6638 8.18753 15.6638 6.44218C15.6638 4.48029 14.0487 2.86523 12.0868 2.86523C10.1249 2.86523 8.50987 4.48029 8.50987 6.44218C8.50987 8.17966 9.75694 9.62388 11.3925 9.9409L11.3925 15.8658C9.08581 16.2159 7.26768 18.0341 7.26768 20.2307C7.26768 22.5887 9.18489 24.5059 11.5429 24.5059C13.4772 24.5059 15.1193 23.2427 15.6223 21.5049C16.9525 21.8605 18.6403 22.6394 19.7189 24.0446C19.8657 24.2385 20.0818 24.3462 20.3066 24.3462C20.4343 24.3462 20.5645 24.3143 20.6823 24.2467C20.9941 24.0683 21.1358 23.6969 21.0176 23.3589C20.3173 21.288 18.5957 20.0787 17.1369 19.3492C17.0322 19.2965 16.9286 19.2476 16.8267 19.202C16.6247 18.5922 16.2874 18.0463 15.8625 17.6011C15.5821 17.3068 15.26 17.0515 14.9086 16.8424L14.7921 16.2432C14.6825 15.6893 14.7773 15.13 15.1353 14.7152C15.4696 14.3269 15.9973 14.1849 16.4875 14.2596C17.7124 14.4077 18.8078 15.2638 19.3348 16.4714C19.4529 16.7427 19.7049 16.9157 19.9907 16.9157C20.0529 16.9157 20.1163 16.9085 20.1792 16.893C20.5338 16.797 20.7441 16.4349 20.6481 16.0803L21 15.5458Z" fill="#D4AF37"/>
-              </svg>}
-              title="Wedding Ceremonies"
-              description="Our grand hall provides the perfect setting for your traditional wedding ceremony with all the elegance and grandeur it deserves."
-            />
-            <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.7 5H5.2C4.54772 5 4 5.54772 4 6.2V8.7C4 9.35229 4.54772 9.9 5.2 9.9H8.7C9.35229 9.9 9.9 9.35229 9.9 8.7V6.2C9.9 5.54772 9.35229 5 8.7 5Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.7 14.1H5.2C4.54772 14.1 4 14.6477 4 15.3V17.8C4 18.4523 4.54772 19 5.2 19H8.7C9.35229 19 9.9 18.4523 9.9 17.8V15.3C9.9 14.6477 9.35229 14.1 8.7 14.1Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.8 5H14.3C13.6477 5 13.1 5.54772 13.1 6.2V8.7C13.1 9.35229 13.6477 9.9 14.3 9.9H17.8C18.4523 9.9 19 9.35229 19 8.7V6.2C19 5.54772 18.4523 5 17.8 5Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.8 14.1H14.3C13.6477 14.1 13.1 14.6477 13.1 15.3V17.8C13.1 18.4523 13.6477 19 14.3 19H17.8C18.4523 19 19 18.4523 19 17.8V15.3C19 14.6477 18.4523 14.1 17.8 14.1Z" fill="#D4AF37"/>
-              </svg>}
-              title="Reception Parties"
-              description="Celebrate your union with friends and family in our elegantly designed spaces perfect for memorable reception parties."
-            />
-            <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11.0489 2.92705C11.3483 2.00574 12.6517 2.00574 12.9511 2.92705L14.2451 6.90983C14.379 7.32185 14.763 7.60081 15.1962 7.60081H19.3839C20.3527 7.60081 20.7554 8.84043 19.9717 9.40983L16.5838 11.8713C16.2333 12.126 16.0866 12.5773 16.2205 12.9894L17.5146 16.9721C17.814 17.8934 16.7595 18.6596 15.9757 18.0902L12.5878 15.6287C12.2373 15.374 11.7627 15.374 11.4122 15.6287L8.02426 18.0902C7.24054 18.6596 6.186 17.8934 6.48541 16.9721L7.7795 12.9894C7.91338 12.5773 7.76672 12.126 7.41623 11.8713L4.02827 9.40983C3.24455 8.84043 3.64732 7.60081 4.61606 7.60081H8.80379C9.23696 7.60081 9.62101 7.32185 9.75489 6.90983L11.0489 2.92705Z" fill="#D4AF37"/>
-              </svg>}
-              title="Special Celebrations"
-              description="From milestone birthdays to corporate events, our versatile venue adapts to your special celebration needs."
-            />
-            <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.84828 8.84847C9.64245 8.05431 10.7996 7.6665 12 7.6665C13.2003 7.6665 14.3575 8.05431 15.1516 8.84847C15.9458 9.64264 16.3336 10.7998 16.3336 12.0002C16.3336 13.2005 15.9458 14.3577 15.1516 15.1518C14.3575 15.946 13.2003 16.3338 12 16.3338C10.7996 16.3338 9.64245 15.946 8.84828 15.1518C8.05412 14.3577 7.66631 13.2005 7.66631 12.0002C7.66631 10.7998 8.05412 9.64264 8.84828 8.84847ZM9.39848 14.6016C10.0343 15.2374 10.8995 15.5893 11.7998 15.5893C12.7001 15.5893 13.5654 15.2374 14.2012 14.6016C14.837 13.9658 15.1889 13.1005 15.1889 12.2002C15.1889 11.2999 14.837 10.4346 14.2012 9.79878C13.5654 9.16296 12.7001 8.81104 11.7998 8.81104C10.8995 8.81104 10.0343 9.16296 9.39848 9.79878C8.76266 10.4346 8.41074 11.2999 8.41074 12.2002C8.41074 13.1005 8.76266 13.9658 9.39848 14.6016Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM3.06667 12C3.06667 7.05446 7.05446 3.06667 12 3.06667C16.9455 3.06667 20.9333 7.05446 20.9333 12C20.9333 16.9455 16.9455 20.9333 12 20.9333C7.05446 20.9333 3.06667 16.9455 3.06667 12Z" fill="#D4AF37"/>
-                <path stroke="#D4AF37" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.4999 11.9999H22.9999M1 11.9999H3.5M11.9999 20.4999V22.9999M11.9999 1V3.5"></path>
-              </svg>}
-              title="Kerala Sadhya"
-              description="Experience the authentic flavors of traditional Kerala Sadhya served on banana leaves, prepared by our expert chefs."
-            />
-            <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.5454 2.5C17.9813 5.31331 19.1807 7.90455 21 9.83307C19.1807 11.7616 17.9813 14.3528 17.5454 17.1662C17.1094 14.3528 15.91 11.7616 14.0907 9.83307C15.91 7.90455 17.1094 5.31331 17.5454 2.5Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.45459 12.5C9.77254 14.5666 10.6255 16.4857 12 18C10.6255 19.5143 9.77254 21.4334 9.45459 23.5C9.13665 21.4334 8.2837 19.5143 6.90918 18C8.2837 16.4857 9.13665 14.5666 9.45459 12.5Z" fill="#D4AF37"/>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.45459 6.5C6.62944 7.64887 7.0898 8.72554 7.81777 9.66667C7.0898 10.6078 6.62944 11.6845 6.45459 12.8333C6.27973 11.6845 5.81937 10.6078 5.0914 9.66667C5.81937 8.72554 6.27973 7.64887 6.45459 6.5Z" fill="#D4AF37"/>
-              </svg>}
-              title="Malabar Cuisine"
-              description="Delight your guests with the rich and aromatic flavors of authentic Malabar cuisine crafted with traditional recipes."
-            />
-            <FeatureCard
-              icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="#D4AF37">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10H21M6 14H8M11 14H13M3 7.8L3 16.2C3 17.8802 3 18.7202 3.32698 19.362C3.6146 19.9265 4.07354 20.3854 4.63803 20.673C5.27976 21 6.11984 21 7.8 21H16.2C17.8802 21 18.7202 21 19.362 20.673C19.9265 20.3854 20.3854 19.9265 20.673 19.362C21 18.7202 21 17.8802 21 16.2V7.8C21 6.11984 21 5.27976 20.673 4.63803C20.3854 4.07354 19.9265 3.6146 19.362 3.32698C18.7202 3 17.8802 3 16.2 3L7.8 3C6.11984 3 5.27976 3 4.63803 3.32698C4.07354 3.6146 3.6146 4.07354 3.32698 4.63803C3 5.27976 3 6.11984 3 7.8Z" />
-              </svg>}
-              title="Event Planning"
-              description="Our experienced team helps coordinate every detail of your event, ensuring a seamless and stress-free experience."
-            />
+      {/* ═══════════════════════════════════════════════
+          3. STATS ROW — Mercedes boldness
+      ═══════════════════════════════════════════════ */}
+      <section
+        className="py-24 border-y"
+        style={{ background: 'var(--lotus-void)', borderColor: 'var(--lotus-border)' }}
+      >
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
+            <Stat value="1300+" label="Guest Capacity" delay={0} />
+            <Stat value="7+" label="Years of Excellence" delay={0.08} />
+            <Stat value="1,000+" label="Events Hosted" delay={0.16} />
+            <Stat value="100%" label="Client Satisfaction" delay={0.24} />
           </div>
         </div>
       </section>
 
-      {/* Gallery Preview Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="section-heading mx-auto">Glimpses of Celebration</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Take a look at some of our beautiful venue spaces and past celebrations.
-            </p>
+      {/* ═══════════════════════════════════════════════
+          4. SERVICES GRID
+      ═══════════════════════════════════════════════ */}
+      <section className="py-32 md:py-44" style={{ background: 'var(--lotus-deep)' }}>
+        <div className="container mx-auto max-w-6xl">
+          <div className="mb-16">
+            <Reveal>
+              <SectionLabel>What We Offer</SectionLabel>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <h2 className="section-heading max-w-2xl">
+                Every occasion,<br />
+                <span style={{ color: 'var(--lotus-gold)' }}>flawlessly executed.</span>
+              </h2>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px]" style={{ background: 'var(--lotus-border)' }}>
+            {[
+              {
+                title: 'Wedding Ceremonies',
+                description:
+                  'Our grand hall provides an architecturally stunning setting for traditional wedding ceremonies, adorned with meticulous floral arrangements and ambient lighting.',
+              },
+              {
+                title: 'Reception Parties',
+                description:
+                  'Celebrate your union with friends and family in spaces designed for connection, elegant, intimate, and memorable beyond the evening.',
+              },
+              {
+                title: 'Special Celebrations',
+                description:
+                  'From milestone birthdays to sophisticated corporate events, our versatile spaces adapt to the unique character of every occasion.',
+              },
+              {
+                title: 'Kerala Sadhya',
+                description:
+                  'Experience the full ceremonial grandeur of traditional Kerala Sadhya, served on banana leaves by our master chefs using time-honoured recipes.',
+              },
+              {
+                title: 'Malabar Cuisine',
+                description:
+                  'An exploration of the rich, aromatic flavour profiles that define the Malabar coast, prepared fresh, served with pride.',
+              },
+              {
+                title: 'Full Event Planning',
+                description:
+                  'Our experienced coordination team manages every logistical detail including décor, catering timelines, and guest flow, leaving you free to be present.',
+              },
+            ].map((service, i) => (
+              <FeatureCard
+                key={service.title}
+                title={service.title}
+                description={service.description}
+                index={i}
+                delay={i * 0.05}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          5. GALLERY PREVIEW — Editorial bento grid
+      ═══════════════════════════════════════════════ */}
+      <section
+        className="py-32 md:py-44"
+        style={{ background: 'var(--lotus-void)' }}
+      >
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <div>
+              <Reveal>
+                <SectionLabel>The Space</SectionLabel>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <h2 className="section-heading mb-0">
+                  Glimpses of<br />
+                  <em style={{ color: 'var(--lotus-gold)', fontStyle: 'italic' }}>Celebration</em>
+                </h2>
+              </Reveal>
+            </div>
+            <Reveal delay={0.2}>
+              <button
+                className="btn-ghost-gold shrink-0"
+                onClick={() => (window.location.href = '/gallery')}
+                style={{ fontFamily: 'Inter, sans-serif' }}
+              >
+                Full Gallery
+              </button>
+            </Reveal>
           </div>
 
           {isLoadingImages ? (
-            <div className="flex justify-center py-12">
+            <div className="flex justify-center py-20">
               <LoadingSpinner size="lg" />
             </div>
-          ) : featuredImages.length === 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-2 overflow-hidden rounded-lg relative group">
-                <img 
-                  src="/gallery/wedding-hall.jpg" 
-                  alt="Decorated Wedding Hall" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
-              </div>
-              <div className="overflow-hidden rounded-lg relative group">
-                <img 
-                  src="/gallery/table-setting.jpg" 
-                  alt="Elegant Table Setting" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
-              </div>
-              <div className="overflow-hidden rounded-lg relative group">
-                <img 
-                  src="/gallery/sadhya.jpg" 
-                  alt="Traditional Kerala Sadhya" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
-              </div>
-              <div className="md:col-span-2 overflow-hidden rounded-lg relative group">
-                <img 
-                  src="/gallery/reception.jpg" 
-                  alt="Wedding Reception" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
-              </div>
-            </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {featuredImages.slice(0, 4).map((image, index) => (
-                <div 
-                  key={image.id} 
-                  className={cn(
-                    "overflow-hidden rounded-lg relative group",
-                    (index === 0 || index === 3) && featuredImages.length >= 4 ? "md:col-span-2" : ""
-                  )}
-                >
-                  <ResponsiveImage 
-                    src={image.image_url} 
-                    alt={image.alt_text} 
-                    className="w-full h-full object-cover"
-                    aspectRatio="aspect-[4/3]"
-                    animateOnHover
-                  />
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="text-white font-medium text-lg px-4 text-center">{image.title}</span>
+            <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-[280px_280px] gap-2">
+              {/* Large left image */}
+              <Reveal className="md:col-span-7 md:row-span-2 h-[260px] md:h-auto overflow-hidden group relative">
+                <img
+                  src={featuredImages[0]?.image_url ?? '/gallery/wedding-hall.jpg'}
+                  alt={featuredImages[0]?.alt_text ?? 'Wedding Hall'}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                  style={{ background: 'linear-gradient(to top, rgba(6,6,6,0.6), transparent)' }} />
+                {featuredImages[0]?.title && (
+                  <div className="absolute bottom-5 left-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-xs tracking-[0.15em] uppercase"
+                      style={{ color: 'var(--lotus-primary-text)', fontFamily: 'Inter, sans-serif' }}>
+                      {featuredImages[0].title}
+                    </span>
                   </div>
-                </div>
-              ))}
+                )}
+              </Reveal>
+
+              {/* Small top-right */}
+              <Reveal delay={0.08} className="md:col-span-5 md:row-span-1 h-[200px] md:h-auto overflow-hidden group relative">
+                <img
+                  src={featuredImages[1]?.image_url ?? '/gallery/table-setting.jpg'}
+                  alt={featuredImages[1]?.alt_text ?? 'Table Setting'}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                  style={{ background: 'rgba(6,6,6,0.3)' }} />
+              </Reveal>
+
+              {/* Small bottom-right */}
+              <Reveal delay={0.12} className="md:col-span-5 md:row-span-1 h-[200px] md:h-auto overflow-hidden group relative">
+                <img
+                  src={featuredImages[2]?.image_url ?? '/gallery/sadhya.jpg'}
+                  alt={featuredImages[2]?.alt_text ?? 'Kerala Sadhya'}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                  style={{ background: 'rgba(6,6,6,0.3)' }} />
+              </Reveal>
             </div>
           )}
+        </div>
+      </section>
 
-          <div className="text-center mt-10">
-            <Button className="btn-primary" onClick={() => window.location.href='/gallery'}>
-              View Full Gallery
-            </Button>
+      {/* ═══════════════════════════════════════════════
+          6. TESTIMONIALS — Minimal dark quotes
+      ═══════════════════════════════════════════════ */}
+      <section
+        className="py-32 md:py-44 border-t"
+        style={{ background: 'var(--lotus-deep)', borderColor: 'var(--lotus-border)' }}
+      >
+        <div className="container mx-auto max-w-6xl">
+          <Reveal>
+            <SectionLabel>Client Voices</SectionLabel>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <h2 className="section-heading max-w-xl">Words from<br />our guests.</h2>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px] mt-16" style={{ background: 'var(--lotus-border)' }}>
+            {[
+              {
+                quote:
+                  'The venue was breathtaking, and the Kerala Sadhya was absolutely delicious. Our guests are still talking about how wonderful everything was.',
+                author: 'Priya & Rahul',
+                role: 'Wedding Reception',
+              },
+              {
+                quote:
+                  'The staff at Lotus were attentive to every detail, making our corporate event truly exceptional. The space is elegant and the service impeccable.',
+                author: 'Suresh Kumar',
+                role: 'Corporate Event',
+              },
+              {
+                quote:
+                  "We couldn't have asked for a more beautiful venue. The Malabar cuisine was outstanding, and the team took care of absolutely everything.",
+                author: 'Deepa & Arun',
+                role: 'Wedding Ceremony',
+              },
+            ].map(({ quote, author, role }, i) => (
+              <Reveal
+                key={author}
+                delay={i * 0.1}
+                className="p-8 md:p-10 flex flex-col"
+                style={{ background: 'var(--lotus-surface)' } as React.CSSProperties}
+              >
+                {/* Large quote mark */}
+                <div
+                  className="text-6xl leading-none mb-5 select-none"
+                  style={{
+                    fontFamily: 'Cormorant Garamond, serif',
+                    color: 'var(--lotus-gold)',
+                    opacity: 0.5,
+                  }}
+                >
+                  "
+                </div>
+                <p
+                  className="flex-1 mb-8 font-light leading-relaxed"
+                  style={{
+                    fontFamily: 'Cormorant Garamond, Georgia, serif',
+                    fontSize: 'clamp(1.0625rem, 1.5vw, 1.25rem)',
+                    color: 'var(--lotus-primary-text)',
+                    lineHeight: 1.65,
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  {quote}
+                </p>
+                <div className="w-6 h-[1px] mb-4" style={{ background: 'var(--lotus-gold)' }} />
+                <div>
+                  <p
+                    className="text-sm font-medium mb-1"
+                    style={{ color: 'var(--lotus-primary-text)', fontFamily: 'Inter, sans-serif' }}
+                  >
+                    {author}
+                  </p>
+                  <p
+                    className="text-xs tracking-[0.15em] uppercase"
+                    style={{ color: 'var(--lotus-muted)', fontFamily: 'Inter, sans-serif' }}
+                  >
+                    {role}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 bg-lotus-cream">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="section-heading mx-auto">Client Testimonials</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Read what our clients have to say about their experience with us.
-            </p>
-          </div>
+      {/* ═══════════════════════════════════════════════
+          7. CTA — Full-width, cinematic close
+      ═══════════════════════════════════════════════ */}
+      <section
+        className="relative py-40 md:py-56 overflow-hidden"
+        style={{ background: 'var(--lotus-void)' }}
+      >
+        {/* Background image with dark overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: 'url(/venue-interior.jpg)' }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(6,6,6,0.92) 0%, rgba(6,6,6,0.82) 50%, rgba(6,6,6,0.90) 100%)',
+          }}
+        />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <TestimonialCard
-              quote="The venue was breathtaking, and the Kerala Sadhya was absolutely delicious. Our guests are still talking about how wonderful everything was!"
-              author="Priya & Rahul"
-              role="Wedding Reception"
-            />
-            <TestimonialCard
-              quote="The staff at Lotus were attentive to every detail, making our corporate event truly exceptional. The space is elegant and the service impeccable."
-              author="Suresh Kumar"
-              role="Corporate Event"
-            />
-            <TestimonialCard
-              quote="We couldn't have asked for a more beautiful venue for our special day. The Malabar cuisine was outstanding, and the team took care of everything."
-              author="Deepa & Arun"
-              role="Wedding Ceremony"
-            />
+        {/* Gold top line — Mercedes precision */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[1px]"
+          style={{ background: 'linear-gradient(to right, transparent, var(--lotus-gold), transparent)' }}
+        />
+
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className="max-w-3xl mx-auto text-center">
+            <Reveal>
+              <SectionLabel>Begin Your Story</SectionLabel>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <h2
+                className="font-light mb-6"
+                style={{
+                  fontFamily: 'Cormorant Garamond, Georgia, serif',
+                  fontSize: 'clamp(2.25rem, 6vw, 5rem)',
+                  lineHeight: 1.05,
+                  letterSpacing: '-0.03em',
+                  color: 'var(--lotus-primary-text)',
+                }}
+              >
+                Your perfect event starts with a single conversation.
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <p
+                className="mb-12 max-w-lg mx-auto"
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '0.9375rem',
+                  lineHeight: 1.75,
+                  color: 'rgba(245,245,247,0.55)',
+                  fontWeight: 300,
+                }}
+              >
+                Schedule a private venue tour or reach out to discuss how we can bring your vision to life.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.28}>
+              <div className="flex flex-wrap justify-center gap-4">
+                <button
+                  onClick={handleBookNow}
+                  className="btn-primary"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  Book Now via WhatsApp
+                </button>
+                <button
+                  onClick={() => (window.location.href = '/contact')}
+                  className="btn-secondary"
+                  style={{ fontFamily: 'Inter, sans-serif' }}
+                >
+                  Contact Us
+                </button>
+              </div>
+            </Reveal>
+
+            {/* Location detail */}
+            <Reveal delay={0.36}>
+              <p
+                className="mt-12 text-xs tracking-[0.2em] uppercase"
+                style={{ color: 'rgba(245,245,247,0.3)', fontFamily: 'Inter, sans-serif' }}
+              >
+                150m from Thalassery Railway Station &nbsp;·&nbsp; +91 92071 02999
+              </p>
+            </Reveal>
           </div>
         </div>
-      </section>
 
-      {/* Call to Action */}
-      <section className="py-20 bg-lotus-navy text-white">
-        <div className="container mx-auto text-center">
-          <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-6">Ready to Plan Your Special Event?</h2>
-          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
-            Contact us today to schedule a venue tour or to discuss how we can make your celebration truly memorable.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button 
-              onClick={handleBookNowClick}
-              className="bg-lotus-gold hover:bg-lotus-gold/90 text-white px-8 py-6 text-lg"
-            >
-              Book Now
-            </Button>
-            <Button 
-              onClick={() => window.location.href='/contact'}
-              className="border-2 border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
-            >
-              Contact Us
-            </Button>
-          </div>
-        </div>
+        {/* Gold bottom line */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-[1px]"
+          style={{ background: 'linear-gradient(to right, transparent, var(--lotus-gold), transparent)' }}
+        />
       </section>
     </div>
   );

@@ -53,18 +53,31 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Lotus custom theme colors
+				// Lotus luxury palette
 				lotus: {
-					navy: '#0A2342', // Navy Blue - primary brand color
-					gold: '#D4AF37', // Gold accent
-					cream: '#FDF5E6', // Cream/Off-white
-					light: '#F8F8FF', // Light background
-					gray: '#8E9196', // Neutral gray
+					void: '#060606',      // Absolute dark
+					deep: '#0f0f0f',      // Deep black
+					surface: '#1a1a1a',   // Card backgrounds
+					elevated: '#242424',  // Elevated surfaces
+					border: '#2a2a2a',    // Hairline borders
+					muted: '#6e6e73',     // Muted text (Apple grey)
+					secondary: '#a1a1a6', // Secondary text
+					primary: '#f5f5f7',   // Primary text (Apple off-white)
+					gold: '#c9a96e',      // Champagne gold
+					'gold-light': '#e0c48a', // Light gold
+					'gold-dim': 'rgba(201, 169, 110, 0.15)', // Dim gold tint
+					// Legacy (kept for compatibility)
+					navy: '#0A2342',
+					cream: '#FDF5E6',
+					light: '#F8F8FF',
+					gray: '#8E9196',
 				},
 			},
 			fontFamily: {
 				'playfair': ['Playfair Display', 'serif'],
 				'lato': ['Lato', 'sans-serif'],
+				'cormorant': ['Cormorant Garamond', 'Georgia', 'serif'],
+				'inter': ['Inter', 'system-ui', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -182,7 +195,8 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'gradient-gold': 'linear-gradient(to right, #D4AF37, #F2D984, #D4AF37)',
+				'gradient-gold': 'linear-gradient(135deg, #c9a96e, #e0c48a, #c9a96e)',
+				'gradient-dark': 'linear-gradient(180deg, #060606 0%, #0f0f0f 100%)',
 			},
 			transitionProperty: {
 				'height': 'height',

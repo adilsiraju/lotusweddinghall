@@ -96,7 +96,7 @@ ${values.message}
   };
 
   return (
-    <div className="min-h-screen">
+    <div style={{ background: 'var(--lotus-void)', color: 'var(--lotus-primary-text)' }}>
       <Hero 
         title="Contact Us"
         subtitle="Reach out to discuss your event or schedule a venue tour"
@@ -104,87 +104,47 @@ ${values.message}
         height="min-h-[50vh] lg:min-h-[60vh]"
       />
       
-      <section className="py-20">
+      <section className="py-24 md:py-32" style={{ background: 'var(--lotus-deep)' }}>
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Get in Touch Section */}
             <div>
-              <h2 className="section-heading">Get in Touch</h2>
-              <p className="text-gray-600 mb-8">
+              <p className="section-label mb-4">We're Here</p>
+              <h2 className="section-heading mb-6">Get in Touch</h2>
+              <p className="mb-8" style={{ color: 'var(--lotus-muted)' }}>
                 Have a question or want to book our venue? Reach out to us using any of the methods below or fill out the contact form.
               </p>
 
               <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="bg-lotus-cream p-3 rounded-full text-lotus-gold mr-4">
-                    <MapPin className="h-6 w-6" />
+                {[
+                  { icon: <MapPin className="h-5 w-5" />, label: 'Location', content: <span style={{ color: 'var(--lotus-muted)' }}>Near Railway Station, Thalassery, Kerala, India - 670101</span> },
+                  { icon: <PhoneCall className="h-5 w-5" />, label: 'Phone', content: (<><span style={{ color: 'var(--lotus-muted)' }}>+91 920 710 2999</span><br /><Button variant="link" className="text-[var(--lotus-gold)] p-0 h-auto font-medium text-sm" onClick={handleWhatsAppClick}>Contact on WhatsApp</Button></>) },
+                  { icon: <Mail className="h-5 w-5" />, label: 'Email', content: <span style={{ color: 'var(--lotus-muted)' }}>lotusweddinghall@gmail.com</span> },
+                  { icon: <Instagram strokeWidth={1.5} className="h-5 w-5" />, label: 'Instagram', content: <a href="https://www.instagram.com/lotusweddinghall" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--lotus-gold)' }} className="hover:underline">@lotusweddinghall</a> },
+                ].map((item) => (
+                  <div key={item.label} className="flex items-start gap-4">
+                    <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-sm border" style={{ borderColor: 'var(--lotus-border)', color: 'var(--lotus-gold)' }}>{item.icon}</div>
+                    <div>
+                      <p className="text-sm font-medium mb-1" style={{ color: 'var(--lotus-secondary-text)', letterSpacing: '0.05em' }}>{item.label}</p>
+                      <div>{item.content}</div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Location</h3>
-                    <p className="text-gray-600">Near Railway Station, Thalassery, Kerala, India - 670101</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-lotus-cream p-3 rounded-full text-lotus-gold mr-4">
-                    <PhoneCall className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Phone</h3>
-                    <p className="text-gray-600">+91 920 710 2999</p>
-                    <Button 
-                      variant="link" 
-                      className="text-lotus-gold p-0 h-auto font-medium"
-                      onClick={handleWhatsAppClick}
-                    >
-                      Contact on WhatsApp
-                    </Button>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-lotus-cream p-3 rounded-full text-lotus-gold mr-4">
-                    <Mail className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Email</h3>
-                    <p className="text-gray-600">lotusweddinghall@gmail.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start">
-                  <div className="bg-lotus-cream p-3 rounded-full text-lotus-gold mr-4">
-                    <Instagram strokeWidth={1.5} className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg">Social Media</h3>
-                    <a 
-                      href="https://www.instagram.com/lotusweddinghall"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lotus-gold hover:underline"
-                    >
-                      @lotusweddinghall
-                    </a>
-                  </div>
-                </div>
+                ))}
               </div>
               
-              <div className="mt-10">
-                <h3 className="font-semibold text-lg mb-4">Business Hours</h3>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Monday - Sunday</span>
-                    <span>9:00 AM - 8:00 PM</span>
-                  </div>
+              <div className="mt-10 luxury-card p-6">
+                <p className="text-sm mb-4" style={{ color: 'var(--lotus-gold)', letterSpacing: '0.15em', fontWeight: 400, textTransform: 'uppercase' }}>Business Hours</p>
+                <div className="flex justify-between" style={{ color: 'var(--lotus-secondary-text)', fontSize: '0.9rem' }}>
+                  <span>Monday through Sunday</span>
+                  <span>9:00 AM - 8:00 PM</span>
                 </div>
               </div>
             </div>
             
             {/* Contact Form */}
             <div>
-              <div className="bg-white p-8 rounded-lg shadow-md">
-                <h2 className="text-2xl font-playfair font-medium mb-6">Send us a Message</h2>
+              <div className="luxury-card p-8">
+                <h2 className="mb-6" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', fontSize: '1.75rem', fontWeight: 400 }}>Send us a Message</h2>
                 
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -257,7 +217,8 @@ ${values.message}
                           <FormControl>
                             <select
                               id="eventType"
-                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                              className="flex h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50"
+                              style={{ background: 'var(--lotus-surface)', borderColor: 'var(--lotus-border)', color: 'var(--lotus-primary-text)' }}
                               {...field}
                             >
                               <option value="">Select Event Type</option>
@@ -312,14 +273,14 @@ ${values.message}
       </section>
 
       {/* Map Section */}
-      <section className="py-10 bg-gray-50">
+      <section className="py-16" style={{ background: 'var(--lotus-void)' }}>
         <div className="container mx-auto">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-playfair font-medium text-gray-900">Visit Our Venue</h2>
-            <p className="text-gray-600 mt-2">Find us at the heart of Thalassery, near the Railway Station</p>
+            <h2 className="section-heading mx-auto mb-4">Visit Our Venue</h2>
+            <p style={{ color: 'var(--lotus-muted)' }}>Find us at the heart of Thalassery, near the Railway Station</p>
           </div>
-          <div className="rounded-lg overflow-hidden shadow-md h-[400px] md:h-[500px] relative">
-            <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
+          <div className="rounded-sm overflow-hidden h-[400px] md:h-[500px] relative" style={{ border: '1px solid var(--lotus-border)' }}>
+            <div className="absolute inset-0 flex items-center justify-center" style={{ background: 'var(--lotus-surface)' }}>
               <LoadingSpinner size="lg" />
             </div>
             <iframe 
