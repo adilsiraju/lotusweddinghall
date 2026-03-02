@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { GalleryImage } from '@/types/database';
+import { normalizeStoragePublicUrl } from '@/lib/supabase-storage';
 
 interface UseGalleryImagesOptions {
   areaId?: string;
@@ -28,7 +29,10 @@ export const useGalleryImages = (options?: UseGalleryImagesOptions) => {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as GalleryImage[];
+      return (data as GalleryImage[]).map((image) => ({
+        ...image,
+        image_url: normalizeStoragePublicUrl(image.image_url, 'gallery'),
+      }));
     }
   });
 };

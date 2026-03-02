@@ -30,6 +30,7 @@ import { PlusCircle, Trash2, Upload, ImageIcon, Star } from 'lucide-react';
 import VenueAreaForm from '@/components/VenueAreaForm';
 import VideoManagementSection from '@/components/VideoManagementSection';
 import { VenueArea } from '@/types/database';
+import { getStorageObjectPath, normalizeStoragePublicUrl } from '@/lib/supabase-storage';
 
 const AdminGallery = () => {
   const { data: venueAreas = [], isLoading: isLoadingAreas, refetch: refetchAreas } = useVenueAreas();
@@ -147,11 +148,15 @@ const AdminGallery = () => {
       let imagePath;
       if (isEditMode) {
         // Delete old file if updating
-        imagePath = selectedImage.image_url.split('/').pop();
+        imagePath = getStorageObjectPath(selectedImage.image_url, 'gallery');
       } else {
         // Generate unique filename for new upload
         const fileExt = imageFile.name.split('.').pop();
         imagePath = `${Date.now()}-${Math.floor(Math.random() * 10000)}.${fileExt}`;
+      }
+
+      if (!imagePath) {
+        throw new Error('Could not resolve a valid image path for upload');
       }
       
       // Upload the image file
@@ -243,7 +248,7 @@ const AdminGallery = () => {
     setSelectedAreaId(image.venue_area_id);
     setIsActive(image.active);
     setIsFeatured(image.featured);
-    setImagePreview(image.image_url);
+    setImagePreview(normalizeStoragePublicUrl(image.image_url, 'gallery'));
     setIsDialogOpen(true);
   };
   
@@ -284,7 +289,10 @@ const AdminGallery = () => {
     
     try {
       // Extract filename from URL
-      const imagePath = image.image_url.split('/').pop();
+      const imagePath = getStorageObjectPath(image.image_url, 'gallery');
+      if (!imagePath) {
+        throw new Error('Could not resolve image file path for deletion');
+      }
       
       // Delete the image record from the database
       const { error: dbError } = await supabase

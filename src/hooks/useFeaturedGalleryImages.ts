@@ -2,6 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { GalleryImage } from '@/types/database';
+import { normalizeStoragePublicUrl } from '@/lib/supabase-storage';
 
 export const useFeaturedGalleryImages = () => {
   return useQuery({
@@ -15,7 +16,10 @@ export const useFeaturedGalleryImages = () => {
         .order('order_index');
       
       if (error) throw error;
-      return data as GalleryImage[];
+      return (data as GalleryImage[]).map((image) => ({
+        ...image,
+        image_url: normalizeStoragePublicUrl(image.image_url, 'gallery'),
+      }));
     }
   });
 };
